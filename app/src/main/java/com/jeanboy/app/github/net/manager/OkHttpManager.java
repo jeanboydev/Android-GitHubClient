@@ -75,7 +75,7 @@ public class OkHttpManager extends NetManager {
         mRetrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(factory)
-//                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//Rxjava
+//                .addCallAdapterFactory(RxJava2CallAdapterFactory.createForJSON())//Rxjava
                 .client(mOkHttpClient).build();
         return mRetrofit;
     }

@@ -1,4 +1,4 @@
-package com.jeanboy.app.github.handler;
+package com.jeanboy.arch.data.repository.handler;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
@@ -6,11 +6,12 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.support.annotation.Nullable;
 
-import com.jeanboy.app.github.data.DataExecutors;
-import com.jeanboy.app.github.net.RequestCallback;
-import com.jeanboy.app.github.net.RequestParams;
-import com.jeanboy.app.github.net.ResponseData;
-import com.jeanboy.app.github.net.manager.OkHttpManager;
+
+import com.jeanboy.arch.data.cache.manager.DataExecutors;
+import com.jeanboy.arch.data.net.core.RequestCallback;
+import com.jeanboy.arch.data.net.core.RequestParams;
+import com.jeanboy.arch.data.net.core.ResponseData;
+import com.jeanboy.arch.data.net.manager.NetManager;
 
 import retrofit2.Call;
 
@@ -19,15 +20,18 @@ public abstract class RepositoryHandler<ResponseType, ResultType> {
     private MutableLiveData<ResultType> liveData = new MutableLiveData<>();
     private MediatorLiveData<ResultType> watcher = new MediatorLiveData<>();
 
-    public RepositoryHandler() {
+    private MapperHandler<ResponseType, ResultType> mapperHandler;
+
+    public RepositoryHandler(MapperHandler<ResponseType, ResultType> mapper) {
+        this.mapperHandler = mapper;
         loadCache();//读取缓存数据
         watcher.addSource(liveData, new Observer<ResultType>() {
             @Override
             public void onChanged(@Nullable ResultType resultType) {
                 //当读取到缓存数据
                 watcher.removeSource(liveData);
-                if (shouldFetch(resultType)) {
-                    loadRemote();
+                if (RepositoryHandler.this.shouldFetch(resultType)) {
+                    RepositoryHandler.this.loadRemote();
                 }
             }
         });
@@ -55,7 +59,7 @@ public abstract class RepositoryHandler<ResponseType, ResultType> {
             return;
         }
 
-        OkHttpManager.getInstance().doBack(new RequestParams<>(fromNetwork),
+        NetManager.getInstance().request(new RequestParams<>(fromNetwork),
                 new RequestCallback<ResponseData<ResponseType>>() {
                     @Override
                     public void onSuccess(ResponseData<ResponseType> response) {
@@ -85,6 +89,18 @@ public abstract class RepositoryHandler<ResponseType, ResultType> {
                 updateToRoom(resultType);
             }
         });
+    }
+    /**
+     * 数据转换
+     *
+     * @param responseType
+     * @return
+     */
+    private ResultType onMapper(ResponseType responseType) {
+        if (mapperHandler != null) {
+            return mapperHandler.transform(responseType);
+        }
+        return null;
     }
 
     public LiveData<ResultType> asLiveData() {
@@ -122,12 +138,4 @@ public abstract class RepositoryHandler<ResponseType, ResultType> {
      * @return
      */
     protected abstract Call<ResponseType> fetchFromNetwork();
-
-    /**
-     * 数据转换
-     *
-     * @param responseType
-     * @return
-     */
-    protected abstract ResultType onMapper(ResponseType responseType);
 }
