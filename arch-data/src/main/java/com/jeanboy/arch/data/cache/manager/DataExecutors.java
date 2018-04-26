@@ -1,5 +1,9 @@
 package com.jeanboy.arch.data.cache.manager;
 
+import android.os.Handler;
+import android.os.Looper;
+import android.support.annotation.NonNull;
+
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -9,8 +13,9 @@ import java.util.concurrent.Executors;
 
 public class DataExecutors {
 
-    private final Executor singleExecutor;
-    private final Executor multipleExecutor;
+    private final Executor writeThread;
+    private final Executor readThread;
+    private final Executor mainThread;
 
     private static DataExecutors instance;
 
@@ -26,19 +31,34 @@ public class DataExecutors {
     }
 
     private DataExecutors() {
-        this(Executors.newSingleThreadExecutor(), Executors.newCachedThreadPool());
+        this(Executors.newSingleThreadExecutor(), Executors.newCachedThreadPool(), new MainThreadExecutor());
     }
 
-    private DataExecutors(Executor singleExecutor, Executor multipleExecutor) {
-        this.singleExecutor = singleExecutor;
-        this.multipleExecutor = multipleExecutor;
+    public DataExecutors(Executor writeThread, Executor readThread, Executor mainThread) {
+        this.writeThread = writeThread;
+        this.readThread = readThread;
+        this.mainThread = mainThread;
+    }
+
+    private static class MainThreadExecutor implements Executor {
+
+        private Handler mainThreadHandler = new Handler(Looper.getMainLooper());
+
+        @Override
+        public void execute(@NonNull Runnable command) {
+            mainThreadHandler.post(command);
+        }
     }
 
     public void load(Runnable runnable) {
-        multipleExecutor.execute(runnable);
+        readThread.execute(runnable);
     }
 
     public void put(Runnable runnable) {
-        singleExecutor.execute(runnable);
+        writeThread.execute(runnable);
+    }
+
+    public void post(Runnable runnable) {
+        mainThread.execute(runnable);
     }
 }

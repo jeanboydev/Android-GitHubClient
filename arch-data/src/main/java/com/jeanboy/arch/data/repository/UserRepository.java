@@ -7,7 +7,7 @@ import com.jeanboy.arch.data.cache.database.model.UserModel;
 import com.jeanboy.arch.data.cache.manager.AppDatabase;
 import com.jeanboy.arch.data.cache.manager.DBManager;
 import com.jeanboy.arch.data.repository.mapper.UserMapper;
-import com.jeanboy.arch.data.net.api.UserService;
+import com.jeanboy.arch.data.net.service.UserService;
 import com.jeanboy.arch.data.net.entity.UserEntity;
 import com.jeanboy.arch.data.net.manager.NetManager;
 import com.jeanboy.arch.data.repository.handler.RepositoryHandler;

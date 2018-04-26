@@ -45,7 +45,12 @@ public abstract class RepositoryHandler<ResponseType, ResultType> {
             @Override
             public void run() {
                 LiveData<ResultType> fromRoom = loadFromRoom();
-                liveData.setValue(fromRoom == null ? null : fromRoom.getValue());
+                DataExecutors.getInstance().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        liveData.setValue(fromRoom == null ? null : fromRoom.getValue());
+                    }
+                });
             }
         });
     }

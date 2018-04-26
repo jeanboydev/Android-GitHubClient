@@ -1,4 +1,4 @@
-package com.jeanboy.arch.data.net.api;
+package com.jeanboy.arch.data.net.service;
 
 
 import com.jeanboy.arch.data.net.entity.UserEntity;
