@@ -58,7 +58,7 @@ public interface UserService {
      * @return
      */
     @GET("/user/{id}")
-    Call<UserEntity> getInfo(@Header("Authorization") String accessToken, @Path("id") String userId);
+    Call<UserEntity> getInfo(@Header("Authorization") String accessToken, @Path("id") long userId);
 
     /**
      * http://www.xxx.com/user/id/friend?skip=xxx&limit=xxx

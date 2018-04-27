@@ -6,11 +6,12 @@ import android.support.annotation.Nullable;
 import com.jeanboy.arch.data.cache.database.model.UserModel;
 import com.jeanboy.arch.data.cache.manager.AppDatabase;
 import com.jeanboy.arch.data.cache.manager.DBManager;
-import com.jeanboy.arch.data.repository.mapper.UserMapper;
-import com.jeanboy.arch.data.net.service.UserService;
+import com.jeanboy.arch.data.cache.manager.DataExecutors;
 import com.jeanboy.arch.data.net.entity.UserEntity;
 import com.jeanboy.arch.data.net.manager.NetManager;
+import com.jeanboy.arch.data.net.service.UserService;
 import com.jeanboy.arch.data.repository.handler.RepositoryHandler;
+import com.jeanboy.arch.data.repository.mapper.UserMapper;
 
 import retrofit2.Call;
 
@@ -33,24 +34,36 @@ public class UserRepository {
 
             @Override
             protected void updateToRoom(UserModel userModel) {
-                database.beginTransaction();
-                try {
-                    database.userDao().insert(userModel);
-                    database.setTransactionSuccessful();
-                } finally {
-                    database.endTransaction();
-                }
+                database.userDao().insert(userModel);
             }
 
             @Override
-            protected boolean shouldFetch(@Nullable UserModel cache) {
-                return cache == null;
+            protected boolean shouldFetch(@Nullable UserModel userModel) {
+                return userModel == null;
             }
 
             @Override
             protected Call<UserEntity> fetchFromNetwork() {
-                return userService.getInfo("","");
+                return userService.getInfo("", userId);
             }
         }.asLiveData();
+    }
+
+    public void save(UserModel userModel) {
+        DataExecutors.getInstance().put(new Runnable() {
+            @Override
+            public void run() {
+                database.userDao().insert(userModel);
+            }
+        });
+    }
+
+    public void update(UserModel userModel) {
+        DataExecutors.getInstance().put(new Runnable() {
+            @Override
+            public void run() {
+                database.userDao().update(userModel);
+            }
+        });
     }
 }

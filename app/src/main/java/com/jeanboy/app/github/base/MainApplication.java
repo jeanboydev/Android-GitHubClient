@@ -1,5 +1,6 @@
 package com.jeanboy.app.github.base;
 
+import com.facebook.stetho.Stetho;
 import com.jeanboy.app.github.di.BaseDiApplication;
 import com.jeanboy.arch.data.cache.manager.DBManager;
 
@@ -13,5 +14,6 @@ public class MainApplication extends BaseDiApplication {
         super.onCreate();
 
         DBManager.getInstance().build(this, "github.db");
+        Stetho.initializeWithDefaults(this);
     }
 }

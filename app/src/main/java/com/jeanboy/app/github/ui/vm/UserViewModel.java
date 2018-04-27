@@ -1,10 +1,7 @@
 package com.jeanboy.app.github.ui.vm;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MediatorLiveData;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
-import android.support.annotation.Nullable;
 
 import com.jeanboy.arch.data.cache.database.model.UserModel;
 import com.jeanboy.arch.data.repository.UserRepository;
@@ -14,26 +11,23 @@ import com.jeanboy.arch.data.repository.UserRepository;
  */
 public class UserViewModel extends ViewModel {
 
-    private MediatorLiveData<UserModel> userInfo;
+    private LiveData<UserModel> userInfo;
 
-    UserRepository userRepository = new UserRepository();
+    private UserRepository userRepository = new UserRepository();
 
-    public MediatorLiveData<UserModel> getUserInfo(long userId) {
+    public LiveData<UserModel> getUserInfo(long userId) {
         if (userInfo == null) {
-            userInfo = new MediatorLiveData<>();
-            loadUserInfo(userId);
+            userInfo = userRepository.getUserInfo(userId);
+
         }
         return userInfo;
     }
 
-    private void loadUserInfo(long userId) {
-        final LiveData<UserModel> liveData = userRepository.getUserInfo(userId);
-        userInfo.addSource(liveData, new Observer<UserModel>() {
-            @Override
-            public void onChanged(@Nullable UserModel userModel) {
-                userInfo.setValue(userModel);
-                userInfo.removeSource(liveData);
-            }
-        });
+    public void save(UserModel userModel) {
+        userRepository.save(userModel);
+    }
+
+    public void update(UserModel userModel) {
+        userRepository.update(userModel);
     }
 }

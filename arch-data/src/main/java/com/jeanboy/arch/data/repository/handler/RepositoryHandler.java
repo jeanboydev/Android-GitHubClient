@@ -2,10 +2,9 @@ package com.jeanboy.arch.data.repository.handler;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.support.annotation.Nullable;
-
+import android.util.Log;
 
 import com.jeanboy.arch.data.cache.manager.DataExecutors;
 import com.jeanboy.arch.data.net.core.RequestCallback;
@@ -17,22 +16,27 @@ import retrofit2.Call;
 
 public abstract class RepositoryHandler<ResponseType, ResultType> {
 
-    private MutableLiveData<ResultType> liveData = new MutableLiveData<>();
-    private MediatorLiveData<ResultType> watcher = new MediatorLiveData<>();
+    private final static String TAG = RepositoryHandler.class.getSimpleName();
+
+    private MediatorLiveData<ResultType> liveData = new MediatorLiveData<>();
 
     private MapperHandler<ResponseType, ResultType> mapperHandler;
 
     public RepositoryHandler(MapperHandler<ResponseType, ResultType> mapper) {
         this.mapperHandler = mapper;
-        loadCache();//读取缓存数据
-        watcher.addSource(liveData, new Observer<ResultType>() {
+        Log.d(TAG, "== 开始读取数据库缓存 ==>>");
+        LiveData<ResultType> roomData = loadCache();//读取缓存数据
+
+        liveData.addSource(roomData, new Observer<ResultType>() {
             @Override
             public void onChanged(@Nullable ResultType resultType) {
-                //当读取到缓存数据
-                watcher.removeSource(liveData);
+                Log.d(TAG, "== 缓存已经读取 ==>>");
                 if (RepositoryHandler.this.shouldFetch(resultType)) {
                     RepositoryHandler.this.loadRemote();
+                    return;
                 }
+                Log.d(TAG, "<<== 缓存未失效，返回数据 ==");
+                liveData.setValue(resultType);
             }
         });
     }
@@ -40,19 +44,8 @@ public abstract class RepositoryHandler<ResponseType, ResultType> {
     /**
      * 读取缓存数据
      */
-    private void loadCache() {
-        DataExecutors.getInstance().load(new Runnable() {
-            @Override
-            public void run() {
-                LiveData<ResultType> fromRoom = loadFromRoom();
-                DataExecutors.getInstance().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        liveData.setValue(fromRoom == null ? null : fromRoom.getValue());
-                    }
-                });
-            }
-        });
+    private LiveData<ResultType> loadCache() {
+        return loadFromRoom();
     }
 
     /**
@@ -63,20 +56,24 @@ public abstract class RepositoryHandler<ResponseType, ResultType> {
         if (fromNetwork == null) {
             return;
         }
-
+        Log.d(TAG, "== 缓存已经失效，开始获取远程数据 ==>>");
         NetManager.getInstance().request(new RequestParams<>(fromNetwork),
                 new RequestCallback<ResponseData<ResponseType>>() {
                     @Override
                     public void onSuccess(ResponseData<ResponseType> response) {
+                        Log.d(TAG, "<<== 获取远程数据成功 ==");
                         ResponseType responseType = response.getBody();
                         ResultType resultType = onMapper(responseType);
                         liveData.setValue(resultType);
                         if (resultType == null) return;
+
+                        Log.d(TAG, "<<== 数据不为空，缓存到数据库 ==");
                         saveToCache(resultType);
                     }
 
                     @Override
                     public void onError(int code, String msg) {
+                        Log.w(TAG, "<<== 获取远程数据失败 ==");
                         liveData.setValue(null);
                     }
                 });
@@ -95,6 +92,7 @@ public abstract class RepositoryHandler<ResponseType, ResultType> {
             }
         });
     }
+
     /**
      * 数据转换
      *
@@ -130,12 +128,12 @@ public abstract class RepositoryHandler<ResponseType, ResultType> {
     }
 
     /**
-     * 是否需要从远程获取数据，一般缓存数据失效设置为 true 即可
+     * 是否需要从远程获取数据，缓存数据失效设为 true
      *
-     * @param cache
+     * @param resultType
      * @return
      */
-    protected abstract boolean shouldFetch(@Nullable ResultType cache);
+    protected abstract boolean shouldFetch(@Nullable ResultType resultType);
 
     /**
      * 获取远程数据 API

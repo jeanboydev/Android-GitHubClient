@@ -1,5 +1,6 @@
 package com.jeanboy.arch.data.net.manager;
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.jeanboy.arch.data.net.core.NetHandler;
 import com.jeanboy.arch.data.net.core.RequestCallback;
 import com.jeanboy.arch.data.net.core.RequestParams;
@@ -77,6 +78,7 @@ public class NetManager {
         if (client == null) {
             client = new OkHttpClient.Builder()
                     .addInterceptor(loggingInterceptor)
+                    .addNetworkInterceptor(new StethoInterceptor())
                     .retryOnConnectionFailure(true)
                     .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
                     .build();
