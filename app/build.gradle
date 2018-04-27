@@ -1,75 +1,43 @@
 apply plugin: 'com.android.application'
-//apply plugin: "com.jakewharton.butterknife"
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "com.jeanboy.app.github"
-        minSdkVersion 15
-        targetSdkVersion 27
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
-    compileOptions {
-        targetCompatibility 1.8
-        sourceCompatibility 1.8
-    }
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    // support
-    implementation 'com.android.support:support-annotations:27.1.1'
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support:recyclerview-v7:27.1.1'
-    implementation 'com.android.support:cardview-v7:27.1.1'
-    implementation 'com.android.support:design:27.1.1'
-    implementation 'com.android.support:support-v4:27.1.1'
-    implementation 'com.android.support:support-core-utils:27.1.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
-    // Lifecycles
-    implementation 'android.arch.lifecycle:runtime:1.1.1'
-    implementation 'android.arch.lifecycle:extensions:1.1.1'
-    implementation 'android.arch.lifecycle:common-java8:1.1.1'
-    annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
-    testImplementation 'android.arch.core:core-testing:1.1.1'
-    // Room
-    implementation 'android.arch.persistence.room:runtime:1.1.0-beta2'
-    annotationProcessor "android.arch.persistence.room:compiler:1.1.0-beta2"
-    testImplementation 'android.arch.persistence.room:testing:1.1.0-beta2'
-    // okhttp
-    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
-    // retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
-    implementation 'com.squareup.retrofit2:converter-simplexml:2.4.0'
-    implementation 'org.simpleframework:simple-xml:2.7.1'
+    testImplementation "junit:junit:$rootProject.junitVersion"
+    androidTestImplementation "com.android.support.test:runner:$rootProject.runnerVersion"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion"
+
     // dagger
-//    implementation 'com.google.dagger:dagger:2.15'
-    implementation 'com.google.dagger:dagger-android:2.15'
-    implementation 'com.google.dagger:dagger-android-support:2.15'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.15'
-    annotationProcessor 'com.google.dagger:dagger-android-processor:2.15'
+    implementation "com.google.dagger:dagger-android:$rootProject.daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$rootProject.daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
     //butterknife
-    implementation "com.jakewharton:butterknife:8.8.1"
-    annotationProcessor "com.jakewharton:butterknife-compiler:8.8.1"
-    //Stetho
-    implementation 'com.facebook.stetho:stetho:1.5.0'
-    implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
-    //fastjson
-    implementation 'com.alibaba:fastjson:1.1.68.android'
+    implementation "com.jakewharton:butterknife:$rootProject.butterknifeVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterknifeVersion"
 
     // arch
     implementation project(':arch-base')

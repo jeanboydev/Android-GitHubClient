@@ -5,12 +5,9 @@ buildscript {
     repositories {
         google()
         jcenter()
-//        // TODO remove after butterknife 9 graduates to stable
-//        maven { name 'Sonatype SNAPSHOTs'; url 'https://oss.sonatype.org/content/repositories/snapshots/' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.0-alpha11'
-//        classpath 'com.jakewharton:butterknife-gradle-plugin:9.0.0-SNAPSHOT'
+        classpath 'com.android.tools.build:gradle:3.2.0-alpha12'
         
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -27,4 +24,41 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+ext{
+    // SDK and tools
+    minSdkVersion = 15
+    targetSdkVersion = 27
+    compileSdkVersion = 27
+
+    // Test
+    junitVersion = '4.12'
+    runnerVersion = '1.0.2'
+    espressoVersion = '3.0.2'
+    // Stetho
+    stethoVersion = '1.5.0'
+
+    // support
+    supportLibraryVersion = '27.1.1'
+    constraintLayoutVersion = '1.1.0'
+
+	// App dependencies
+	// core
+    archVersion = '1.1.1'
+    roomVersion = '1.1.0-beta3'
+    okhttpVersion = '3.10.0'
+    retrofitVersion = '2.4.0'
+    daggerVersion = '2.15'
+    butterknifeVersion = '8.8.1'
+
+    // retrofit -> xml
+    simpleXmlVersion = '2.7.1'
+
+	// glide
+    glideVersion = '3.7.0'
+
+    // fastjson
+    fastjsonVersion = '1.1.68.android'
+
 }
