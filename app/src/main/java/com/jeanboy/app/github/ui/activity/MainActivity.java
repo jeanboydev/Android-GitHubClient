@@ -2,6 +2,7 @@ package com.jeanboy.app.github.ui.activity;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -71,5 +72,9 @@ public class MainActivity extends BaseDiActivity {
         userModel.setCreateTime(System.currentTimeMillis());
         userViewModel.save(userModel);
 
+    }
+
+    public void toAuth(View view) {
+        startActivity(new Intent(this, AuthActivity.class));
     }
 }

@@ -22,8 +22,6 @@ import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
 public class NetManager {
 
-    private static Retrofit retrofit;
-    private static Retrofit retrofitForXml;
     private static OkHttpClient client;
     private final static int CONNECT_TIMEOUT = 30;
     private final static boolean DEBUG = true;
@@ -47,17 +45,11 @@ public class NetManager {
     /*------------------------ 配置 Retrofit ------------------------------*/
 
     private Retrofit getWithGSON(String baseUrl) {
-        if (retrofit == null) {
-            retrofit = get(baseUrl, GsonConverterFactory.create());
-        }
-        return retrofit;
+        return get(baseUrl, GsonConverterFactory.create());
     }
 
     private Retrofit getWithXml(String baseUrl) {
-        if (retrofitForXml == null) {
-            retrofitForXml = get(baseUrl, SimpleXmlConverterFactory.create());
-        }
-        return retrofitForXml;
+        return get(baseUrl, SimpleXmlConverterFactory.create());
     }
 
     private Retrofit get(String baseUrl, Converter.Factory factory) {

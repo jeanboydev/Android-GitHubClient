@@ -20,6 +20,10 @@ import com.jeanboy.arch.base.R;
 
 public class ToolbarHelper {
 
+    public ToolbarHelper() {
+        throw new AssertionError();
+    }
+
     /**
      * 设置Toolbar的标题
      *

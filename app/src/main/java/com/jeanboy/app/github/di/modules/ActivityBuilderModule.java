@@ -1,6 +1,7 @@
 package com.jeanboy.app.github.di.modules;
 
 import com.jeanboy.app.github.di.component.ActivityComponent;
+import com.jeanboy.app.github.ui.activity.AuthActivity;
 import com.jeanboy.app.github.ui.activity.MainActivity;
 
 import dagger.Module;
@@ -14,4 +15,7 @@ public abstract class ActivityBuilderModule {
 
     @ContributesAndroidInjector(modules = {MainActivityModule.class})
     abstract MainActivity contributeMainActivity();
+
+    @ContributesAndroidInjector
+    abstract AuthActivity contributeAuthActivity();
 }

@@ -14,6 +14,10 @@ import android.view.WindowManager;
 
 public class StatusBarHelper {
 
+    public StatusBarHelper() {
+        throw new AssertionError();
+    }
+
     private final static int SHADOW_COLOR = 0x80000000;
 
     /**

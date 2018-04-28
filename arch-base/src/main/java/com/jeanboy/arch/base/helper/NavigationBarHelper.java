@@ -11,6 +11,10 @@ import java.lang.reflect.Method;
 
 public class NavigationBarHelper {
 
+    public NavigationBarHelper() {
+        throw new AssertionError();
+    }
+
     /**
      * 是否存在虚拟按键
      *

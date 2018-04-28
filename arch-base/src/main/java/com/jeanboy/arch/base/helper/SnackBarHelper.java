@@ -9,6 +9,10 @@ import android.view.View;
 
 public class SnackBarHelper {
 
+    public SnackBarHelper() {
+        throw new AssertionError();
+    }
+
     public static void show(View view, String message, String action, View.OnClickListener listener) {
         Snackbar.make(view, message, Snackbar.LENGTH_LONG).setAction(action, listener).show();
     }

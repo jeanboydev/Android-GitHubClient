@@ -12,7 +12,7 @@ public class SharedPreferencesHelper {
         throw new AssertionError();
     }
 
-    public static String PREFERENCE_NAME = "Preferences";
+    private static String PREFERENCE_NAME = "Preferences";
 
     /**
      * put string preferences

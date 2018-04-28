@@ -10,6 +10,10 @@ import android.support.v7.app.AlertDialog;
 
 public class DialogHelper {
 
+    public DialogHelper() {
+        throw new AssertionError();
+    }
+
     private static AlertDialog.Builder getDialogBuilder(Context context) {
         return new AlertDialog.Builder(context);
     }
