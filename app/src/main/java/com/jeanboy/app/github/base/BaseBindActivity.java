@@ -12,7 +12,7 @@ import butterknife.Unbinder;
 /**
  * Created by jeanboy on 2018/4/25.
  */
-public abstract class BaseBindActivity extends BaseActivity implements BindWrapper {
+public abstract class BaseBindActivity extends BaseActivity implements BindWrapper<Activity> {
 
     private Unbinder unbinder;
 
@@ -28,8 +28,8 @@ public abstract class BaseBindActivity extends BaseActivity implements BindWrapp
     }
 
     @Override
-    public void onBind(Object target) {
-        unbinder = ButterKnife.bind((Activity) target);
+    public void onBind(Activity target) {
+        unbinder = ButterKnife.bind(target);
     }
 
     @Override

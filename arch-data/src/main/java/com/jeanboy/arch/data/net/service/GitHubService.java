@@ -1,5 +1,6 @@
 package com.jeanboy.arch.data.net.service;
 
+import com.jeanboy.arch.data.net.entity.ReceivedEventEntity;
 import com.jeanboy.arch.data.net.entity.UserInfoEntity;
 
 import retrofit2.Call;
@@ -125,7 +126,7 @@ public interface GitHubService {
      */
     @Headers("Accept: application/json")
     @GET("users/{username}/received_events")
-    Call<String> getReceivedEvents(@Header("Authorization") String accessToken,
-                                   @Path("username") long username,
-                                   @Query("page") int page);
+    Call<ReceivedEventEntity> getReceivedEvents(@Header("Authorization") String accessToken,
+                                                @Path("username") long username,
+                                                @Query("page") int page);
 }

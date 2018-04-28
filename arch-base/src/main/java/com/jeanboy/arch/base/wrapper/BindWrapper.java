@@ -6,13 +6,13 @@ package com.jeanboy.arch.base.wrapper;
  * 用于初始化butterknife
  */
 
-public interface BindWrapper {
+public interface BindWrapper<T> {
 
     /**
      * activity中：onSetContentView()后调用
      * fragment中：onFragmentViewCreated()后调用
      */
-    void onBind(Object target);
+    void onBind(T target);
 
     /**
      * activity中：onDestroy()后调用

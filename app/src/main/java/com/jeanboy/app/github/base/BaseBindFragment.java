@@ -1,6 +1,7 @@
 package com.jeanboy.app.github.base;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.View;
 
 
@@ -13,7 +14,7 @@ import butterknife.Unbinder;
 /**
  * Created by jeanboy on 2018/4/25.
  */
-public abstract class BaseBindFragment extends BaseFragment implements BindWrapper {
+public abstract class BaseBindFragment extends BaseFragment implements BindWrapper<View> {
 
     private Unbinder unbinder;
 
@@ -33,8 +34,8 @@ public abstract class BaseBindFragment extends BaseFragment implements BindWrapp
     }
 
     @Override
-    public void onBind(Object target) {
-        unbinder = ButterKnife.bind((View) target);
+    public void onBind(View target) {
+        unbinder = ButterKnife.bind(target);
     }
 
     @Override
