@@ -3,6 +3,7 @@ package com.jeanboy.app.github.di.modules;
 import com.jeanboy.app.github.di.component.ActivityComponent;
 import com.jeanboy.app.github.ui.activity.AuthActivity;
 import com.jeanboy.app.github.ui.activity.MainActivity;
+import com.jeanboy.app.github.ui.activity.SplashActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -13,9 +14,12 @@ import dagger.android.ContributesAndroidInjector;
 @Module(subcomponents = ActivityComponent.class)
 public abstract class ActivityBuilderModule {
 
-    @ContributesAndroidInjector(modules = {MainActivityModule.class})
+    @ContributesAndroidInjector
+    abstract SplashActivity contributeSplashActivity();
+
+    @ContributesAndroidInjector(modules = {ViewModelModule.class})
     abstract MainActivity contributeMainActivity();
 
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = {ViewModelModule.class})
     abstract AuthActivity contributeAuthActivity();
 }

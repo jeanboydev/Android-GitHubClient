@@ -1,24 +1,35 @@
 package com.jeanboy.app.github.ui.activity;
 
+import android.app.Activity;
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 
 import com.alibaba.fastjson.JSON;
 import com.jeanboy.app.github.R;
 import com.jeanboy.app.github.config.AppConfig;
+import com.jeanboy.app.github.config.AppSettings;
 import com.jeanboy.app.github.di.BaseDiActivity;
-import com.jeanboy.arch.data.net.core.RequestCallback;
-import com.jeanboy.arch.data.net.core.ResponseData;
-import com.jeanboy.arch.data.net.entity.AccessTokenEntity;
-import com.jeanboy.arch.data.net.entity.UserInfoEntity;
-import com.jeanboy.arch.data.repository.GitHubRepository;
+import com.jeanboy.app.github.ui.vm.AuthViewModel;
+import com.jeanboy.arch.data.cache.database.model.AccessTokenModel;
+import com.jeanboy.arch.data.cache.database.model.UserInfoModel;
+import com.jeanboy.arch.data.repository.params.TokenParams;
+
+import javax.inject.Inject;
 
 public class AuthActivity extends BaseDiActivity {
 
-    private GitHubRepository gitHubRepository = new GitHubRepository();
+    @Inject
+    AuthViewModel authViewModel;
+
+    public static void startBy(Activity context) {
+        startActivity(context, AuthActivity.class, null);
+    }
 
     @Override
     protected int getLayoutId() {
@@ -54,34 +65,29 @@ public class AuthActivity extends BaseDiActivity {
         Uri uri = getIntent().getData();
         if (uri != null && uri.toString().startsWith(AppConfig.REDIRECT_URI)) {
             String code = uri.getQueryParameter("code");
-            gitHubRepository.getAccessToken(AppConfig.CLIENT_ID, AppConfig.CLIENT_SECRET, code,
-                    new RequestCallback<ResponseData<AccessTokenEntity>>() {
-                        @Override
-                        public void onSuccess(ResponseData<AccessTokenEntity> response) {
-                            AccessTokenEntity responseBody = response.getBody();
-                            Log.d(TAG, "====" + JSON.toJSONString(responseBody));
-                            getUserInfo(responseBody.getAccessToken());
-                        }
+            TokenParams tokenParams = new TokenParams(AppConfig.CLIENT_ID, AppConfig.CLIENT_SECRET, code);
+            LiveData<AccessTokenModel> accessTokenLiveData = authViewModel.requestToken(tokenParams);
+            accessTokenLiveData.observe(this, new Observer<AccessTokenModel>() {
+                @Override
+                public void onChanged(@Nullable AccessTokenModel accessTokenModel) {
+                    Log.d(TAG, "==onChanged==" + JSON.toJSONString(accessTokenModel));
 
-                        @Override
-                        public void onError(int code, String msg) {
-                            Log.d(TAG, "====" + msg);
-                        }
-                    });
+                    if (accessTokenModel == null) return;
+                    getUserInfo(accessTokenModel.getAccessToken());
+                }
+            });
         }
     }
 
     private void getUserInfo(String accessToken) {
-        gitHubRepository.getUserInfo(accessToken, new RequestCallback<ResponseData<UserInfoEntity>>() {
+        LiveData<UserInfoModel> userInfoLiveData = authViewModel.getUserInfo(AppSettings.getUserId(), accessToken);
+        userInfoLiveData.observe(this, new Observer<UserInfoModel>() {
             @Override
-            public void onSuccess(ResponseData<UserInfoEntity> response) {
-                UserInfoEntity responseBody = response.getBody();
-                Log.d(TAG, "====" + JSON.toJSONString(responseBody));
-            }
+            public void onChanged(@Nullable UserInfoModel userInfoModel) {
+                Log.d(TAG, "==getUserInfo==onChanged==" + JSON.toJSONString(userInfoModel));
 
-            @Override
-            public void onError(int code, String msg) {
-                Log.d(TAG, "====" + msg);
+                if (userInfoModel == null) return;
+                AppSettings.setUserId(userInfoModel.getId());
             }
         });
     }

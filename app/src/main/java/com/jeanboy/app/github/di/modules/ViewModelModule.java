@@ -1,6 +1,11 @@
 package com.jeanboy.app.github.di.modules;
 
-import com.jeanboy.arch.data.repository.UserRepository;
+import android.arch.lifecycle.ViewModelProviders;
+
+import com.jeanboy.app.github.ui.activity.AuthActivity;
+import com.jeanboy.app.github.ui.activity.MainActivity;
+import com.jeanboy.app.github.ui.vm.AuthViewModel;
+import com.jeanboy.app.github.ui.vm.MainViewModel;
 
 import dagger.Module;
 import dagger.Provides;
@@ -12,7 +17,12 @@ import dagger.Provides;
 public class ViewModelModule {
 
     @Provides
-    UserRepository provideUserRepository() {
-        return new UserRepository();
+    MainViewModel provideUserViewModel(MainActivity activity) {
+        return ViewModelProviders.of(activity).get(MainViewModel.class);
+    }
+
+    @Provides
+    AuthViewModel provideTokenViewModel(AuthActivity activity) {
+        return ViewModelProviders.of(activity).get(AuthViewModel.class);
     }
 }

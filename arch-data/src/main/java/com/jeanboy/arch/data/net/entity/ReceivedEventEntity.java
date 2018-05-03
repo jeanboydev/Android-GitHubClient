@@ -1,6 +1,10 @@
 package com.jeanboy.arch.data.net.entity;
 
 import com.google.gson.annotations.SerializedName;
+import com.jeanboy.arch.data.net.entity.received.ActorEntity;
+import com.jeanboy.arch.data.net.entity.received.OrganizationEntity;
+import com.jeanboy.arch.data.net.entity.received.PayLoadEntity;
+import com.jeanboy.arch.data.net.entity.received.RepositoryEntity;
 
 /**
  * Created by jeanboy on 2018/4/28.
@@ -41,7 +45,7 @@ public class ReceivedEventEntity {
     private String id;
     private String type;
     private ActorEntity actor;
-    private RepoEntity repo;
+    private RepositoryEntity repo;
     private PayLoadEntity payload;
     @SerializedName("public")
     private boolean isPublic;
@@ -72,11 +76,11 @@ public class ReceivedEventEntity {
         this.actor = actor;
     }
 
-    public RepoEntity getRepo() {
+    public RepositoryEntity getRepo() {
         return repo;
     }
 
-    public void setRepo(RepoEntity repo) {
+    public void setRepo(RepositoryEntity repo) {
         this.repo = repo;
     }
 

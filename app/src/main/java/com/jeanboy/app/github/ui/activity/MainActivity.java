@@ -1,19 +1,18 @@
 package com.jeanboy.app.github.ui.activity;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.Observer;
-import android.content.Intent;
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
+import android.support.annotation.IdRes;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
+import android.widget.RadioGroup;
 
-import com.alibaba.fastjson.JSON;
 import com.jeanboy.app.github.R;
 import com.jeanboy.app.github.di.BaseDiActivity;
-import com.jeanboy.app.github.ui.vm.UserViewModel;
-import com.jeanboy.arch.data.cache.database.model.UserModel;
+import com.jeanboy.app.github.ui.fragment.HomeFragment;
+import com.jeanboy.app.github.ui.fragment.MineFragment;
+import com.jeanboy.app.github.ui.fragment.ProjectFragment;
 
 import javax.inject.Inject;
 
@@ -22,12 +21,22 @@ import butterknife.BindView;
 
 public class MainActivity extends BaseDiActivity {
 
-    @BindView(R.id.tv_data)
-    TextView tv_data;
+    @BindView(R.id.bottom_menu)
+    RadioGroup bottomMenu;
 
     @Inject
-    UserViewModel userViewModel;
-    private LiveData<UserModel> userModel;
+    HomeFragment homeFragment;
+    @Inject
+    ProjectFragment projectFragment;
+    @Inject
+    MineFragment mineFragment;
+
+    private Fragment[] fragments;
+    private int currentTabIndex = 0;
+
+    public static void startBy(Activity context) {
+        startActivity(context, MainActivity.class, null);
+    }
 
     @Override
     protected int getLayoutId() {
@@ -36,45 +45,48 @@ public class MainActivity extends BaseDiActivity {
 
     @Override
     protected void setupView(Bundle savedInstanceState) {
+        fragments = new Fragment[]{homeFragment, projectFragment, mineFragment};
+        showFragment(R.id.fragment_container, fragments[currentTabIndex]);
+        bottomMenu.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                int index = 0;
+                int count = group.getChildCount();
+                for (int i = 0; i < count; i++) {
+                    if (checkedId == group.getChildAt(i).getId()) {
+                        index = i;
+                    }
+                }
+
+                switchTab(index);
+            }
+        });
+
+    }
+
+    private void switchTab(int index) {
+        if (currentTabIndex != index) {
+            FragmentTransaction trx = getSupportFragmentManager().beginTransaction();
+            trx.hide(fragments[currentTabIndex]);
+            if (!fragments[index].isAdded())
+                trx.add(R.id.fragment_container, fragments[index]);
+            trx.show(fragments[index]).commitAllowingStateLoss();
+        }
+        currentTabIndex = index;
     }
 
     @Override
     protected void initData() {
-        userModel = userViewModel.getUserInfo(1);
-        userModel.observe(this, new Observer<UserModel>() {
-            @Override
-            public void onChanged(@Nullable UserModel userModel) {
-                if (userModel == null) return;
-                Log.d(TAG, "=====onChanged=====");
-                tv_data.setText(JSON.toJSONString(userModel));
-            }
-        });
-    }
-
-    public void toSave(View view) {
-        UserModel userModel = new UserModel();
-        userModel.setUserNick("张三" + System.currentTimeMillis());
-        userModel.setUserName("test" + System.currentTimeMillis());
-        userModel.setCreateTime(System.currentTimeMillis());
-        userViewModel.save(userModel);
-    }
-
-    public void toLoad(View view) {
-        Log.d(TAG, "=====toLoad=====");
 
     }
 
-    public void toUpdate(View view) {
-        UserModel userModel = new UserModel();
-        userModel.setId(1);
-        userModel.setUserNick("张三new");
-        userModel.setUserName("test new!!!");
-        userModel.setCreateTime(System.currentTimeMillis());
-        userViewModel.save(userModel);
-
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+            moveTaskToBack(true);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
-    public void toAuth(View view) {
-        startActivity(new Intent(this, AuthActivity.class));
-    }
 }

@@ -35,7 +35,7 @@ public abstract class BaseBindFragment extends BaseFragment implements BindWrapp
 
     @Override
     public void onBind(View target) {
-        unbinder = ButterKnife.bind(target);
+        unbinder = ButterKnife.bind(this, target);
     }
 
     @Override

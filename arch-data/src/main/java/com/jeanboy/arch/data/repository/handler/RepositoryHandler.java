@@ -19,17 +19,16 @@ public abstract class RepositoryHandler<ResponseType, ResultType> {
     private final static String TAG = RepositoryHandler.class.getSimpleName();
 
     private MediatorLiveData<ResultType> liveData = new MediatorLiveData<>();
+    private MediatorLiveData<ResultType> watcher = new MediatorLiveData<>();
 
-    private MapperHandler<ResponseType, ResultType> mapperHandler;
-
-    public RepositoryHandler(MapperHandler<ResponseType, ResultType> mapper) {
-        this.mapperHandler = mapper;
+    public RepositoryHandler() {
         Log.d(TAG, "== 开始读取数据库缓存 ==>>");
         LiveData<ResultType> roomData = loadCache();//读取缓存数据
 
-        liveData.addSource(roomData, new Observer<ResultType>() {
+        watcher.addSource(roomData, new Observer<ResultType>() {
             @Override
             public void onChanged(@Nullable ResultType resultType) {
+                watcher.removeSource(roomData);
                 Log.d(TAG, "== 缓存已经读取 ==>>");
                 if (RepositoryHandler.this.shouldFetch(resultType)) {
                     RepositoryHandler.this.loadRemote();
@@ -54,6 +53,7 @@ public abstract class RepositoryHandler<ResponseType, ResultType> {
     private void loadRemote() {
         Call<ResponseType> fromNetwork = fetchFromNetwork();
         if (fromNetwork == null) {
+            Log.w(TAG, "== 缓存已经失效，获取远程数据未实现 ==>>");
             return;
         }
         Log.d(TAG, "== 缓存已经失效，开始获取远程数据 ==>>");
@@ -63,7 +63,7 @@ public abstract class RepositoryHandler<ResponseType, ResultType> {
                     public void onSuccess(ResponseData<ResponseType> response) {
                         Log.d(TAG, "<<== 获取远程数据成功 ==");
                         ResponseType responseType = response.getBody();
-                        ResultType resultType = onMapper(responseType);
+                        ResultType resultType = toMapper(responseType);
                         liveData.setValue(resultType);
                         if (resultType == null) return;
 
@@ -99,11 +99,8 @@ public abstract class RepositoryHandler<ResponseType, ResultType> {
      * @param responseType
      * @return
      */
-    private ResultType onMapper(ResponseType responseType) {
-        if (mapperHandler != null) {
-            return mapperHandler.transform(responseType);
-        }
-        return null;
+    private ResultType toMapper(ResponseType responseType) {
+        return onMapper().transform(responseType);
     }
 
     public LiveData<ResultType> asLiveData() {
@@ -141,4 +138,11 @@ public abstract class RepositoryHandler<ResponseType, ResultType> {
      * @return
      */
     protected abstract Call<ResponseType> fetchFromNetwork();
+
+    /**
+     * 数据转换
+     *
+     * @return
+     */
+    protected abstract MapperHandler<ResponseType, ResultType> onMapper();
 }

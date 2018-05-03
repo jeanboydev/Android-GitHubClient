@@ -18,17 +18,6 @@ public interface GitHubService {
     String BASE_URL = "https://api.github.com";
 
     /**
-     * 获取用户公开信息
-     * GET https://api.github.com/user
-     * HEAD{
-     * Authorization: token OAUTH-TOKEN
-     * }
-     */
-    @Headers("Accept: application/json")
-    @GET("user")
-    Call<UserInfoEntity> getUserInfo(@Header("Authorization") String accessToken);
-
-    /**
      * 跟随者
      * GET https://api.github.com/users/{username}/followers?page=2
      * HEAD{

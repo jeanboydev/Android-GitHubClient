@@ -1,7 +1,6 @@
 package com.jeanboy.app.github.di.component;
 
 import com.jeanboy.app.github.di.BaseDiActivity;
-import com.jeanboy.app.github.di.modules.ViewModelModule;
 
 import dagger.Subcomponent;
 import dagger.android.AndroidInjectionModule;

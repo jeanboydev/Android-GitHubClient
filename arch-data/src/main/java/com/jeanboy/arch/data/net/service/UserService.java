@@ -1,80 +1,29 @@
 package com.jeanboy.arch.data.net.service;
 
 
-import com.jeanboy.arch.data.net.entity.UserEntity;
-
-import java.util.List;
+import com.jeanboy.arch.data.net.entity.UserInfoEntity;
 
 import retrofit2.Call;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.POST;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
+import retrofit2.http.Headers;
 
 /**
- * Created by jeanboy on 2017/7/27.
+ * Created by jeanboy on 2018/5/3.
  */
 
 public interface UserService {
 
-    String BASE_URL = "http://www.xxx.com";
+    String BASE_URL = "https://api.github.com";
 
     /**
-     * http://www.xxx.com
-     * POST {
-     * username:xxx,
-     * password:xxx
+     * 获取用户公开信息
+     * GET https://api.github.com/user
+     * HEAD{
+     * Authorization: token OAUTH-TOKEN
      * }
-     *
-     * @param username
-     * @param password
-     * @return
      */
-    @FormUrlEncoded
-    @POST("/user")
-    Call<UserEntity> getToken(@Field("username") String username, @Field("password") String password);
-
-    /**
-     * http://www.xxx.com/user?refreshToken=xxx
-     *
-     * @param refreshToken
-     * @return
-     */
-    @GET("/user")
-    Call<UserEntity> refreshToken(@Query("refreshToken") String refreshToken);
-
-    /**
-     * http://www.xxx.com/user/id
-     * GET
-     * Header {
-     * Authorization : accessToken
-     * }
-     *
-     * @param accessToken
-     * @param userId
-     * @return
-     */
-    @GET("/user/{id}")
-    Call<UserEntity> getInfo(@Header("Authorization") String accessToken, @Path("id") long userId);
-
-    /**
-     * http://www.xxx.com/user/id/friend?skip=xxx&limit=xxx
-     * GET
-     * Header {
-     * Authorization : accessToken
-     * }
-     *
-     * @param accessToken
-     * @param userId
-     * @param skip
-     * @param limit
-     * @return
-     */
-    @GET("/user/{id}/friend")
-    Call<List<UserEntity>> getFriendList(@Header("Authorization") String accessToken, @Path("id") String userId, @Query("skip") int
-            skip,
-                                         @Query("limit") int limit);
+    @Headers("Accept: application/json")
+    @GET("user")
+    Call<UserInfoEntity> getUserInfo(@Header("Authorization") String accessToken);
 }

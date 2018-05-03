@@ -43,39 +43,57 @@ public class DateUtil {
      * X	Time zone	ISO 8601 time zone	-08; -0800; -08:00
      */
 
-    public static final String FORMAT_DATE_24_FULL = "yyyy-MM-dd HH:mm:ss";
+    public static final String FORMAT_DATE_24_FULL = "yyyy-MM-dd HH:mm:ss";//2016-11-28 13:53:00
     public static final String FORMAT_DATE_12_FULL = "yyyy-MM-dd hh:mm:ss";//2016-11-28 11:53:00
     public static final String FORMAT_DATE_12_MARKER = "a";//上午/下午
 
-    public static final String FORMAT_TIME_24_FULL = "HH:mm:ss";
-    public static final String FORMAT_TIME_12_FULL = "hh:mm:ss a";
-    public static final String FORMAT_TIME_24_SIMPLE = "HH:mm";
-    public static final String FORMAT_TIME_12_SIMPLE = "hh:mm a";
+    public static final String FORMAT_TIME_24_FULL = "HH:mm:ss";//13:53:00
+    public static final String FORMAT_TIME_12_FULL = "hh:mm:ss a";//11:53:00 AM
+    public static final String FORMAT_TIME_24_SIMPLE = "HH:mm";//13:53
+    public static final String FORMAT_TIME_12_SIMPLE = "hh:mm a";//11:53 AM
 
     public static final String FORMAT_HOURS_24_HOUR = "H";//1-24
     public static final String FORMAT_HOURS_12_HOUR = "h";//1-12
-    public static final String FORMAT_WEEK = "E";//星期一/ Monday
-    public static final String FORMAT_SHARE = "E.M.dd";// Monday.Jul.18
-    public static final String FORMAT_DATE_SIMPLE = "MM/dd";
+    public static final String FORMAT_WEEK = "E";//星期一/Monday
+    public static final String FORMAT_SHARE = "E.M.dd";//Monday.Jul.18
+    public static final String FORMAT_DATE_SIMPLE = "MM/dd";//01/01
 
-    public static String dateFormat(long timestamp, String format, String timeZoneId) {
+    public static final String FORMAT_UTC = "yyyy-MM-dd'T'HH:mm:ss'Z'";//2014-08-23T09:20:05Z
+
+    /**
+     * 格式化时间戳
+     *
+     * @param timestamp
+     * @param format
+     * @param timeZoneId
+     * @return
+     */
+    public static String format(long timestamp, String format, String timeZoneId) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.getDefault());
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(timestamp);
         if (timeZoneId != null) {
             dateFormat.setTimeZone(TimeZone.getTimeZone(timeZoneId));
-        }else {
+        } else {
             dateFormat.setTimeZone(TimeZone.getDefault());
         }
         return dateFormat.format(calendar.getTime());
     }
 
-    public static Date stringToDate(String dateStr, String format, String timeZoneId) {
+    /**
+     * 字符串转日期
+     *
+     * @param dateStr
+     * @param format
+     * @param timeZoneId
+     * @return
+     */
+    public static Date format(String dateStr, String format, String timeZoneId) {
         Date date = null;
-        SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.ENGLISH);
+        SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.getDefault());
         if (timeZoneId != null) {
             dateFormat.setTimeZone(TimeZone.getTimeZone(timeZoneId));
-        }else {
+        } else {
             dateFormat.setTimeZone(TimeZone.getDefault());
         }
         try {
@@ -86,23 +104,63 @@ public class DateUtil {
         return date;
     }
 
-    public static boolean is24HourFormat(Context context) {
+    /**
+     * 格式化世界标准时间
+     *
+     * @param dateStr
+     * @return
+     */
+    public static Date format(String dateStr) {
+        Date date = null;
+        SimpleDateFormat dateFormat = new SimpleDateFormat(FORMAT_UTC, Locale.getDefault());
+        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        try {
+            date = dateFormat.parse(dateStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
+
+    /**
+     * 是否是 24 小时制
+     *
+     * @param context
+     * @return
+     */
+    public static boolean is24Hour(Context context) {
         return DateFormat.is24HourFormat(context);
     }
 
-    public static String dateFormatUseSystem(Context context, long timestamp, String timeZoneId) {
+    /**
+     * 根据系统设置，选择 12 或 24 小时制进行格式化日期
+     *
+     * @param context
+     * @param timestamp
+     * @param timeZoneId
+     * @return
+     */
+    public static String formatDateUseSystem(Context context, long timestamp, String timeZoneId) {
         String format = FORMAT_DATE_12_FULL + " " + FORMAT_DATE_12_MARKER;
-        if (is24HourFormat(context)) {
+        if (is24Hour(context)) {
             format = FORMAT_DATE_24_FULL;
         }
-        return dateFormat(timestamp, format, timeZoneId);
+        return format(timestamp, format, timeZoneId);
     }
 
-    public static String timeFormatUseSystem(Context context, long timestamp, String timeZoneId) {
+    /**
+     * 根据系统设置，选择 12 或 24 小时制进行格式化时间
+     *
+     * @param context
+     * @param timestamp
+     * @param timeZoneId
+     * @return
+     */
+    public static String formatTimeUseSystem(Context context, long timestamp, String timeZoneId) {
         String format = FORMAT_TIME_12_SIMPLE;
-        if (is24HourFormat(context)) {
+        if (is24Hour(context)) {
             format = FORMAT_TIME_24_SIMPLE;
         }
-        return dateFormat(timestamp, format, timeZoneId);
+        return format(timestamp, format, timeZoneId);
     }
 }
