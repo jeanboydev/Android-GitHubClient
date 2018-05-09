@@ -7,7 +7,7 @@ import com.jeanboy.arch.data.repository.handler.MapperHandler;
 /**
  * Created by jeanboy on 2018/5/2.
  */
-public class AccessTokenMapper implements MapperHandler<AccessTokenEntity, AccessTokenModel> {
+public class AccessTokenMapper extends MapperHandler<AccessTokenEntity, AccessTokenModel> {
 
     @Override
     public AccessTokenModel transform(AccessTokenEntity accessTokenEntity) {

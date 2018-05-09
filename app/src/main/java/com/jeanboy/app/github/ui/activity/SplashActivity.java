@@ -26,6 +26,7 @@ public class SplashActivity extends BaseDiActivity {
         public void run() {
             if (AppSettings.getUserId() == 0) {
                 AuthActivity.startBy(SplashActivity.this);
+                SplashActivity.this.finish();
                 return;
             }
             MainActivity.startBy(SplashActivity.this);

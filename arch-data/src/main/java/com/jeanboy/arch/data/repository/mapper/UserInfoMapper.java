@@ -8,7 +8,7 @@ import com.jeanboy.arch.data.repository.util.DateUtil;
 /**
  * Created by jeanboy on 2018/5/3.
  */
-public class UserInfoMapper implements MapperHandler<UserInfoEntity, UserInfoModel> {
+public class UserInfoMapper extends MapperHandler<UserInfoEntity, UserInfoModel> {
 
     @Override
     public UserInfoModel transform(UserInfoEntity userInfoEntity) {

@@ -106,16 +106,4 @@ public interface GitHubService {
                            @Path("username") long username,
                            @Query("page") int page);
 
-    /**
-     * 动态列表
-     * GET https://api.github.com/users/{username}/received_events?page=2
-     * HEAD{
-     * Authorization: token OAUTH-TOKEN
-     * }
-     */
-    @Headers("Accept: application/json")
-    @GET("users/{username}/received_events")
-    Call<ReceivedEventEntity> getReceivedEvents(@Header("Authorization") String accessToken,
-                                                @Path("username") long username,
-                                                @Query("page") int page);
 }

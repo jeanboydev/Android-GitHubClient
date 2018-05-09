@@ -1,12 +1,15 @@
 package com.jeanboy.arch.data.net.service;
 
 
+import com.jeanboy.arch.data.net.entity.ReceivedEventEntity;
 import com.jeanboy.arch.data.net.entity.UserInfoEntity;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by jeanboy on 2018/5/3.
@@ -26,4 +29,6 @@ public interface UserService {
     @Headers("Accept: application/json")
     @GET("user")
     Call<UserInfoEntity> getUserInfo(@Header("Authorization") String accessToken);
+
+
 }

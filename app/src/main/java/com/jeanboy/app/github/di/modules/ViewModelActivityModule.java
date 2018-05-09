@@ -14,7 +14,7 @@ import dagger.Provides;
  * Created by jeanboy on 2018/4/25.
  */
 @Module
-public class ViewModelModule {
+public class ViewModelActivityModule {
 
     @Provides
     MainViewModel provideUserViewModel(MainActivity activity) {
@@ -25,4 +25,5 @@ public class ViewModelModule {
     AuthViewModel provideTokenViewModel(AuthActivity activity) {
         return ViewModelProviders.of(activity).get(AuthViewModel.class);
     }
+
 }

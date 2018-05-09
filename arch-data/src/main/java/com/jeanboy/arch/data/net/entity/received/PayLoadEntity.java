@@ -6,6 +6,7 @@ package com.jeanboy.arch.data.net.entity.received;
 public class PayLoadEntity {
 
     private String action;
+    private ForkeeEntity forkee;
 
     public String getAction() {
         return action;
@@ -13,5 +14,13 @@ public class PayLoadEntity {
 
     public void setAction(String action) {
         this.action = action;
+    }
+
+    public ForkeeEntity getForkee() {
+        return forkee;
+    }
+
+    public void setForkee(ForkeeEntity forkee) {
+        this.forkee = forkee;
     }
 }

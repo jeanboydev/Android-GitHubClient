@@ -18,17 +18,17 @@ public abstract class RepositoryHandler<ResponseType, ResultType> {
 
     private final static String TAG = RepositoryHandler.class.getSimpleName();
 
-    private MediatorLiveData<ResultType> liveData = new MediatorLiveData<>();
-    private MediatorLiveData<ResultType> watcher = new MediatorLiveData<>();
+    private LiveData<ResultType> roomData;
+    private MediatorLiveData<ResultType> liveData;
 
     public RepositoryHandler() {
         Log.d(TAG, "== 开始读取数据库缓存 ==>>");
-        LiveData<ResultType> roomData = loadCache();//读取缓存数据
+        roomData = loadCache();//读取缓存数据
 
-        watcher.addSource(roomData, new Observer<ResultType>() {
+        liveData = new MediatorLiveData<>();
+        liveData.addSource(roomData, new Observer<ResultType>() {
             @Override
             public void onChanged(@Nullable ResultType resultType) {
-                watcher.removeSource(roomData);
                 Log.d(TAG, "== 缓存已经读取 ==>>");
                 if (RepositoryHandler.this.shouldFetch(resultType)) {
                     RepositoryHandler.this.loadRemote();
@@ -36,6 +36,7 @@ public abstract class RepositoryHandler<ResponseType, ResultType> {
                 }
                 Log.d(TAG, "<<== 缓存未失效，返回数据 ==");
                 liveData.setValue(resultType);
+                liveData.removeSource(roomData);
             }
         });
     }
@@ -65,6 +66,7 @@ public abstract class RepositoryHandler<ResponseType, ResultType> {
                         ResponseType responseType = response.getBody();
                         ResultType resultType = toMapper(responseType);
                         liveData.setValue(resultType);
+                        liveData.removeSource(roomData);
                         if (resultType == null) return;
 
                         Log.d(TAG, "<<== 数据不为空，缓存到数据库 ==");
@@ -75,6 +77,7 @@ public abstract class RepositoryHandler<ResponseType, ResultType> {
                     public void onError(int code, String msg) {
                         Log.w(TAG, "<<== 获取远程数据失败 ==");
                         liveData.setValue(null);
+                        liveData.removeSource(roomData);
                     }
                 });
     }

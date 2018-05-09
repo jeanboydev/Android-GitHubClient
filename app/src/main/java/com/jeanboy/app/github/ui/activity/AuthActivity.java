@@ -62,15 +62,17 @@ public class AuthActivity extends BaseDiActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Log.d(TAG, "=====onResume=======");
         Uri uri = getIntent().getData();
         if (uri != null && uri.toString().startsWith(AppConfig.REDIRECT_URI)) {
             String code = uri.getQueryParameter("code");
+            Log.d(TAG, "=====onResume====code===" + code);
             TokenParams tokenParams = new TokenParams(AppConfig.CLIENT_ID, AppConfig.CLIENT_SECRET, code);
             LiveData<AccessTokenModel> accessTokenLiveData = authViewModel.requestToken(tokenParams);
             accessTokenLiveData.observe(this, new Observer<AccessTokenModel>() {
                 @Override
                 public void onChanged(@Nullable AccessTokenModel accessTokenModel) {
-                    Log.d(TAG, "==onChanged==" + JSON.toJSONString(accessTokenModel));
+                    Log.d(TAG, "==accessToken==onChanged==" + JSON.toJSONString(accessTokenModel));
 
                     if (accessTokenModel == null) return;
                     getUserInfo(accessTokenModel.getAccessToken());
@@ -88,6 +90,10 @@ public class AuthActivity extends BaseDiActivity {
 
                 if (userInfoModel == null) return;
                 AppSettings.setUserId(userInfoModel.getId());
+                AppSettings.setUsername(userInfoModel.getLogin());
+
+                MainActivity.startBy(AuthActivity.this);
+                AuthActivity.this.finish();
             }
         });
     }

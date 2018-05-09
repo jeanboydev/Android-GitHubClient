@@ -7,6 +7,8 @@ import com.jeanboy.arch.data.cache.database.model.UserInfoModel;
 import com.jeanboy.arch.data.cache.database.model.UserModel;
 import com.jeanboy.arch.data.repository.UserRepository;
 
+import javax.inject.Inject;
+
 /**
  * Created by jeanboy on 2018/4/25.
  */

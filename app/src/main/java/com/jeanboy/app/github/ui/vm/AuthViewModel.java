@@ -9,6 +9,8 @@ import com.jeanboy.arch.data.repository.TokenRepository;
 import com.jeanboy.arch.data.repository.UserRepository;
 import com.jeanboy.arch.data.repository.params.TokenParams;
 
+import javax.inject.Inject;
+
 /**
  * Created by jeanboy on 2018/5/2.
  */
