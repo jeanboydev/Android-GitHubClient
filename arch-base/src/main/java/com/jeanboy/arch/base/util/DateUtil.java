@@ -60,6 +60,14 @@ public class DateUtil {
 
     public static final String FORMAT_UTC = "yyyy-MM-dd'T'HH:mm:ss'Z'";//2014-08-23T09:20:05Z
 
+    public static final long SECOND = 1000;
+    public static final long MINUTE = 60 * SECOND;
+    public static final long HOUR = 60 * MINUTE;
+    public static final long DAY = 24 * HOUR;
+    public static final long WEEK = 7 * DAY;
+    public static final String FORMAT_RECENT_DEFAULT = "yyyy-MM-dd HH:mm";//2016-11-28 13:53
+    public static final String FORMAT_RECENT_THIS_YEAR = "MM-dd HH:mm";//11-28 13:53
+
     /**
      * 格式化时间戳
      *
@@ -78,6 +86,10 @@ public class DateUtil {
             dateFormat.setTimeZone(TimeZone.getDefault());
         }
         return dateFormat.format(calendar.getTime());
+    }
+
+    public static String format(long timestamp, String format) {
+        return format(timestamp, format, null);
     }
 
     /**
@@ -104,13 +116,17 @@ public class DateUtil {
         return date;
     }
 
+    public static Date format(String dateStr, String format) {
+        return format(dateStr, format, null);
+    }
+
     /**
      * 格式化世界标准时间
      *
      * @param dateStr
      * @return
      */
-    public static Date format(String dateStr) {
+    public static Date formatUTC(String dateStr) {
         Date date = null;
         SimpleDateFormat dateFormat = new SimpleDateFormat(FORMAT_UTC, Locale.getDefault());
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -120,6 +136,39 @@ public class DateUtil {
             e.printStackTrace();
         }
         return date;
+    }
+
+    /**
+     * 格式化为：昨天，？秒前，？分钟前，？小时前
+     *
+     * @param timestamp
+     * @return
+     */
+    public static String formatRecent(long timestamp) {
+        long currentTimeMillis = System.currentTimeMillis();
+        long delay = currentTimeMillis - timestamp;
+        if (delay < MINUTE) {
+            return "just now";
+        } else if (delay < HOUR) {
+            int count = Math.round(delay / MINUTE);
+            return count == 1 ? "a minute ago" : count + " minutes ago";
+        } else if (delay < DAY) {
+            Calendar formatTime = Calendar.getInstance();
+            formatTime.setTimeInMillis(timestamp);
+            int formatDay = formatTime.get(Calendar.DAY_OF_MONTH);
+
+            Calendar currentTime = Calendar.getInstance();
+            currentTime.setTimeInMillis(currentTimeMillis);
+            int currentDay = currentTime.get(Calendar.DAY_OF_MONTH);
+
+            int count = Math.round(delay / HOUR);
+            return currentDay > formatDay ? "yesterday" : (count == 1 ? "an hour ago" : count + " hours ago");
+        } else if (delay < DAY * 365) {
+            int count = Math.round(delay / DAY);
+            return count == 1 ? "yesterday" : format(timestamp, FORMAT_RECENT_THIS_YEAR);
+        } else {
+            return format(timestamp, FORMAT_RECENT_DEFAULT);
+        }
     }
 
     /**

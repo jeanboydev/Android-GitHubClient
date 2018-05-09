@@ -4,43 +4,11 @@ import com.google.gson.annotations.SerializedName;
 import com.jeanboy.arch.data.net.entity.received.ActorEntity;
 import com.jeanboy.arch.data.net.entity.received.OrganizationEntity;
 import com.jeanboy.arch.data.net.entity.received.PayLoadEntity;
-import com.jeanboy.arch.data.net.entity.received.RepositoryEntity;
 
 /**
  * Created by jeanboy on 2018/4/28.
  */
 public class ReceivedEventEntity {
-    /**
-     * {
-     *         "id": "7600824528",
-     *         "type": "WatchEvent",
-     *         "actor": {
-     *             "id": 10704521,
-     *             "login": "hongyangAndroid",
-     *             "display_login": "hongyangAndroid",
-     *             "gravatar_id": "",
-     *             "url": "https://api.github.com/users/hongyangAndroid",
-     *             "avatar_url": "https://avatars.githubusercontent.com/u/10704521?"
-     *         },
-     *         "repo": {
-     *             "id": 93491617,
-     *             "name": "EOSIO/Documentation",
-     *             "url": "https://api.github.com/repos/EOSIO/Documentation"
-     *         },
-     *         "payload": {
-     *             "action": "started"
-     *         },
-     *         "public": true,
-     *         "created_at": "2018-04-28T06:53:12Z",
-     *         "org": {
-     *             "id": 26932212,
-     *             "login": "EOSIO",
-     *             "gravatar_id": "",
-     *             "url": "https://api.github.com/orgs/EOSIO",
-     *             "avatar_url": "https://avatars.githubusercontent.com/u/26932212?"
-     *         }
-     *     }
-     */
 
     private String id;
     private String type;

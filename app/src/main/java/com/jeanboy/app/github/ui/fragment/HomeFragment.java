@@ -18,6 +18,7 @@ import com.jeanboy.app.github.ui.vm.MainHomeViewModel;
 import com.jeanboy.arch.base.adapter.recyclerview.decoration.SpaceItemDecoration;
 import com.jeanboy.arch.base.helper.ToolbarHelper;
 import com.jeanboy.arch.data.cache.database.model.ReceivedEventModel;
+import com.jeanboy.arch.data.net.entity.RepositoryEntity;
 import com.jeanboy.recyclerviewhelper.RecyclerViewHelper;
 import com.jeanboy.recyclerviewhelper.footer.FooterState;
 import com.jeanboy.recyclerviewhelper.listener.LoadMoreListener;
@@ -25,7 +26,9 @@ import com.jeanboy.recyclerviewhelper.listener.OnFooterChangeListener;
 import com.jeanboy.recyclerviewhelper.listener.TipsListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -40,6 +43,7 @@ public class HomeFragment extends BaseDiFragment {
     RecyclerView list_container;
 
     private List<ReceivedEventModel> dataList = new ArrayList<>();
+    private Map<String, RepositoryEntity> repositoryMap = new HashMap<>();
     private ReceivedEventAdapter dataAdapter;
     private RecyclerViewHelper recyclerViewHelper;
 
@@ -98,7 +102,19 @@ public class HomeFragment extends BaseDiFragment {
             }
         });
 
-//        mainHomeViewModel = ViewModelProviders.of(this).get(MainHomeViewModel.class);
+        dataAdapter.setOnLoadReposListener(new ReceivedEventAdapter.OnLoadReposListener() {
+            @Override
+            public void toLoad(String name, String url) {
+                LiveData<RepositoryEntity> reposInfo = mainHomeViewModel.getReposInfo(name);
+                reposInfo.observe(HomeFragment.this, new Observer<RepositoryEntity>() {
+                    @Override
+                    public void onChanged(@Nullable RepositoryEntity repositoryEntity) {
+                        if (repositoryEntity == null) return;
+                        repositoryMap.put(repositoryEntity.getFull_name(), repositoryEntity);
+                    }
+                });
+            }
+        });
     }
 
     private void loadNext() {

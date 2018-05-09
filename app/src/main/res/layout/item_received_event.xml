@@ -18,18 +18,18 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
+        <me.codeboy.android.aligntextview.AlignTextView
             android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:ellipsize="end"
             android:gravity="left|center_vertical"
-            android:maxLines="2"
             android:text="@string/title_project"
             android:textColor="@android:color/darker_gray" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_repos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -37,19 +37,15 @@
         android:orientation="vertical"
         android:padding="@dimen/dp_10">
 
-        <TextView
+        <me.codeboy.android.aligntextview.AlignTextView
             android:id="@+id/tv_project_name"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:ellipsize="end" />
+            android:layout_height="wrap_content"/>
 
-        <TextView
+        <me.codeboy.android.aligntextview.AlignTextView
             android:id="@+id/tv_project_desc"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:maxLines="2" />
+            android:layout_height="wrap_content"/>
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -39,6 +39,8 @@ dependencies {
     //butterknife
     implementation "com.jakewharton:butterknife:$rootProject.butterknifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterknifeVersion"
+    //text view
+    implementation 'me.codeboy.android:align-text-view:2.3.2'
     // arch
     implementation project(':arch-base')
     implementation project(':arch-data')

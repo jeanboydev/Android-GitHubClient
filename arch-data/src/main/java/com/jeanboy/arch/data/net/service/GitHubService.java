@@ -1,8 +1,5 @@
 package com.jeanboy.arch.data.net.service;
 
-import com.jeanboy.arch.data.net.entity.ReceivedEventEntity;
-import com.jeanboy.arch.data.net.entity.UserInfoEntity;
-
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;

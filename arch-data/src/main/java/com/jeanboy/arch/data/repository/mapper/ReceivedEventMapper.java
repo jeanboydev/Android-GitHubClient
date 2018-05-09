@@ -9,7 +9,7 @@ import com.jeanboy.arch.data.net.entity.ReceivedEventEntity;
 import com.jeanboy.arch.data.net.entity.received.ActorEntity;
 import com.jeanboy.arch.data.net.entity.received.OrganizationEntity;
 import com.jeanboy.arch.data.net.entity.received.PayLoadEntity;
-import com.jeanboy.arch.data.net.entity.received.RepositoryEntity;
+import com.jeanboy.arch.data.net.entity.RepositoryEntity;
 import com.jeanboy.arch.data.repository.handler.MapperHandler;
 import com.jeanboy.arch.data.repository.util.DateUtil;
 
