@@ -3,7 +3,9 @@ package com.jeanboy.app.github.ui.adapter;
 import android.support.annotation.NonNull;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 
+import com.alibaba.fastjson.JSON;
 import com.jeanboy.app.github.R;
 import com.jeanboy.app.github.config.AppConfig;
 import com.jeanboy.arch.base.adapter.recyclerview.BaseViewHolder;
@@ -32,6 +34,8 @@ public class ReceivedEventAdapter extends RecyclerBaseAdapter<ReceivedEventModel
 
     @Override
     public void convert(BaseViewHolder holder, ReceivedEventModel receivedEventModel, int position) {
+        Log.w(ReceivedEventAdapter.class.getSimpleName(), "=====================================");
+        Log.w(ReceivedEventAdapter.class.getSimpleName(), JSON.toJSONString(receivedEventModel));
         String username = "";
         String projectName = "";
         int actionStringId = AppConfig.getEventStringId(receivedEventModel.getType());

@@ -108,14 +108,14 @@ public class HomeFragment extends BaseDiFragment {
                 if (!name.contains("/")) return;
                 String[] params = name.split("/");
                 if (params.length != 2) return;
-                LiveData<RepositoryEntity> reposInfo = mainHomeViewModel.getReposInfo(params[0], params[1]);
-                reposInfo.observe(HomeFragment.this, new Observer<RepositoryEntity>() {
-                    @Override
-                    public void onChanged(@Nullable RepositoryEntity repositoryEntity) {
-                        if (repositoryEntity == null) return;
-                        repositoryMap.put(repositoryEntity.getFull_name(), repositoryEntity);
-                    }
-                });
+//                LiveData<RepositoryEntity> reposInfo = mainHomeViewModel.getReposInfo(params[0], params[1]);
+//                reposInfo.observe(HomeFragment.this, new Observer<RepositoryEntity>() {
+//                    @Override
+//                    public void onChanged(@Nullable RepositoryEntity repositoryEntity) {
+//                        if (repositoryEntity == null) return;
+//                        repositoryMap.put(repositoryEntity.getFull_name(), repositoryEntity);
+//                    }
+//                });
             }
         });
     }
