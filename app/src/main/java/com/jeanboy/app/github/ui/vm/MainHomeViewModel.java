@@ -29,7 +29,7 @@ public class MainHomeViewModel extends ViewModel {
         return eventRepository.getReceivedEvents(AppSettings.getAccessToken(), AppSettings.getUsername(), page);
     }
 
-    public LiveData<RepositoryEntity> getReposInfo(String name) {
-        return reposRepository.getReposInfo(name);
+    public LiveData<RepositoryEntity> getReposInfo(String username, String repos) {
+        return reposRepository.getReposInfo(AppSettings.getAccessToken(), username, repos);
     }
 }

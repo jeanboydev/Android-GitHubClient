@@ -71,7 +71,7 @@ public class HomeFragment extends BaseDiFragment {
     protected void setupView(View view, Bundle savedInstanceState) {
         ToolbarHelper.setToolBarTitle(getToolbar(), "Received Events");
 
-        dataAdapter = new ReceivedEventAdapter(dataList);
+        dataAdapter = new ReceivedEventAdapter(dataList, repositoryMap);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         list_container.setAdapter(dataAdapter);
@@ -105,7 +105,10 @@ public class HomeFragment extends BaseDiFragment {
         dataAdapter.setOnLoadReposListener(new ReceivedEventAdapter.OnLoadReposListener() {
             @Override
             public void toLoad(String name, String url) {
-                LiveData<RepositoryEntity> reposInfo = mainHomeViewModel.getReposInfo(name);
+                if (!name.contains("/")) return;
+                String[] params = name.split("/");
+                if (params.length != 2) return;
+                LiveData<RepositoryEntity> reposInfo = mainHomeViewModel.getReposInfo(params[0], params[1]);
                 reposInfo.observe(HomeFragment.this, new Observer<RepositoryEntity>() {
                     @Override
                     public void onChanged(@Nullable RepositoryEntity repositoryEntity) {

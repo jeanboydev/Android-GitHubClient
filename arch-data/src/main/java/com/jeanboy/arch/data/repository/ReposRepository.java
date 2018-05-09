@@ -27,9 +27,9 @@ public class ReposRepository {
         reposService = NetManager.getInstance().create(ReposService.BASE_URL, ReposService.class);
     }
 
-    public LiveData<RepositoryEntity> getReposInfo(String name) {
+    public LiveData<RepositoryEntity> getReposInfo(String accessToken, String username, String repos) {
         MutableLiveData<RepositoryEntity> liveData = new MutableLiveData<>();
-        Call<RepositoryEntity> call = reposService.getReposInfo(name);
+        Call<RepositoryEntity> call = reposService.getReposInfo(accessToken, username, repos);
         NetManager.getInstance().request(new RequestParams<>(call),
                 new RequestCallback<ResponseData<RepositoryEntity>>() {
                     @Override

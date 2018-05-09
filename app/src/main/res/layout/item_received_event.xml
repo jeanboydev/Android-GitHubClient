@@ -59,7 +59,7 @@
                 android:text="java" />
 
             <TextView
-                android:id="@+id/tv_star"
+                android:id="@+id/tv_watchers"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/dp_10"

@@ -27,6 +27,8 @@ public interface ReposService {
      * }
      */
     @Headers("Accept: application/json")
-    @GET("repos/{name}")
-    Call<RepositoryEntity> getReposInfo(@Path("name") String name);
+    @GET("repos/{username}/{repos}")
+    Call<RepositoryEntity> getReposInfo(@Header("Authorization") String accessToken,
+                                        @Path("username") String username,
+                                        @Path("repos") String repos);
 }

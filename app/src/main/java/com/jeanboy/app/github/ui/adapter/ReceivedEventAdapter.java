@@ -15,7 +15,6 @@ import com.jeanboy.arch.data.cache.database.model.received.RepositoryModel;
 import com.jeanboy.arch.data.net.entity.RepositoryEntity;
 import com.jeanboy.arch.data.net.entity.received.ForkeeEntity;
 
-import java.net.URI;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +32,6 @@ public class ReceivedEventAdapter extends RecyclerBaseAdapter<ReceivedEventModel
 
     @Override
     public void convert(BaseViewHolder holder, ReceivedEventModel receivedEventModel, int position) {
-        String itemId = receivedEventModel.getId();
         String username = "";
         String projectName = "";
         int actionStringId = AppConfig.getEventStringId(receivedEventModel.getType());
@@ -73,7 +71,10 @@ public class ReceivedEventAdapter extends RecyclerBaseAdapter<ReceivedEventModel
                 holder.setText(R.id.tv_project_name, repositoryEntity.getFull_name());
                 holder.setText(R.id.tv_project_desc, repositoryEntity.getDescription());
                 holder.setText(R.id.tv_language, repositoryEntity.getLanguage());
-                holder.setText(R.id.tv_star, repositoryEntity.getWatchers_count());
+
+                String watchers = holder.getConvertView().getResources().getString(R.string.watchers_count,
+                        repositoryEntity.getWatchers_count());
+                holder.setText(R.id.tv_watchers, watchers);
 
                 long updateTime = DateUtil.formatUTC(repositoryEntity.getUpdated_at()).getTime();
                 String formatRecent = DateUtil.formatRecent(updateTime);
