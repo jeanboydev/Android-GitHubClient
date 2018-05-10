@@ -37,66 +37,69 @@ public class ReceivedEventAdapter extends RecyclerBaseAdapter<ReceivedEventModel
         Log.w(ReceivedEventAdapter.class.getSimpleName(), "=====================================");
         Log.w(ReceivedEventAdapter.class.getSimpleName(), JSON.toJSONString(receivedEventModel));
         String username = "";
-        String projectName = "";
         int actionStringId = AppConfig.getEventStringId(receivedEventModel.getType());
         String action = holder.getConvertView().getResources().getString(actionStringId);
         if (receivedEventModel.getActor() != null) {
             username = receivedEventModel.getActor().getDisplayLogin();
         }
 
-        String repoName = "";
-        String repoUrl = "";
+        String fromRepoName = "";
+        String fromRepoUrl = "";
+        RepositoryModel repo = receivedEventModel.getRepo();
+        if (repo != null) {
+            fromRepoName = repo.getName();
+            fromRepoUrl = repo.getUrl();
+        }
+
+        String toRepoName = "";
+        String toRepoUrl = "";
         if (AppConfig.FORK_EVENT.equals(receivedEventModel.getType())) {
             PayLoadModel payload = receivedEventModel.getPayload();
             if (payload != null) {
                 ForkeeEntity forkee = payload.getForkee();
                 if (forkee != null) {
-                    repoName = forkee.getName();
-                    repoUrl = forkee.getUrl();
+                    toRepoName = forkee.getFull_name();
+                    toRepoUrl = forkee.getUrl();
                 }
-            }
-        } else {
-            RepositoryModel repo = receivedEventModel.getRepo();
-            if (repo != null) {
-                repoName = repo.getName();
-                repoUrl = repo.getUrl();
             }
         }
 
-        holder.setVisible(R.id.ll_repos, false);
-        if (!TextUtils.isEmpty(repoName) && !TextUtils.isEmpty(repoUrl)) {
-            RepositoryEntity repositoryEntity = repositoryMap.get(repoName);
-            if (repositoryEntity == null) {
-                if (onLoadReposListener != null) {
-                    onLoadReposListener.toLoad(repoName, repoUrl);
-                }
-            } else {
-                holder.setVisible(R.id.ll_repos, true);
-                holder.setText(R.id.tv_project_name, repositoryEntity.getFull_name());
-                holder.setText(R.id.tv_project_desc, repositoryEntity.getDescription());
-                holder.setText(R.id.tv_language, repositoryEntity.getLanguage());
-
-                String watchers = holder.getConvertView().getResources().getString(R.string.watchers_count,
-                        repositoryEntity.getWatchers_count());
-                holder.setText(R.id.tv_watchers, watchers);
-
-                long updateTime = DateUtil.formatUTC(repositoryEntity.getUpdated_at()).getTime();
-                String formatRecent = DateUtil.formatRecent(updateTime);
-                holder.setText(R.id.tv_update_time, formatRecent);
-            }
-        }
-
-
-        if (receivedEventModel.getRepo() != null) {
-            projectName = receivedEventModel.getRepo().getName();
+        String content = holder.getConvertView().getResources().getString(R.string.title_normal_project,
+                action, fromRepoName);
+        if (AppConfig.FORK_EVENT.equals(receivedEventModel.getType())) {
+            content = holder.getConvertView().getResources().getString(R.string.title_fork_project,
+                    action, toRepoName, fromRepoName);
         }
 
         long createdAt = receivedEventModel.getCreatedAt();
         String formatRecent = DateUtil.formatRecent(createdAt);
 
-        String title = holder.getConvertView().getResources().getString(R.string.title_project,
-                username, action, projectName, formatRecent);
-        holder.setText(R.id.tv_title, Html.fromHtml(title));
+        holder.setText(R.id.tv_username, username);
+        holder.setText(R.id.tv_create_at, formatRecent);
+        holder.setText(R.id.tv_content, Html.fromHtml(content));
+
+//        holder.setVisible(R.id.ll_repos, false);
+//        if (!TextUtils.isEmpty(fromRepoName) && !TextUtils.isEmpty(fromRepoUrl)) {
+//            RepositoryEntity repositoryEntity = repositoryMap.get(fromRepoName);
+//            if (repositoryEntity == null) {
+//                if (onLoadReposListener != null) {
+//                    onLoadReposListener.toLoad(fromRepoName, fromRepoUrl);
+//                }
+//            } else {
+//                holder.setVisible(R.id.ll_repos, true);
+//                holder.setText(R.id.tv_project_name, repositoryEntity.getFull_name());
+//                holder.setText(R.id.tv_project_desc, repositoryEntity.getDescription());
+//                holder.setText(R.id.tv_language, repositoryEntity.getLanguage());
+//
+//                String watchers = holder.getConvertView().getResources().getString(R.string.watchers_count,
+//                        repositoryEntity.getWatchers_count());
+//                holder.setText(R.id.tv_watchers, watchers);
+//
+//                long updateTime = DateUtil.formatUTC(repositoryEntity.getUpdated_at()).getTime();
+//                String formatRecent = DateUtil.formatRecent(updateTime);
+//                holder.setText(R.id.tv_update_time, formatRecent);
+//            }
+//        }
     }
 
     private OnLoadReposListener onLoadReposListener;

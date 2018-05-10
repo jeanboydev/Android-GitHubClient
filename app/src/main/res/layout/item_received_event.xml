@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="8dp"
+    android:layout_marginTop="10dp"
     android:clickable="true"
     android:descendantFocusability="blocksDescendants"
     android:focusable="true"
@@ -13,66 +13,55 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     tools:ignore="MissingDefaultResource">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <me.codeboy.android.aligntextview.AlignTextView
-            android:id="@+id/tv_title"
-            android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:ellipsize="end"
-            android:gravity="left|center_vertical"
-            android:text="@string/title_project"
-            android:textColor="@android:color/darker_gray" />
-    </LinearLayout>
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/iv_avatar"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_launcher"/>
+            <TextView
+                android:id="@+id/tv_username"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:ellipsize="end"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:text="username"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/textTitle" />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_create_at"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_alignParentRight="true"
+            android:text="2018-05-10 17:15:37"
+            android:textSize="14sp"
+            android:textColor="@color/textNormal" />
+    </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/ll_repos"
+    <TextView
+        android:id="@+id/tv_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:background="@drawable/bg_round_radius_border"
-        android:orientation="vertical"
-        android:padding="@dimen/dp_10">
+        android:ellipsize="end"
+        android:text="content"
+        android:gravity="left|center_vertical" />
 
-        <me.codeboy.android.aligntextview.AlignTextView
-            android:id="@+id/tv_project_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <me.codeboy.android.aligntextview.AlignTextView
-            android:id="@+id/tv_project_desc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tv_language"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="java" />
-
-            <TextView
-                android:id="@+id/tv_watchers"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:text="star(0)" />
-
-            <TextView
-                android:id="@+id/tv_update_time"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:text="update time" />
-        </LinearLayout>
-
-    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:background="@color/line"
+        android:layout_height="1dp"/>
 
 </LinearLayout>
