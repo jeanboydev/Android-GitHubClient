@@ -22,11 +22,11 @@ import retrofit2.Call;
 public class TokenRepository {
 
     private AppDatabase database;
-    private AuthService gitHubAuthService;
+    private AuthService authService;
 
     public TokenRepository() {
         database = DBManager.getInstance().getDatabase();
-        gitHubAuthService = NetManager.getInstance().create(AuthService.BASE_URL, AuthService.class);
+        authService = NetManager.getInstance().create(AuthService.BASE_URL, AuthService.class);
     }
 
     public AccessTokenModel getAccessToken(){
@@ -54,7 +54,7 @@ public class TokenRepository {
             @Override
             protected Call<AccessTokenEntity> fetchFromNetwork() {
                 if (params == null) return null;
-                return gitHubAuthService.getAccessToken(params.getClientID(), params.getClientSecret(),
+                return authService.getAccessToken(params.getClientID(), params.getClientSecret(),
                         params.getCode());
             }
 
