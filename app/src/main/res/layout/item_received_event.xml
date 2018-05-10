@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
     android:clickable="true"
     android:descendantFocusability="blocksDescendants"
     android:focusable="true"
@@ -22,8 +21,9 @@
             android:orientation="horizontal">
             <ImageView
                 android:id="@+id/iv_avatar"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"
                 android:scaleType="centerCrop"
                 android:src="@mipmap/ic_launcher"/>
             <TextView
@@ -35,7 +35,6 @@
                 android:gravity="center_vertical"
                 android:text="username"
                 android:textSize="16sp"
-                android:textStyle="bold"
                 android:textColor="@color/textTitle" />
         </LinearLayout>
         <TextView
@@ -45,7 +44,7 @@
             android:gravity="center_vertical"
             android:layout_alignParentRight="true"
             android:text="2018-05-10 17:15:37"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:textColor="@color/textNormal" />
     </RelativeLayout>
 
@@ -56,11 +55,12 @@
         android:layout_marginTop="10dp"
         android:ellipsize="end"
         android:text="content"
+        android:textSize="14sp"
         android:gravity="left|center_vertical" />
 
     <View
         android:layout_width="match_parent"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:background="@color/line"
         android:layout_height="1dp"/>
 

@@ -1,5 +1,6 @@
 package com.jeanboy.arch.data.repository.mapper;
 
+import com.jeanboy.arch.base.util.DateUtil;
 import com.jeanboy.arch.data.cache.database.model.ReceivedEventModel;
 import com.jeanboy.arch.data.cache.database.model.received.ActorModel;
 import com.jeanboy.arch.data.cache.database.model.received.OrganizationModel;
@@ -11,7 +12,6 @@ import com.jeanboy.arch.data.net.entity.received.OrganizationEntity;
 import com.jeanboy.arch.data.net.entity.received.PayLoadEntity;
 import com.jeanboy.arch.data.net.entity.RepositoryEntity;
 import com.jeanboy.arch.data.repository.handler.MapperHandler;
-import com.jeanboy.arch.data.repository.util.DateUtil;
 
 /**
  * Created by jeanboy on 2018/5/7.
@@ -51,6 +51,13 @@ public class ReceivedEventMapper extends MapperHandler<ReceivedEventEntity, Rece
             PayLoadModel payLoadModel = new PayLoadModel();
             payLoadModel.setAction(payLoadEntity.getAction());
             payLoadModel.setForkee(payLoadEntity.getForkee());
+            payLoadModel.setPush_id(payLoadEntity.getPush_id());
+            payLoadModel.setSize(payLoadEntity.getSize());
+            payLoadModel.setDistinct_size(payLoadEntity.getDistinct_size());
+            payLoadModel.setRef(payLoadEntity.getRef());
+            payLoadModel.setHead(payLoadEntity.getHead());
+            payLoadModel.setBefore(payLoadEntity.getBefore());
+            payLoadModel.setCommits(payLoadEntity.getCommits());
             receivedEventModel.setPayload(payLoadModel);
         }
 

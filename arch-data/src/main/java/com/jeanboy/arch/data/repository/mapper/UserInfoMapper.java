@@ -1,9 +1,9 @@
 package com.jeanboy.arch.data.repository.mapper;
 
+import com.jeanboy.arch.base.util.DateUtil;
 import com.jeanboy.arch.data.cache.database.model.UserInfoModel;
 import com.jeanboy.arch.data.net.entity.UserInfoEntity;
 import com.jeanboy.arch.data.repository.handler.MapperHandler;
-import com.jeanboy.arch.data.repository.util.DateUtil;
 
 /**
  * Created by jeanboy on 2018/5/3.

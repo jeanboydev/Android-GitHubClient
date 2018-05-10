@@ -2,16 +2,19 @@ package com.jeanboy.app.github.ui.adapter;
 
 import android.support.annotation.NonNull;
 import android.text.Html;
-import android.text.TextUtils;
 import android.util.Log;
+import android.widget.ImageView;
 
 import com.alibaba.fastjson.JSON;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.jeanboy.app.github.R;
 import com.jeanboy.app.github.config.AppConfig;
 import com.jeanboy.arch.base.adapter.recyclerview.BaseViewHolder;
 import com.jeanboy.arch.base.adapter.recyclerview.RecyclerBaseAdapter;
 import com.jeanboy.arch.base.util.DateUtil;
 import com.jeanboy.arch.data.cache.database.model.ReceivedEventModel;
+import com.jeanboy.arch.data.cache.database.model.received.ActorModel;
 import com.jeanboy.arch.data.cache.database.model.received.PayLoadModel;
 import com.jeanboy.arch.data.cache.database.model.received.RepositoryModel;
 import com.jeanboy.arch.data.net.entity.RepositoryEntity;
@@ -36,12 +39,17 @@ public class ReceivedEventAdapter extends RecyclerBaseAdapter<ReceivedEventModel
     public void convert(BaseViewHolder holder, ReceivedEventModel receivedEventModel, int position) {
         Log.w(ReceivedEventAdapter.class.getSimpleName(), "=====================================");
         Log.w(ReceivedEventAdapter.class.getSimpleName(), JSON.toJSONString(receivedEventModel));
+
         String username = "";
+        String avatarUrl = "";
+        ActorModel actor = receivedEventModel.getActor();
+        if (actor != null) {
+            username = actor.getDisplayLogin();
+            avatarUrl = actor.getAvatarUrl();
+        }
+
         int actionStringId = AppConfig.getEventStringId(receivedEventModel.getType());
         String action = holder.getConvertView().getResources().getString(actionStringId);
-        if (receivedEventModel.getActor() != null) {
-            username = receivedEventModel.getActor().getDisplayLogin();
-        }
 
         String fromRepoName = "";
         String fromRepoUrl = "";
@@ -53,6 +61,7 @@ public class ReceivedEventAdapter extends RecyclerBaseAdapter<ReceivedEventModel
 
         String toRepoName = "";
         String toRepoUrl = "";
+        String branch = "";
         if (AppConfig.FORK_EVENT.equals(receivedEventModel.getType())) {
             PayLoadModel payload = receivedEventModel.getPayload();
             if (payload != null) {
@@ -62,13 +71,24 @@ public class ReceivedEventAdapter extends RecyclerBaseAdapter<ReceivedEventModel
                     toRepoUrl = forkee.getUrl();
                 }
             }
+        }else if(AppConfig.PUSH_EVENT.equals(receivedEventModel.getType())){
+            PayLoadModel payload = receivedEventModel.getPayload();
+            if (payload != null) {
+                String ref = payload.getRef();
+                if(ref.contains("/")){
+                    branch = ref.substring(ref.lastIndexOf("/")+1,ref.length());
+                }
+            }
         }
 
-        String content = holder.getConvertView().getResources().getString(R.string.title_normal_project,
+        String content = holder.getConvertView().getResources().getString(R.string.title_normal_event,
                 action, fromRepoName);
         if (AppConfig.FORK_EVENT.equals(receivedEventModel.getType())) {
-            content = holder.getConvertView().getResources().getString(R.string.title_fork_project,
+            content = holder.getConvertView().getResources().getString(R.string.title_fork_event,
                     action, toRepoName, fromRepoName);
+        }else if(AppConfig.PUSH_EVENT.equals(receivedEventModel.getType())){
+            content = holder.getConvertView().getResources().getString(R.string.title_push_event,
+                    action, branch, fromRepoName);
         }
 
         long createdAt = receivedEventModel.getCreatedAt();
@@ -77,6 +97,9 @@ public class ReceivedEventAdapter extends RecyclerBaseAdapter<ReceivedEventModel
         holder.setText(R.id.tv_username, username);
         holder.setText(R.id.tv_create_at, formatRecent);
         holder.setText(R.id.tv_content, Html.fromHtml(content));
+        ImageView avatarImageView = holder.getView(R.id.iv_avatar);
+        Glide.with(holder.getConvertView().getContext()).load(avatarUrl)
+                .apply(RequestOptions.circleCropTransform()).into(avatarImageView);
 
 //        holder.setVisible(R.id.ll_repos, false);
 //        if (!TextUtils.isEmpty(fromRepoName) && !TextUtils.isEmpty(fromRepoUrl)) {
