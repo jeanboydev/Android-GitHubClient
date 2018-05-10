@@ -16,6 +16,7 @@ import com.jeanboy.app.github.config.AppConfig;
 import com.jeanboy.app.github.config.AppSettings;
 import com.jeanboy.app.github.di.BaseDiActivity;
 import com.jeanboy.app.github.ui.vm.AuthViewModel;
+import com.jeanboy.arch.base.helper.ToolbarHelper;
 import com.jeanboy.arch.data.cache.database.model.AccessTokenModel;
 import com.jeanboy.arch.data.cache.database.model.UserInfoModel;
 import com.jeanboy.arch.data.repository.params.TokenParams;
@@ -38,7 +39,7 @@ public class AuthActivity extends BaseDiActivity {
 
     @Override
     protected void setupView(Bundle savedInstanceState) {
-
+        ToolbarHelper.setToolBarTitle(getToolbar(), "Sign In");
     }
 
     @Override
