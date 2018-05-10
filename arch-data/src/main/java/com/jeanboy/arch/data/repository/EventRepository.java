@@ -4,15 +4,18 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 
 import com.jeanboy.arch.data.cache.database.model.ReceivedEventModel;
+import com.jeanboy.arch.data.cache.database.model.events.UserEventModel;
 import com.jeanboy.arch.data.cache.manager.AppDatabase;
 import com.jeanboy.arch.data.cache.manager.DBManager;
 import com.jeanboy.arch.data.net.core.RequestCallback;
 import com.jeanboy.arch.data.net.core.RequestParams;
 import com.jeanboy.arch.data.net.core.ResponseData;
 import com.jeanboy.arch.data.net.entity.ReceivedEventEntity;
+import com.jeanboy.arch.data.net.entity.events.UserEventEntity;
 import com.jeanboy.arch.data.net.manager.NetManager;
 import com.jeanboy.arch.data.net.service.EventService;
 import com.jeanboy.arch.data.repository.mapper.ReceivedEventMapper;
+import com.jeanboy.arch.data.repository.mapper.UserEventsMapper;
 
 import java.util.List;
 
@@ -41,6 +44,26 @@ public class EventRepository {
                         List<ReceivedEventEntity> body = response.getBody();
                         List<ReceivedEventModel> receivedEventList = new ReceivedEventMapper().transform(body);
                         liveData.setValue(receivedEventList);
+                    }
+
+                    @Override
+                    public void onError(int code, String msg) {
+                        liveData.setValue(null);
+                    }
+                });
+        return liveData;
+    }
+
+    public LiveData<List<UserEventModel>> getUserEvents(String accessToken, String username, int page) {
+        MutableLiveData<List<UserEventModel>> liveData = new MutableLiveData<>();
+        Call<List<UserEventEntity>> call = eventService.getUserEvents(accessToken, username, page);
+        NetManager.getInstance().request(new RequestParams<>(call),
+                new RequestCallback<ResponseData<List<UserEventEntity>>>() {
+                    @Override
+                    public void onSuccess(ResponseData<List<UserEventEntity>> response) {
+                        List<UserEventEntity> body = response.getBody();
+                        List<UserEventModel> userEventsList = new UserEventsMapper().transform(body);
+                        liveData.setValue(userEventsList);
                     }
 
                     @Override

@@ -1,6 +1,5 @@
 package com.jeanboy.arch.data.net.service;
 
-import com.jeanboy.arch.data.net.entity.ReceivedEventEntity;
 import com.jeanboy.arch.data.net.entity.RepositoryEntity;
 
 import java.util.List;
@@ -31,4 +30,18 @@ public interface ReposService {
     Call<RepositoryEntity> getReposInfo(@Header("Authorization") String accessToken,
                                         @Path("username") String username,
                                         @Path("repos") String repos);
+
+    /**
+     * 获取指定用户的所有仓库源
+     * GET https://api.github.com/users/jeanboydev/repos
+     * HEAD{
+     * Authorization: token OAUTH-TOKEN
+     * }
+     */
+    @Headers("Accept: application/json")
+    @GET("users/{username}/repos")
+    Call<List<RepositoryEntity>> getRepos(@Header("Authorization") String accessToken,
+                                         @Path("username") String username,
+                                         @Query("page") int page);
+
 }
