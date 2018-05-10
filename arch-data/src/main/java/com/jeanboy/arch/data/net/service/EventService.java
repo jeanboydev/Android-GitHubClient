@@ -1,6 +1,7 @@
 package com.jeanboy.arch.data.net.service;
 
 import com.jeanboy.arch.data.net.entity.ReceivedEventEntity;
+import com.jeanboy.arch.data.net.entity.events.UserEventEntity;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public interface EventService {
     String BASE_URL = "https://api.github.com";
 
     /**
-     * 动态列表
+     * 好友动态列表
      * GET https://api.github.com/users/{username}/received_events?page=2
      * HEAD{
      * Authorization: token OAUTH-TOKEN
@@ -30,4 +31,17 @@ public interface EventService {
     Call<List<ReceivedEventEntity>> getReceivedEvents(@Header("Authorization") String accessToken,
                                                       @Path("username") String username,
                                                       @Query("page") int page);
+
+    /**
+     * 获取指定用户动态列表
+     * GET https://api.github.com/users/jeanboydev/events{/privacy}
+     * HEAD{
+     * Authorization: token OAUTH-TOKEN
+     * }
+     */
+    @Headers("Accept: application/json")
+    @GET("users/{username}/events")
+    Call<List<UserEventEntity>> getUserEvents(@Header("Authorization") String accessToken,
+                                              @Path("username") String username,
+                                              @Query("page") int page);
 }
