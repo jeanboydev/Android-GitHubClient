@@ -6,6 +6,7 @@
     <string name="fork_event_content">forked</string>
     <string name="member_event_content">added</string>
 
-    <string name="title_project"><Data><![CDATA[<font color="#303030"><b>%1$s</b></font>&nbsp;&nbsp;%2$s&nbsp;&nbsp;<font color="#303030"><b>%3$s</b></font>&nbsp;&nbsp;%4$s]]></Data></string>
+    <string name="title_normal_project"><Data><![CDATA[%1$s&nbsp;&nbsp;<font color="#303030"><b>%2$s</b></font>]]></Data></string>
+    <string name="title_fork_project"><Data><![CDATA[%1$s&nbsp;&nbsp;<font color="#303030"><b>%2$s</b></font>&nbsp;&nbsp;from&nbsp;&nbsp;<font color="#303030"><b>%3$s</b></font>]]></Data></string>
     <string name="watchers_count">star(%1$d)</string>
 </resources>
