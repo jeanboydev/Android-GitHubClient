@@ -36,6 +36,6 @@
     <string name="settings_item_sign_out">Sign Out</string>
 
     <!-- repos info-->
-    <string name="title_repos">%1$s/%2$s</string>
+    <string name="title_repos">Repository</string>
 
 </resources>

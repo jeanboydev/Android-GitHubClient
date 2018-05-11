@@ -18,10 +18,7 @@
         <item name="android:button">@null</item>
     </style>
 
-    <style name="style_text_size_bigger">
-        <item name="android:textSize">23sp</item>
-    </style>
-    <style name="style_text_size_small">
-        <item name="android:textSize">18sp</item>
+    <style name="Toolbar.Expand.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">22sp</item>
     </style>
 </resources>
