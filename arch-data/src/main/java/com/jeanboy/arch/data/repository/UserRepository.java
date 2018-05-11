@@ -1,21 +1,22 @@
 package com.jeanboy.arch.data.repository;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.jeanboy.arch.data.cache.database.model.UserInfoModel;
-import com.jeanboy.arch.data.cache.database.model.UserModel;
 import com.jeanboy.arch.data.cache.manager.AppDatabase;
 import com.jeanboy.arch.data.cache.manager.DBManager;
-import com.jeanboy.arch.data.cache.manager.DataExecutors;
-import com.jeanboy.arch.data.net.entity.UserEntity;
+import com.jeanboy.arch.data.net.core.RequestCallback;
+import com.jeanboy.arch.data.net.core.RequestParams;
+import com.jeanboy.arch.data.net.core.ResponseData;
 import com.jeanboy.arch.data.net.entity.UserInfoEntity;
 import com.jeanboy.arch.data.net.manager.NetManager;
 import com.jeanboy.arch.data.net.service.UserService;
 import com.jeanboy.arch.data.repository.handler.MapperHandler;
 import com.jeanboy.arch.data.repository.handler.RepositoryHandler;
 import com.jeanboy.arch.data.repository.mapper.UserInfoMapper;
-import com.jeanboy.arch.data.repository.mapper.UserMapper;
 
 import retrofit2.Call;
 
@@ -62,5 +63,27 @@ public class UserRepository {
 
     public LiveData<UserInfoModel> getUserInfo(long userId) {
         return database.userInfoModelDao().getById(userId);
+    }
+
+    public LiveData<UserInfoModel> getUserInfo(String accessToken, String username) {
+        Log.d("getUserInfo param:", "accessToken:" + accessToken + ",username:" + username);
+        MutableLiveData<UserInfoModel> liveData = new MutableLiveData<>();
+        Call<UserInfoEntity> call = userService.getUserInfo(accessToken, username);
+        NetManager.getInstance().request(new RequestParams<>(call),
+                new RequestCallback<ResponseData<UserInfoEntity>>() {
+                    @Override
+                    public void onSuccess(ResponseData<UserInfoEntity> response) {
+                        UserInfoEntity body = response.getBody();
+                        UserInfoModel userInfoModel = new UserInfoMapper().transform(body);
+                        liveData.setValue(userInfoModel);
+                    }
+
+                    @Override
+                    public void onError(int code, String msg) {
+                        Log.d("getUserInfo", "code:" + code + ",msg:" + msg);
+                        liveData.setValue(null);
+                    }
+                });
+        return liveData;
     }
 }

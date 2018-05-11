@@ -21,6 +21,8 @@ import com.jeanboy.arch.data.cache.database.model.AccessTokenModel;
 import com.jeanboy.arch.data.cache.database.model.UserInfoModel;
 import com.jeanboy.arch.data.repository.params.TokenParams;
 
+import java.util.UUID;
+
 import javax.inject.Inject;
 
 public class AuthActivity extends BaseDiActivity {
@@ -52,9 +54,11 @@ public class AuthActivity extends BaseDiActivity {
     }
 
     public void getGitHubAccessToken() {
+        // user,repo,gist,notifications
+        String randomState = UUID.randomUUID().toString();
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(
                 "https://github.com/login/oauth/authorize" + "?client_id=" + AppConfig.CLIENT_ID
-                        + "&scope=repo" + "&redirect_uri=" + AppConfig.REDIRECT_URI
+                        + "&scope=user,repo,gist,notifications" + "&redirect_uri=" + AppConfig.REDIRECT_URI + "&state=" + randomState
         ));
 
         startActivity(intent);
