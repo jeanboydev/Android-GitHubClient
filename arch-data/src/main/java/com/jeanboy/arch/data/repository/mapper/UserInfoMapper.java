@@ -1,5 +1,7 @@
 package com.jeanboy.arch.data.repository.mapper;
 
+import android.text.TextUtils;
+
 import com.jeanboy.arch.base.util.DateUtil;
 import com.jeanboy.arch.data.cache.database.model.UserInfoModel;
 import com.jeanboy.arch.data.net.entity.UserInfoEntity;
@@ -41,8 +43,12 @@ public class UserInfoMapper extends MapperHandler<UserInfoEntity, UserInfoModel>
         userInfoModel.setFollowing(userInfoEntity.getFollowing());
         userInfoModel.setSiteAdmin(userInfoEntity.isSite_admin());
         userInfoModel.setHireable(userInfoEntity.isHireable());
-        userInfoModel.setCreatedAt(DateUtil.formatUTC(userInfoEntity.getCreated_at()).getTime());
-        userInfoModel.setUpdatedAt(DateUtil.formatUTC(userInfoEntity.getUpdated_at()).getTime());
+        if (!TextUtils.isEmpty(userInfoEntity.getCreated_at())) {
+            userInfoModel.setCreatedAt(DateUtil.formatUTC(userInfoEntity.getCreated_at()).getTime());
+        }
+        if (!TextUtils.isEmpty(userInfoEntity.getUpdated_at())) {
+            userInfoModel.setUpdatedAt(DateUtil.formatUTC(userInfoEntity.getUpdated_at()).getTime());
+        }
         return userInfoModel;
     }
 }

@@ -30,4 +30,6 @@ public interface AuthService {
     Call<AccessTokenEntity> getAccessToken(@Field("client_id") String clientID,
                                            @Field("client_secret") String clientSecret,
                                            @Field("code") String code);
+
+
 }

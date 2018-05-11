@@ -1,25 +1,19 @@
 package com.jeanboy.app.github.ui.activity;
 
 import android.app.Activity;
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.RadioGroup;
 
 import com.jeanboy.app.github.R;
-import com.jeanboy.app.github.config.AppSettings;
 import com.jeanboy.app.github.di.BaseDiActivity;
 import com.jeanboy.app.github.ui.fragment.HomeFragment;
 import com.jeanboy.app.github.ui.fragment.MineFragment;
 import com.jeanboy.app.github.ui.fragment.ProjectFragment;
 import com.jeanboy.app.github.ui.vm.TestApiViewModel;
-import com.jeanboy.arch.data.cache.database.model.UserInfoModel;
 
 import javax.inject.Inject;
 
@@ -74,45 +68,7 @@ public class MainActivity extends BaseDiActivity {
 
         // test code start
 
-        LiveData<UserInfoModel> userInfoModelLiveData = testApiViewModel.requestUserInfo(AppSettings.getAccessToken(), "coolspan");
-        userInfoModelLiveData.observe(this, new Observer<UserInfoModel>() {
-            @Override
-            public void onChanged(@Nullable UserInfoModel userInfoModel) {
-                Log.d("MainActivity", "requestUserInfo:" + (userInfoModel != null ? userInfoModel.toString() : "null"));
-            }
-        });
-
-        LiveData<Boolean> booleanLiveData = testApiViewModel.checkFollowing(AppSettings.getAccessToken(), "jeanboydev");
-        booleanLiveData.observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(@Nullable Boolean aBoolean) {
-                Log.d("MainActivity", "checkFollowing: " + aBoolean);
-            }
-        });
-
-        LiveData<Boolean> booleanLiveData2 = testApiViewModel.checkFollowing(AppSettings.getAccessToken(), "coolspan","jeanboydev");
-        booleanLiveData2.observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(@Nullable Boolean aBoolean) {
-                Log.d("MainActivity", "checkFollowing2: " + aBoolean);
-            }
-        });
-
-        LiveData<Boolean> booleanLiveData3 = testApiViewModel.unfollowUser(AppSettings.getAccessToken(),"jeanboydev");
-        booleanLiveData3.observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(@Nullable Boolean aBoolean) {
-                Log.d("MainActivity", "unfollowUser: " + aBoolean);
-            }
-        });
-
-        LiveData<Boolean> booleanLiveData4 = testApiViewModel.followUser(AppSettings.getAccessToken(),"jeanboydev");
-        booleanLiveData4.observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(@Nullable Boolean aBoolean) {
-                Log.d("MainActivity", "followUser: " + aBoolean);
-            }
-        });
+        new TestApi().test(this, testApiViewModel);
 
 
         // test code end
