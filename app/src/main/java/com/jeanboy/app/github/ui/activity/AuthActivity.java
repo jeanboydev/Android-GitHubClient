@@ -76,6 +76,7 @@ public class AuthActivity extends BaseDiActivity {
                     Log.d(TAG, "==accessToken==onChanged==" + JSON.toJSONString(accessTokenModel));
 
                     if (accessTokenModel == null) return;
+                    AppSettings.setAccessToken(accessTokenModel.getAccessToken());
                     getUserInfo(accessTokenModel.getAccessToken());
                 }
             });
@@ -87,7 +88,7 @@ public class AuthActivity extends BaseDiActivity {
         userInfoLiveData.observe(this, new Observer<UserInfoModel>() {
             @Override
             public void onChanged(@Nullable UserInfoModel userInfoModel) {
-                Log.d(TAG, "==getUserInfo==onChanged==" + JSON.toJSONString(userInfoModel));
+                Log.d(TAG, "==loadUserInfo==onChanged==" + JSON.toJSONString(userInfoModel));
 
                 if (userInfoModel == null) return;
                 AppSettings.setUserId(userInfoModel.getId());

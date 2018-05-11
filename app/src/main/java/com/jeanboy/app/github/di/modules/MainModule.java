@@ -30,7 +30,7 @@ public abstract class MainModule {
     @ContributesAndroidInjector
     abstract ProjectFragment contributeProjectFragment();
 
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = {ViewModelFragmentModule.class})
     abstract MineFragment contributeMineFragment();
 
 }

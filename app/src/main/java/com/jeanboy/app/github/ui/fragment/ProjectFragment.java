@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.jeanboy.app.github.R;
 import com.jeanboy.app.github.di.BaseDiFragment;
+import com.jeanboy.arch.base.helper.ToolbarHelper;
 
 import javax.inject.Inject;
 
@@ -30,7 +31,7 @@ public class ProjectFragment extends BaseDiFragment {
 
     @Override
     protected void setupView(View view, Bundle savedInstanceState) {
-
+        ToolbarHelper.setToolBarTitle(getToolbar(), R.string.title_project);
     }
 
     @Override

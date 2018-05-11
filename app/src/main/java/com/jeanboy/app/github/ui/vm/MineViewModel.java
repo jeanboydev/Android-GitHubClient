@@ -6,24 +6,26 @@ import android.arch.lifecycle.ViewModel;
 import com.jeanboy.arch.data.cache.database.model.UserInfoModel;
 import com.jeanboy.arch.data.repository.UserRepository;
 
+import javax.inject.Inject;
+
 /**
  * Created by jeanboy on 2018/4/25.
  */
-public class MainViewModel extends ViewModel {
+public class MineViewModel extends ViewModel {
 
     private LiveData<UserInfoModel> userInfo;
 
     private UserRepository userRepository = new UserRepository();
 
-    public LiveData<UserInfoModel> getUserInfo(long userId, String accessToken) {
+    @Inject
+    public MineViewModel() {
+    }
+
+    public LiveData<UserInfoModel> getUserInfo(long userId) {
         if (userInfo == null) {
-            userInfo = requestUserInfo(userId, accessToken);
+            userInfo = userRepository.getUserInfo(userId);
         }
         return userInfo;
     }
 
-    public LiveData<UserInfoModel> requestUserInfo(long userId, String accessToken) {
-        userInfo = userRepository.loadUserInfo(userId, accessToken);
-        return userInfo;
-    }
 }

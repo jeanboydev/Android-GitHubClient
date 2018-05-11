@@ -29,7 +29,7 @@ public class UserRepository {
         userService = NetManager.getInstance().create(UserService.BASE_URL, UserService.class);
     }
 
-    public LiveData<UserInfoModel> getUserInfo(long userId, String accessToken) {
+    public LiveData<UserInfoModel> loadUserInfo(long userId, String accessToken) {
         return new RepositoryHandler<UserInfoEntity, UserInfoModel>() {
 
             @Override
@@ -58,5 +58,9 @@ public class UserRepository {
                 return new UserInfoMapper();
             }
         }.asLiveData();
+    }
+
+    public LiveData<UserInfoModel> getUserInfo(long userId) {
+        return database.userInfoModelDao().getById(userId);
     }
 }

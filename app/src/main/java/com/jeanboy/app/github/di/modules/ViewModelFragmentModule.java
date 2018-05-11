@@ -3,7 +3,9 @@ package com.jeanboy.app.github.di.modules;
 import android.arch.lifecycle.ViewModelProviders;
 
 import com.jeanboy.app.github.ui.fragment.HomeFragment;
+import com.jeanboy.app.github.ui.fragment.MineFragment;
 import com.jeanboy.app.github.ui.vm.MainHomeViewModel;
+import com.jeanboy.app.github.ui.vm.MineViewModel;
 
 import dagger.Module;
 import dagger.Provides;
@@ -19,4 +21,8 @@ public class ViewModelFragmentModule {
         return ViewModelProviders.of(fragment).get(MainHomeViewModel.class);
     }
 
+    @Provides
+    MineViewModel provideMineViewModel(MineFragment fragment) {
+        return ViewModelProviders.of(fragment).get(MineViewModel.class);
+    }
 }

@@ -14,7 +14,7 @@ import com.jeanboy.arch.data.cache.database.model.UserModel;
 /**
  * Created by jeanboy on 2017/9/29.
  */
-@Database(entities = {AccessTokenModel.class, UserInfoModel.class, UserModel.class}, version = 1)
+@Database(entities = {AccessTokenModel.class, UserInfoModel.class, UserModel.class}, version = 2)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract UserModelDao userDao();

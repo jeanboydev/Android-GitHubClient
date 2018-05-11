@@ -71,12 +71,12 @@ public class ReceivedEventAdapter extends RecyclerBaseAdapter<ReceivedEventModel
                     toRepoUrl = forkee.getUrl();
                 }
             }
-        }else if(AppConfig.PUSH_EVENT.equals(receivedEventModel.getType())){
+        } else if (AppConfig.PUSH_EVENT.equals(receivedEventModel.getType())) {
             PayLoadModel payload = receivedEventModel.getPayload();
             if (payload != null) {
                 String ref = payload.getRef();
-                if(ref.contains("/")){
-                    branch = ref.substring(ref.lastIndexOf("/")+1,ref.length());
+                if (ref.contains("/")) {
+                    branch = ref.substring(ref.lastIndexOf("/") + 1, ref.length());
                 }
             }
         }
@@ -86,16 +86,16 @@ public class ReceivedEventAdapter extends RecyclerBaseAdapter<ReceivedEventModel
         if (AppConfig.FORK_EVENT.equals(receivedEventModel.getType())) {
             content = holder.getConvertView().getResources().getString(R.string.title_fork_event,
                     action, toRepoName, fromRepoName);
-        }else if(AppConfig.PUSH_EVENT.equals(receivedEventModel.getType())){
+        } else if (AppConfig.PUSH_EVENT.equals(receivedEventModel.getType())) {
             content = holder.getConvertView().getResources().getString(R.string.title_push_event,
                     action, branch, fromRepoName);
-        }else if(AppConfig.PUBLIC_EVENT.equals(receivedEventModel.getType())){
+        } else if (AppConfig.PUBLIC_EVENT.equals(receivedEventModel.getType())) {
             content = holder.getConvertView().getResources().getString(R.string.title_public_event,
                     action, fromRepoName);
         }
 
         long createdAt = receivedEventModel.getCreatedAt();
-        String formatRecent = DateUtil.formatRecent(createdAt);
+        String formatRecent = DateUtil.formatRecent(createdAt, holder.getConvertView().getContext());
 
         holder.setText(R.id.tv_username, username);
         holder.setText(R.id.tv_create_at, formatRecent);

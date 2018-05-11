@@ -3,6 +3,8 @@ package com.jeanboy.arch.base.util;
 import android.content.Context;
 import android.text.format.DateFormat;
 
+import com.jeanboy.arch.base.R;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -145,20 +147,26 @@ public class DateUtil {
      * @param timestamp
      * @return
      */
-    public static String formatRecent(long timestamp) {
+    public static String formatRecent(long timestamp, Context context) {
         long currentTimeMillis = System.currentTimeMillis();
         long delay = currentTimeMillis - timestamp;
         if (delay < MINUTE) {
-            return "just now";
+            return context.getResources().getString(R.string.recent_just_now);
         } else if (delay < HOUR) {
             int count = Math.round(delay / MINUTE);
-            return count == 1 ? "a minute ago" : count + " minutes ago";
+            String single = context.getResources().getString(R.string.recent_a_minute_ago);
+            String multiple = context.getResources().getString(R.string.recent_minutes_ago);
+            return count == 1 ? single : String.format(multiple, count);
         } else if (delay < DAY) {
             int count = Math.round(delay / HOUR);
-            return count == 1 ? "an hour ago" : count + " hours ago";
+            String single = context.getResources().getString(R.string.recent_an_hour_ago);
+            String multiple = context.getResources().getString(R.string.recent_hours_ago);
+            return count == 1 ? single : String.format(multiple, count);
         } else if (delay < WEEK) {
             int count = Math.round(delay / DAY);
-            return count == 1 ? "a day ago" : count + " days ago";
+            String single = context.getResources().getString(R.string.recent_a_day_ago);
+            String multiple = context.getResources().getString(R.string.recent_days_ago);
+            return count == 1 ? single : String.format(multiple, count);
         } else if (delay < DAY * 365) {
             return format(timestamp, FORMAT_RECENT_THIS_YEAR);
         } else {

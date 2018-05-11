@@ -13,20 +13,10 @@ public class UserInfoModel {
     @PrimaryKey
     private long id;
     private String login;
-    private String name;
-    private String company;
-    private String blog;
-    private String location;
-    private String hireable;
-    private String bio;
-    private String publicRepos;
-    private String publicGists;
-    private String followers;
-    private String following;
     private String avatarUrl;
     private String gravatarId;
     private String url;
-    private String htmUrl;
+    private String htmlUrl;
     private String followersUrl;
     private String followingUrl;
     private String gistsUrl;
@@ -37,9 +27,21 @@ public class UserInfoModel {
     private String eventsUrl;
     private String receivedEventsUrl;
     private String type;
+    private String name;
+    private String company;
+    private String blog;
+    private String location;
+    private String email;
+    private String bio;
+    private int publicRepos;
+    private int publicGists;
+    private int followers;
+    private int following;
     private boolean siteAdmin;
+    private boolean hireable;
     private long createdAt;
     private long updatedAt;
+
 
     public long getId() {
         return id;
@@ -55,86 +57,6 @@ public class UserInfoModel {
 
     public void setLogin(String login) {
         this.login = login;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCompany() {
-        return company;
-    }
-
-    public void setCompany(String company) {
-        this.company = company;
-    }
-
-    public String getBlog() {
-        return blog;
-    }
-
-    public void setBlog(String blog) {
-        this.blog = blog;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getHireable() {
-        return hireable;
-    }
-
-    public void setHireable(String hireable) {
-        this.hireable = hireable;
-    }
-
-    public String getBio() {
-        return bio;
-    }
-
-    public void setBio(String bio) {
-        this.bio = bio;
-    }
-
-    public String getPublicRepos() {
-        return publicRepos;
-    }
-
-    public void setPublicRepos(String publicRepos) {
-        this.publicRepos = publicRepos;
-    }
-
-    public String getPublicGists() {
-        return publicGists;
-    }
-
-    public void setPublicGists(String publicGists) {
-        this.publicGists = publicGists;
-    }
-
-    public String getFollowers() {
-        return followers;
-    }
-
-    public void setFollowers(String followers) {
-        this.followers = followers;
-    }
-
-    public String getFollowing() {
-        return following;
-    }
-
-    public void setFollowing(String following) {
-        this.following = following;
     }
 
     public String getAvatarUrl() {
@@ -161,12 +83,12 @@ public class UserInfoModel {
         this.url = url;
     }
 
-    public String getHtmUrl() {
-        return htmUrl;
+    public String getHtmlUrl() {
+        return htmlUrl;
     }
 
-    public void setHtmUrl(String htmUrl) {
-        this.htmUrl = htmUrl;
+    public void setHtmlUrl(String htmlUrl) {
+        this.htmlUrl = htmlUrl;
     }
 
     public String getFollowersUrl() {
@@ -249,12 +171,100 @@ public class UserInfoModel {
         this.type = type;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public String getBlog() {
+        return blog;
+    }
+
+    public void setBlog(String blog) {
+        this.blog = blog;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public int getPublicRepos() {
+        return publicRepos;
+    }
+
+    public void setPublicRepos(int publicRepos) {
+        this.publicRepos = publicRepos;
+    }
+
+    public int getPublicGists() {
+        return publicGists;
+    }
+
+    public void setPublicGists(int publicGists) {
+        this.publicGists = publicGists;
+    }
+
+    public int getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(int followers) {
+        this.followers = followers;
+    }
+
+    public int getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(int following) {
+        this.following = following;
+    }
+
     public boolean isSiteAdmin() {
         return siteAdmin;
     }
 
     public void setSiteAdmin(boolean siteAdmin) {
         this.siteAdmin = siteAdmin;
+    }
+
+    public boolean isHireable() {
+        return hireable;
+    }
+
+    public void setHireable(boolean hireable) {
+        this.hireable = hireable;
     }
 
     public long getCreatedAt() {

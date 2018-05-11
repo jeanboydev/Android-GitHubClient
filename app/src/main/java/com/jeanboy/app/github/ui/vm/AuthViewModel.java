@@ -9,8 +9,6 @@ import com.jeanboy.arch.data.repository.TokenRepository;
 import com.jeanboy.arch.data.repository.UserRepository;
 import com.jeanboy.arch.data.repository.params.TokenParams;
 
-import javax.inject.Inject;
-
 /**
  * Created by jeanboy on 2018/5/2.
  */
@@ -43,7 +41,7 @@ public class AuthViewModel extends ViewModel {
     }
 
     public LiveData<UserInfoModel> requestUserInfo(long userId, String accessToken) {
-        userInfo = userRepository.getUserInfo(userId, accessToken);
+        userInfo = userRepository.loadUserInfo(userId, accessToken);
         return userInfo;
     }
 }

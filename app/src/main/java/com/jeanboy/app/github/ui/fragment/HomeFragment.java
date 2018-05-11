@@ -3,13 +3,11 @@ package com.jeanboy.app.github.ui.fragment;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.jeanboy.app.github.R;
@@ -22,9 +20,7 @@ import com.jeanboy.arch.base.helper.ToolbarHelper;
 import com.jeanboy.arch.data.cache.database.model.ReceivedEventModel;
 import com.jeanboy.arch.data.net.entity.RepositoryEntity;
 import com.jeanboy.recyclerviewhelper.RecyclerViewHelper;
-import com.jeanboy.recyclerviewhelper.footer.FooterState;
 import com.jeanboy.recyclerviewhelper.listener.LoadMoreListener;
-import com.jeanboy.recyclerviewhelper.listener.OnFooterChangeListener;
 import com.jeanboy.recyclerviewhelper.listener.TipsListener;
 
 import java.util.ArrayList;
@@ -73,7 +69,7 @@ public class HomeFragment extends BaseDiFragment {
 
     @Override
     protected void setupView(View view, Bundle savedInstanceState) {
-        ToolbarHelper.setToolBarTitle(getToolbar(), "Received Events");
+        ToolbarHelper.setToolBarTitle(getToolbar(), R.string.title_received);
 
         srl_refresh.setEnabled(false);
         srl_refresh.setColorSchemeResources(R.color.colorPrimary);

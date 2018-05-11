@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Demo</string>
 
+    <!-- home -->
+    <string name="title_home">Received Events</string>
+    <string name="title_received">Received Events</string>
     <string name="watch_event_content">started</string>
     <string name="create_event_content">created a repository</string>
     <string name="fork_event_content">forked</string>
@@ -13,5 +16,17 @@
     <string name="title_push_event"><Data><![CDATA[%1$s&nbsp;&nbsp;<font color="#303030"><b>%2$s</b></font>&nbsp;&nbsp;in&nbsp;&nbsp;<font color="#303030"><b>%3$s</b></font>]]></Data></string>
     <string name="title_public_event"><Data><![CDATA[%1$s&nbsp;&nbsp;<font color="#303030"><b>%2$s</b></font>&nbsp;&nbsp;public]]></Data></string>
     <string name="watchers_count">star(%1$d)</string>
+
+    <!-- mine -->
+    <string name="title_mine">Mine</string>
+
+
+    <!-- projects-->
+    <string name="title_project">Projects</string>
+    <string name="mine_item_repositories">Repositories</string>
+    <string name="mine_item_stars">Stars</string>
+    <string name="mine_item_followers">Followers</string>
+    <string name="mine_item_following">Following</string>
+    <string name="mine_item_settings">Settings</string>
 
 </resources>
