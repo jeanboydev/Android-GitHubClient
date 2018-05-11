@@ -35,4 +35,10 @@ public class AppSettings {
     public static void setAccessToken(String accessToken) {
         SharedPreferencesHelper.putString(MainApplication.getInstance(), ACCESS_TOKEN, accessToken);
     }
+
+    public static void signOut(){
+        AppSettings.setAccessToken(null);
+        AppSettings.setUserId(0);
+        AppSettings.setUsername(null);
+    }
 }

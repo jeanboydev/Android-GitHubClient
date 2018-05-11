@@ -15,13 +15,17 @@ import com.bumptech.glide.request.RequestOptions;
 import com.jeanboy.app.github.R;
 import com.jeanboy.app.github.config.AppSettings;
 import com.jeanboy.app.github.di.BaseDiFragment;
+import com.jeanboy.app.github.ui.activity.SettingsActivity;
 import com.jeanboy.app.github.ui.vm.MineViewModel;
 import com.jeanboy.arch.base.helper.ToolbarHelper;
 import com.jeanboy.arch.data.cache.database.model.UserInfoModel;
 
+import java.util.Objects;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by jeanboy on 2018/4/25.
@@ -85,9 +89,14 @@ public class MineFragment extends BaseDiFragment {
         });
     }
 
+    @OnClick({R.id.item_settings})
+    public void toSettings() {
+        SettingsActivity.startBy(getActivity());
+    }
+
     private void refreshView(UserInfoModel userInfoModel) {
         String avatarUrl = userInfoModel.getAvatarUrl();
-        Glide.with(getActivity()).load(avatarUrl).into(iv_avatar);
+        Glide.with(Objects.requireNonNull(getActivity())).load(avatarUrl).into(iv_avatar);
 
         tv_username.setText(userInfoModel.getLogin());
         tv_nickname.setText(userInfoModel.getName());
