@@ -2,6 +2,7 @@ package com.jeanboy.arch.data.repository;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.util.Log;
 
 import com.jeanboy.arch.data.cache.database.model.received.RepositoryModel;
 import com.jeanboy.arch.data.cache.manager.AppDatabase;
@@ -64,6 +65,48 @@ public class ReposRepository {
 
                     @Override
                     public void onError(int code, String msg) {
+                        liveData.setValue(null);
+                    }
+                });
+        return liveData;
+    }
+
+    public LiveData<List<RepositoryModel>> getStarredRepos(String accessToken, String username, int page, String sort, String direction) {
+        Log.d("getStarredRepos", "accessToken: " + accessToken);
+        MutableLiveData<List<RepositoryModel>> liveData = new MutableLiveData<>();
+        Call<List<RepositoryEntity>> call = reposService.getStarredRepos(accessToken, username, page, sort, direction);
+        NetManager.getInstance().request(new RequestParams<>(call),
+                new RequestCallback<ResponseData<List<RepositoryEntity>>>() {
+                    @Override
+                    public void onSuccess(ResponseData<List<RepositoryEntity>> response) {
+                        List<RepositoryEntity> body = response.getBody();
+                        List<RepositoryModel> repositoryModelList = new RepositoryMapper().transform(body);
+                        liveData.setValue(repositoryModelList);
+                    }
+
+                    @Override
+                    public void onError(int code, String msg) {
+                        liveData.setValue(null);
+                    }
+                });
+        return liveData;
+    }
+
+    public LiveData<List<RepositoryModel>> getUserRepos(String accessToken, int page, String type, String sort, String direction) {
+        MutableLiveData<List<RepositoryModel>> liveData = new MutableLiveData<>();
+        Call<List<RepositoryEntity>> call = reposService.getUserRepos(accessToken, page, type, sort, direction);
+        NetManager.getInstance().request(new RequestParams<>(call),
+                new RequestCallback<ResponseData<List<RepositoryEntity>>>() {
+                    @Override
+                    public void onSuccess(ResponseData<List<RepositoryEntity>> response) {
+                        List<RepositoryEntity> body = response.getBody();
+                        List<RepositoryModel> repositoryModelList = new RepositoryMapper().transform(body);
+                        liveData.setValue(repositoryModelList);
+                    }
+
+                    @Override
+                    public void onError(int code, String msg) {
+                        Log.d("getUserRepos", "code:" + code + ",msg:" + msg);
                         liveData.setValue(null);
                     }
                 });

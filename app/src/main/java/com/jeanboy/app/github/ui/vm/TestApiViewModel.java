@@ -4,8 +4,10 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 
 import com.jeanboy.arch.data.cache.database.model.UserInfoModel;
+import com.jeanboy.arch.data.cache.database.model.received.RepositoryModel;
 import com.jeanboy.arch.data.repository.FollowingRepository;
 import com.jeanboy.arch.data.repository.OrganizationRepository;
+import com.jeanboy.arch.data.repository.ReposRepository;
 import com.jeanboy.arch.data.repository.UserRepository;
 
 import java.util.List;
@@ -23,10 +25,13 @@ public class TestApiViewModel extends ViewModel {
     private LiveData<List<UserInfoModel>> checkFollowing5;
     private LiveData<List<UserInfoModel>> checkFollowing6;
     private LiveData<List<UserInfoModel>> checkFollowing7;
+    private LiveData<List<RepositoryModel>> checkFollowing8;
+    private LiveData<List<RepositoryModel>> checkFollowing9;
 
     private UserRepository userRepository = new UserRepository();
     private FollowingRepository followingRepository = new FollowingRepository();
     private OrganizationRepository organizationRepository = new OrganizationRepository();
+    private ReposRepository reposRepository = new ReposRepository();
 
     public LiveData<UserInfoModel> requestUserInfo(String accessToken, String username) {
         userInfo = userRepository.getUserInfo(accessToken, username);
@@ -66,6 +71,16 @@ public class TestApiViewModel extends ViewModel {
     public LiveData<List<UserInfoModel>> getOrgMembers(String accessToken, String username, int page) {
         checkFollowing7 = organizationRepository.getOrgMembers(accessToken, username, page);
         return checkFollowing7;
+    }
+
+    public LiveData<List<RepositoryModel>> getStarredRepos(String accessToken, String username, int page, String sort, String direction) {
+        checkFollowing8 = reposRepository.getStarredRepos(accessToken, username, page, sort, direction);
+        return checkFollowing8;
+    }
+
+    public LiveData<List<RepositoryModel>> getUserRepos(String accessToken, int page, String type, String sort, String direction) {
+        checkFollowing9 = reposRepository.getUserRepos(accessToken, page, type, sort, direction);
+        return checkFollowing9;
     }
 
 }

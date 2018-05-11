@@ -9,6 +9,7 @@ import android.util.Log;
 import com.jeanboy.app.github.config.AppSettings;
 import com.jeanboy.app.github.ui.vm.TestApiViewModel;
 import com.jeanboy.arch.data.cache.database.model.UserInfoModel;
+import com.jeanboy.arch.data.cache.database.model.received.RepositoryModel;
 
 import java.util.List;
 
@@ -62,7 +63,7 @@ public class TestApi {
         booleanLiveData5.observe(activity, new Observer<List<UserInfoModel>>() {
             @Override
             public void onChanged(@Nullable List<UserInfoModel> list) {
-                Log.d("MainActivity", "getFollowing: " + list.size());
+                Log.d("MainActivity", "getFollowing: " + (list != null ? list.size(): "null"));
             }
         });
 
@@ -70,7 +71,7 @@ public class TestApi {
         booleanLiveData6.observe(activity, new Observer<List<UserInfoModel>>() {
             @Override
             public void onChanged(@Nullable List<UserInfoModel> list) {
-                Log.d("MainActivity", "getFollowers: " + list.size());
+                Log.d("MainActivity", "getFollowers: " + (list != null ? list.size(): "null"));
             }
         });
 
@@ -78,7 +79,23 @@ public class TestApi {
         booleanLiveData7.observe(activity, new Observer<List<UserInfoModel>>() {
             @Override
             public void onChanged(@Nullable List<UserInfoModel> list) {
-                Log.d("MainActivity", "getOrgMembers: " + list.size());
+                Log.d("MainActivity", "getOrgMembers: " + (list != null ? list.size(): "null"));
+            }
+        });
+
+        LiveData<List<RepositoryModel>> booleanLiveData8 = testApiViewModel.getStarredRepos(AppSettings.getAccessToken(), "coolspan", 1,"desc","full_name");
+        booleanLiveData8.observe(activity, new Observer<List<RepositoryModel>>() {
+            @Override
+            public void onChanged(@Nullable List<RepositoryModel> list) {
+                Log.d("MainActivity", "getStarredRepos: " + (list != null ? list.size(): "null"));
+            }
+        });
+
+        LiveData<List<RepositoryModel>> booleanLiveData9 = testApiViewModel.getUserRepos(AppSettings.getAccessToken(), 1,"all","desc","full_name");
+        booleanLiveData9.observe(activity, new Observer<List<RepositoryModel>>() {
+            @Override
+            public void onChanged(@Nullable List<RepositoryModel> list) {
+                Log.d("MainActivity", "getUserRepos: " + (list != null ? list.size(): "null"));
             }
         });
     }

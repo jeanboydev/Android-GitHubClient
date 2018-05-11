@@ -41,7 +41,48 @@ public interface ReposService {
     @Headers("Accept: application/json")
     @GET("users/{username}/repos")
     Call<List<RepositoryEntity>> getRepos(@Header("Authorization") String accessToken,
-                                         @Path("username") String username,
-                                         @Query("page") int page);
+                                          @Path("username") String username,
+                                          @Query("page") int page);
+
+    /**
+     * 获取指定用户的Started的仓库
+     * GET https://api.github.com/users/jeanboydev/starred
+     * HEAD{
+     * Authorization: token OAUTH-TOKEN
+     * }
+     * <p>
+     * sort: created, updated, pushed, full_name
+     * direction: desc, asc
+     * <p>
+     * 每页30条数据
+     */
+    @Headers("Accept: application/json")
+    @GET("users/{username}/starred")
+    Call<List<RepositoryEntity>> getStarredRepos(@Header("Authorization") String accessToken,
+                                                 @Path("username") String username,
+                                                 @Query("page") int page,
+                                                 @Query("sort") String sort,
+                                                 @Query("direction") String direction);
+
+    /**
+     * 获取用户自己的仓库源
+     * GET https://api.github.com/user/repos
+     * HEAD{
+     * Authorization: token OAUTH-TOKEN
+     * }
+     * <p>
+     * type：all, owner, public, private, member
+     * sort: created, updated, pushed, full_name
+     * direction: desc, asc
+     * <p>
+     * 每页30条数据
+     */
+    @Headers("Accept: application/json")
+    @GET("user/repos")
+    Call<List<RepositoryEntity>> getUserRepos(@Header("Authorization") String accessToken,
+                                              @Query("page") int page,
+                                              @Query("type") String type,
+                                              @Query("sort") String sort,
+                                              @Query("direction") String direction);
 
 }
