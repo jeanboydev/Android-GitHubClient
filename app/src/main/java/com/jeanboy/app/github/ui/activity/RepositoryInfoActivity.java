@@ -3,6 +3,7 @@ package com.jeanboy.app.github.ui.activity;
 import android.app.Activity;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -13,6 +14,7 @@ import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
 import com.jeanboy.app.github.R;
 import com.jeanboy.app.github.di.BaseDiActivity;
+import com.jeanboy.app.github.helper.webview.CodeWebView;
 import com.jeanboy.app.github.ui.vm.RepositoryInfoViewModel;
 import com.jeanboy.arch.base.ExtrasCallback;
 import com.jeanboy.arch.base.helper.ToolbarHelper;
@@ -61,6 +63,9 @@ public class RepositoryInfoActivity extends BaseDiActivity {
     @BindView(R.id.tv_update_time)
     TextView tv_update_time;
 
+    @BindView(R.id.web_view)
+    CodeWebView web_view;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_repository_info;
@@ -89,6 +94,24 @@ public class RepositoryInfoActivity extends BaseDiActivity {
             public void onChanged(@Nullable RepositoryEntity repositoryEntity) {
                 if (repositoryEntity == null) return;
                 refreshView(repositoryEntity);
+                String branch = repositoryEntity.getDefault_branch();
+                loadReadMe(branch);
+            }
+        });
+    }
+
+    private void loadReadMe(String branch) {
+        final String baseUrl = "https://github.com/" + username + "/" + repos
+                + "/blob/" + branch + "/" + "README.md";
+        LiveData<String> readMeHTML = repositoryInfoViewModel.getReadMeHTML(username, repos);
+        readMeHTML.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                if (s == null) return;
+                Log.d(TAG, s);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    web_view.setMdSource(s, baseUrl, true);
+                }
             }
         });
     }
@@ -96,7 +119,7 @@ public class RepositoryInfoActivity extends BaseDiActivity {
     private void refreshView(RepositoryEntity repositoryEntity) {
         Log.d(TAG, JSON.toJSONString(repositoryEntity));
         UserInfoEntity owner = repositoryEntity.getOwner();
-        if(owner!=null){
+        if (owner != null) {
             String username = owner.getLogin();
             tv_username.setText(username);
             String avatarUrl = owner.getAvatar_url();

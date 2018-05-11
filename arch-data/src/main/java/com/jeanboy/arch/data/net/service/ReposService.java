@@ -19,7 +19,7 @@ public interface ReposService {
     String BASE_URL = "https://api.github.com";
 
     /**
-     * 项目详情
+     * 获取仓库详情
      * GET https://api.github.com/repos/{name}
      * HEAD{
      * Authorization: token OAUTH-TOKEN

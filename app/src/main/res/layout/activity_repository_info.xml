@@ -52,9 +52,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:layout_marginTop="@dimen/activity_vertical_margin"
                         android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                        android:layout_marginRight="@dimen/activity_horizontal_margin">
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:layout_marginTop="@dimen/activity_vertical_margin">
 
                         <ImageView
                             android:id="@+id/iv_avatar"
@@ -178,85 +178,21 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@android:color/white" />
+            <TextView
+                android:id="@+id/readme_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_vertical_margin"
+                android:text="README"
+                android:textColor="@color/textTitle"
+                android:textSize="18sp" />
 
-            <View
+            <com.jeanboy.app.github.helper.webview.CodeWebView
+                android:id="@+id/web_view"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@android:color/white" />
+                android:layout_height="wrap_content"
+                app:webview_background="#ffffff" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@android:color/white" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@android:color/holo_purple" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@android:color/holo_green_dark" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@android:color/holo_blue_dark" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@android:color/holo_orange_dark" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@android:color/holo_purple" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@android:color/holo_green_dark" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@android:color/holo_blue_dark" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@android:color/holo_orange_dark" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@android:color/holo_purple" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@android:color/holo_green_dark" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@android:color/holo_blue_dark" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@android:color/holo_orange_dark" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@android:color/holo_purple" />
         </LinearLayout>
 
 

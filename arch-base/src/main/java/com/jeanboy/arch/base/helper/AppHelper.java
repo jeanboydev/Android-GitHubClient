@@ -1,10 +1,15 @@
 package com.jeanboy.arch.base.helper;
 
 import android.app.ActivityManager;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.support.annotation.NonNull;
+
+import com.jeanboy.arch.base.R;
 
 import java.io.File;
 import java.util.List;
@@ -133,5 +138,17 @@ public class AppHelper {
             ret = context.stopService(intent_service);
         }
         return ret;
+    }
+
+    /**
+     * 复制到剪切板
+     * @param context
+     * @param extra
+     * @param uri
+     */
+    public static void copyToClipboard(Context context, String extra, @NonNull String uri) {
+        ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText(context.getString(R.string.app_name), uri);
+        clipboard.setPrimaryClip(clip);
     }
 }

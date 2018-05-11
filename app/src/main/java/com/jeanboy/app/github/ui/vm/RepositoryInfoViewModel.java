@@ -28,4 +28,9 @@ public class RepositoryInfoViewModel extends ViewModel {
     public LiveData<RepositoryEntity> getReposInfo(String username, String repos) {
         return reposRepository.getReposInfo(AppSettings.getAccessToken(), username, repos);
     }
+
+    public LiveData<String> getReadMeHTML(String username, String repos) {
+        String url = "https://api.github.com/repos/" + username + "/" + repos + "/readme";
+        return reposRepository.getReadMeHTML(url);
+    }
 }
