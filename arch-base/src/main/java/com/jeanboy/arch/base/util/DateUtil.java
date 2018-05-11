@@ -67,6 +67,7 @@ public class DateUtil {
     public static final long WEEK = 7 * DAY;
     public static final String FORMAT_RECENT_DEFAULT = "yyyy-MM-dd HH:mm";//2016-11-28 13:53
     public static final String FORMAT_RECENT_THIS_YEAR = "MM-dd HH:mm";//11-28 13:53
+    public static final String FORMAT_RECENT_YESTERDAY = "HH:mm";//yesterday 13:53
 
     /**
      * 格式化时间戳
@@ -153,19 +154,13 @@ public class DateUtil {
             int count = Math.round(delay / MINUTE);
             return count == 1 ? "a minute ago" : count + " minutes ago";
         } else if (delay < DAY) {
-            Calendar formatTime = Calendar.getInstance();
-            formatTime.setTimeInMillis(timestamp);
-            int formatDay = formatTime.get(Calendar.DAY_OF_MONTH);
-
-            Calendar currentTime = Calendar.getInstance();
-            currentTime.setTimeInMillis(currentTimeMillis);
-            int currentDay = currentTime.get(Calendar.DAY_OF_MONTH);
-
             int count = Math.round(delay / HOUR);
-            return currentDay > formatDay ? "yesterday" : (count == 1 ? "an hour ago" : count + " hours ago");
-        } else if (delay < DAY * 365) {
+            return count == 1 ? "an hour ago" : count + " hours ago";
+        } else if (delay < WEEK) {
             int count = Math.round(delay / DAY);
-            return count == 1 ? "yesterday" : format(timestamp, FORMAT_RECENT_THIS_YEAR);
+            return count == 1 ? "a day ago" : count + " days ago";
+        } else if (delay < DAY * 365) {
+            return format(timestamp, FORMAT_RECENT_THIS_YEAR);
         } else {
             return format(timestamp, FORMAT_RECENT_DEFAULT);
         }

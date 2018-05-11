@@ -20,6 +20,7 @@ public class AppConfig {
     public final static String FORK_EVENT = "ForkEvent";
     public final static String MEMBER_EVENT = "MemberEvent";
     public final static String PUSH_EVENT = "PushEvent";
+    public final static String PUBLIC_EVENT = "PublicEvent";
     private static Map<String, Integer> eventContentMap = new HashMap<>();
 
     static {
@@ -28,6 +29,7 @@ public class AppConfig {
         eventContentMap.put(FORK_EVENT, R.string.fork_event_content);
         eventContentMap.put(MEMBER_EVENT, R.string.member_event_content);
         eventContentMap.put(PUSH_EVENT, R.string.push_event_content);
+        eventContentMap.put(PUBLIC_EVENT, R.string.public_event_content);
     }
 
     public static Integer getEventStringId(String event) {

@@ -43,7 +43,7 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:layout_alignParentRight="true"
-            android:text="2018-05-10 17:15:37"
+            android:text="create at"
             android:textSize="12sp"
             android:textColor="@color/textNormal" />
     </RelativeLayout>
