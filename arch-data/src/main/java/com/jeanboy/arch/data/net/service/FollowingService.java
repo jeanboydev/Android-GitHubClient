@@ -21,6 +21,8 @@ public interface FollowingService {
     String BASE_URL = "https://api.github.com";
 
     /**
+     * 不可用
+     * <p>
      * 查看我是否关注了该用户
      * GET https://api.github.com/user/following/{username}
      * HEAD{
@@ -46,6 +48,7 @@ public interface FollowingService {
                                  @Path("targetUsername") String targetUsername);
 
     /**
+     * 不可用
      * 取消关注
      * DELETE https://api.github.com/user/following/{username}
      * HEAD{
@@ -59,6 +62,7 @@ public interface FollowingService {
 
 
     /**
+     * 不可用
      * 添加关注
      * PUT https://api.github.com/user/following/{username}
      * HEAD{
@@ -80,8 +84,8 @@ public interface FollowingService {
     @Headers("Accept: application/json")
     @GET("users/{username}/following")
     Call<List<UserInfoEntity>> getFollowing(@Header("Authorization") String accessToken,
-                                           @Path("username") String username,
-                                           @Query("page") int page);
+                                            @Path("username") String username,
+                                            @Query("page") int page);
 
     /**
      * 获取指定用户的粉丝
