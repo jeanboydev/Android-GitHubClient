@@ -25,11 +25,6 @@ public class ProjectFragment extends BaseDiFragment {
     }
 
     @Override
-    protected void setupArguments(Bundle args) {
-
-    }
-
-    @Override
     protected void setupView(View view, Bundle savedInstanceState) {
         ToolbarHelper.setToolBarTitle(getToolbar(), R.string.title_project);
     }

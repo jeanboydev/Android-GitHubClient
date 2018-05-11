@@ -33,7 +33,7 @@ public class OrganizationRepository {
 
     public LiveData<List<OrganizationModel>> getReposInfo(String accessToken, String username, int page) {
         MutableLiveData<List<OrganizationModel>> liveData = new MutableLiveData<>();
-        Call<List<OrganizationEntity>> call = organizationService.getRepos(accessToken, username, page);
+        Call<List<OrganizationEntity>> call = organizationService.getRepos("token " + accessToken, username, page);
         NetManager.getInstance().request(new RequestParams<>(call),
                 new RequestCallback<ResponseData<List<OrganizationEntity>>>() {
                     @Override

@@ -12,12 +12,16 @@ import android.view.View;
 
 import com.jeanboy.app.github.R;
 import com.jeanboy.app.github.di.BaseDiFragment;
+import com.jeanboy.app.github.ui.activity.RepositoryInfoActivity;
 import com.jeanboy.app.github.ui.adapter.ReceivedEventAdapter;
 import com.jeanboy.app.github.ui.vm.MainHomeViewModel;
+import com.jeanboy.arch.base.adapter.recyclerview.BaseViewHolder;
+import com.jeanboy.arch.base.adapter.recyclerview.RecyclerBaseAdapter;
 import com.jeanboy.arch.base.adapter.recyclerview.decoration.SpaceItemDecoration;
 import com.jeanboy.arch.base.helper.ToastHelper;
 import com.jeanboy.arch.base.helper.ToolbarHelper;
 import com.jeanboy.arch.data.cache.database.model.ReceivedEventModel;
+import com.jeanboy.arch.data.cache.database.model.received.RepositoryModel;
 import com.jeanboy.arch.data.net.entity.RepositoryEntity;
 import com.jeanboy.recyclerviewhelper.RecyclerViewHelper;
 import com.jeanboy.recyclerviewhelper.listener.LoadMoreListener;
@@ -60,11 +64,6 @@ public class HomeFragment extends BaseDiFragment {
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_home;
-    }
-
-    @Override
-    protected void setupArguments(Bundle args) {
-
     }
 
     @Override
@@ -113,20 +112,19 @@ public class HomeFragment extends BaseDiFragment {
             }
         });
 
-        dataAdapter.setOnLoadReposListener(new ReceivedEventAdapter.OnLoadReposListener() {
+        dataAdapter.setOnItemClickListener(new RecyclerBaseAdapter.OnItemClickListener() {
             @Override
-            public void toLoad(String name, String url) {
-                if (!name.contains("/")) return;
-                String[] params = name.split("/");
+            public void onItemClick(View view, BaseViewHolder holder, int position) {
+                ReceivedEventModel receivedEventModel = dataList.get(position);
+                RepositoryModel repo = receivedEventModel.getRepo();
+                if (repo == null) return;
+
+                String fromRepoName = repo.getName();
+                if (!fromRepoName.contains("/")) return;
+
+                String[] params = fromRepoName.split("/");
                 if (params.length != 2) return;
-//                LiveData<RepositoryEntity> reposInfo = mainHomeViewModel.getReposInfo(params[0], params[1]);
-//                reposInfo.observe(HomeFragment.this, new Observer<RepositoryEntity>() {
-//                    @Override
-//                    public void onChanged(@Nullable RepositoryEntity repositoryEntity) {
-//                        if (repositoryEntity == null) return;
-//                        repositoryMap.put(repositoryEntity.getFull_name(), repositoryEntity);
-//                    }
-//                });
+                RepositoryInfoActivity.startBy(getActivity(), params[0], params[1]);
             }
         });
     }

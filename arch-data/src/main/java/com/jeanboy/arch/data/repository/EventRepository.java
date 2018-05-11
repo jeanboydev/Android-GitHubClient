@@ -36,7 +36,7 @@ public class EventRepository {
 
     public LiveData<List<ReceivedEventModel>> getReceivedEvents(String accessToken, String username, int page) {
         MutableLiveData<List<ReceivedEventModel>> liveData = new MutableLiveData<>();
-        Call<List<ReceivedEventEntity>> call = eventService.getReceivedEvents(accessToken, username, page);
+        Call<List<ReceivedEventEntity>> call = eventService.getReceivedEvents("token " + accessToken, username, page);
         NetManager.getInstance().request(new RequestParams<>(call),
                 new RequestCallback<ResponseData<List<ReceivedEventEntity>>>() {
                     @Override
@@ -56,7 +56,7 @@ public class EventRepository {
 
     public LiveData<List<UserEventModel>> getUserEvents(String accessToken, String username, int page) {
         MutableLiveData<List<UserEventModel>> liveData = new MutableLiveData<>();
-        Call<List<UserEventEntity>> call = eventService.getUserEvents(accessToken, username, page);
+        Call<List<UserEventEntity>> call = eventService.getUserEvents("token " + accessToken, username, page);
         NetManager.getInstance().request(new RequestParams<>(call),
                 new RequestCallback<ResponseData<List<UserEventEntity>>>() {
                     @Override

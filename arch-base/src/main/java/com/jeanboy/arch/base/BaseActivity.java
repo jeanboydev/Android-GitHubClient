@@ -20,6 +20,10 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract int getLayoutId();
 
+    protected void setupArguments(Bundle args) {
+
+    }
+
     protected abstract void onSetContentView();
 
     protected abstract void setupView(Bundle savedInstanceState);
@@ -31,6 +35,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
+        if (getIntent() != null && getIntent().getExtras() != null) {
+            setupArguments(getIntent().getExtras());
+        }
         onSetContentView();
         setupToolbar();
         setupView(savedInstanceState);

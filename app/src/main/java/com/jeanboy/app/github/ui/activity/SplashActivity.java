@@ -24,7 +24,7 @@ public class SplashActivity extends BaseDiActivity {
         @SuppressLint("InlinedApi")
         @Override
         public void run() {
-            if (AppSettings.getUserId() == 0) {
+            if (AppSettings.getUserId() == 0 || AppSettings.getAccessToken() == null) {
                 AuthActivity.startBy(SplashActivity.this);
                 SplashActivity.this.finish();
                 return;

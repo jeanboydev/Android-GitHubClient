@@ -9,245 +9,238 @@
 
     <include layout="@layout/toolbar" />
 
-
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/srl_refresh"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="100dp"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/iv_avatar"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/ic_launcher" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
                     android:gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:layout_marginTop="@dimen/activity_vertical_margin"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
-                    <ImageView
-                        android:id="@+id/iv_avatar"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:scaleType="centerCrop"
-                        android:src="@mipmap/ic_launcher" />
-
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/tv_username"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="10dp"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
                         android:gravity="center_vertical"
-                        android:orientation="vertical">
+                        android:text="username"
+                        android:textColor="@color/textTitle"
+                        android:textSize="16sp" />
 
-                        <TextView
-                            android:id="@+id/tv_username"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:gravity="center_vertical"
-                            android:text="username"
-                            android:textColor="@color/textTitle"
-                            android:textSize="16sp" />
+                    <TextView
+                        android:id="@+id/tv_nickname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:text="nickname"
+                        android:textColor="@color/textNormal"
+                        android:textSize="14sp" />
 
-                        <TextView
-                            android:id="@+id/tv_nickname"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:gravity="center_vertical"
-                            android:text="nickname"
-                            android:textColor="@color/textNormal"
-                            android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/tv_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:text="email"
+                        android:textColor="@color/textLink"
+                        android:textSize="14sp" />
 
-                        <TextView
-                            android:id="@+id/tv_email"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:gravity="center_vertical"
-                            android:text="email"
-                            android:textColor="@color/textLink"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:id="@+id/tv_home_page"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:gravity="center_vertical"
-                            android:text="home page"
-                            android:textColor="@color/textLink"
-                            android:textSize="14sp" />
-
-                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/tv_home_page"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:text="home page"
+                        android:textColor="@color/textLink"
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tv_description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:layout_marginTop="10dp"
-                    android:ellipsize="end"
-                    android:gravity="center_vertical"
-                    android:text="description"
-                    android:textColor="@color/textNormal"
-                    android:textSize="16sp" />
-
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/line" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:paddingLeft="@dimen/activity_horizontal_margin"
-                    android:paddingRight="@dimen/activity_horizontal_margin">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:text="@string/mine_item_repositories"
-                        android:textColor="@color/textTitle" />
-
-                    <TextView
-                        android:id="@+id/tv_repositories_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentRight="true"
-                        android:gravity="center_vertical"
-                        android:text="0"
-                        android:textColor="@color/textTitle" />
-
-                </RelativeLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/line" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:paddingLeft="@dimen/activity_horizontal_margin"
-                    android:paddingRight="@dimen/activity_horizontal_margin">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:text="@string/mine_item_stars"
-                        android:textColor="@color/textTitle" />
-
-                    <TextView
-                        android:id="@+id/tv_stars_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentRight="true"
-                        android:gravity="center_vertical"
-                        android:text="0"
-                        android:textColor="@color/textTitle" />
-                </RelativeLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/line" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:paddingLeft="@dimen/activity_horizontal_margin"
-                    android:paddingRight="@dimen/activity_horizontal_margin">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:text="@string/mine_item_followers"
-                        android:textColor="@color/textTitle" />
-
-                    <TextView
-                        android:id="@+id/tv_followers_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentRight="true"
-                        android:gravity="center_vertical"
-                        android:text="0"
-                        android:textColor="@color/textTitle" />
-                </RelativeLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/line" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:paddingLeft="@dimen/activity_horizontal_margin"
-                    android:paddingRight="@dimen/activity_horizontal_margin">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:text="@string/mine_item_following"
-                        android:textColor="@color/textTitle" />
-
-                    <TextView
-                        android:id="@+id/tv_following_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentRight="true"
-                        android:gravity="center_vertical"
-                        android:text="0"
-                        android:textColor="@color/textTitle" />
-                </RelativeLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/line" />
-
-                <RelativeLayout
-                    android:id="@+id/item_settings"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:paddingLeft="@dimen/activity_horizontal_margin"
-                    android:paddingRight="@dimen/activity_horizontal_margin">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:text="@string/mine_item_settings"
-                        android:textColor="@color/textTitle" />
-
-                </RelativeLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/line" />
-
             </LinearLayout>
-        </ScrollView>
-    </android.support.v4.widget.SwipeRefreshLayout>
+
+            <TextView
+                android:id="@+id/tv_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="10dp"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:text="description"
+                android:textColor="@color/textNormal"
+                android:textSize="16sp" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/mine_item_repositories"
+                    android:textColor="@color/textTitle" />
+
+                <TextView
+                    android:id="@+id/tv_repositories_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical"
+                    android:text="0"
+                    android:textColor="@color/textTitle" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/mine_item_stars"
+                    android:textColor="@color/textTitle" />
+
+                <TextView
+                    android:id="@+id/tv_stars_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical"
+                    android:text="0"
+                    android:textColor="@color/textTitle" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/mine_item_followers"
+                    android:textColor="@color/textTitle" />
+
+                <TextView
+                    android:id="@+id/tv_followers_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical"
+                    android:text="0"
+                    android:textColor="@color/textTitle" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/mine_item_following"
+                    android:textColor="@color/textTitle" />
+
+                <TextView
+                    android:id="@+id/tv_following_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical"
+                    android:text="0"
+                    android:textColor="@color/textTitle" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line" />
+
+            <RelativeLayout
+                android:id="@+id/item_settings"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/mine_item_settings"
+                    android:textColor="@color/textTitle" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </android.support.design.widget.CoordinatorLayout>

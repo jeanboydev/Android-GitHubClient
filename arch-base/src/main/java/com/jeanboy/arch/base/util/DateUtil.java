@@ -155,18 +155,18 @@ public class DateUtil {
         } else if (delay < HOUR) {
             int count = Math.round(delay / MINUTE);
             String single = context.getResources().getString(R.string.recent_a_minute_ago);
-            String multiple = context.getResources().getString(R.string.recent_minutes_ago);
-            return count == 1 ? single : String.format(multiple, count);
+            String multiple = context.getResources().getString(R.string.recent_minutes_ago, count);
+            return count == 1 ? single : multiple;
         } else if (delay < DAY) {
             int count = Math.round(delay / HOUR);
             String single = context.getResources().getString(R.string.recent_an_hour_ago);
-            String multiple = context.getResources().getString(R.string.recent_hours_ago);
-            return count == 1 ? single : String.format(multiple, count);
+            String multiple = context.getResources().getString(R.string.recent_hours_ago, count);
+            return count == 1 ? single : multiple;
         } else if (delay < WEEK) {
             int count = Math.round(delay / DAY);
             String single = context.getResources().getString(R.string.recent_a_day_ago);
-            String multiple = context.getResources().getString(R.string.recent_days_ago);
-            return count == 1 ? single : String.format(multiple, count);
+            String multiple = context.getResources().getString(R.string.recent_days_ago, count);
+            return count == 1 ? single : multiple;
         } else if (delay < DAY * 365) {
             return format(timestamp, FORMAT_RECENT_THIS_YEAR);
         } else {

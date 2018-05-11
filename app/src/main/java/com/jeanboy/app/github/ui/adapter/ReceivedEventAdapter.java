@@ -103,39 +103,5 @@ public class ReceivedEventAdapter extends RecyclerBaseAdapter<ReceivedEventModel
         ImageView avatarImageView = holder.getView(R.id.iv_avatar);
         Glide.with(holder.getConvertView().getContext()).load(avatarUrl)
                 .apply(RequestOptions.circleCropTransform()).into(avatarImageView);
-
-//        holder.setVisible(R.id.ll_repos, false);
-//        if (!TextUtils.isEmpty(fromRepoName) && !TextUtils.isEmpty(fromRepoUrl)) {
-//            RepositoryEntity repositoryEntity = repositoryMap.get(fromRepoName);
-//            if (repositoryEntity == null) {
-//                if (onLoadReposListener != null) {
-//                    onLoadReposListener.toLoad(fromRepoName, fromRepoUrl);
-//                }
-//            } else {
-//                holder.setVisible(R.id.ll_repos, true);
-//                holder.setText(R.id.tv_project_name, repositoryEntity.getFull_name());
-//                holder.setText(R.id.tv_project_desc, repositoryEntity.getDescription());
-//                holder.setText(R.id.tv_language, repositoryEntity.getLanguage());
-//
-//                String watchers = holder.getConvertView().getResources().getString(R.string.watchers_count,
-//                        repositoryEntity.getWatchers_count());
-//                holder.setText(R.id.tv_watchers, watchers);
-//
-//                long updateTime = DateUtil.formatUTC(repositoryEntity.getUpdated_at()).getTime();
-//                String formatRecent = DateUtil.formatRecent(updateTime);
-//                holder.setText(R.id.tv_update_time, formatRecent);
-//            }
-//        }
-    }
-
-    private OnLoadReposListener onLoadReposListener;
-
-    public void setOnLoadReposListener(OnLoadReposListener onLoadReposListener) {
-        this.onLoadReposListener = onLoadReposListener;
-    }
-
-    public interface OnLoadReposListener {
-
-        void toLoad(String name, String url);
     }
 }

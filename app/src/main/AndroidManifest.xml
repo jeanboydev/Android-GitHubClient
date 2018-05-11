@@ -36,7 +36,8 @@
                     android:scheme="myhubapp" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.SettingsActivity"></activity>
+        <activity android:name=".ui.activity.SettingsActivity" />
+        <activity android:name=".ui.activity.RepositoryInfoActivity"></activity>
     </application>
 
 </manifest>
