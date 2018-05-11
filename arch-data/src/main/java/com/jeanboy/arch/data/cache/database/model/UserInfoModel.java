@@ -301,7 +301,7 @@ public class UserInfoModel {
                 ", avatarUrl='" + avatarUrl + '\'' +
                 ", gravatarId='" + gravatarId + '\'' +
                 ", url='" + url + '\'' +
-                ", htmUrl='" + htmUrl + '\'' +
+                ", htmlUrl='" + htmlUrl + '\'' +
                 ", followersUrl='" + followersUrl + '\'' +
                 ", followingUrl='" + followingUrl + '\'' +
                 ", gistsUrl='" + gistsUrl + '\'' +
