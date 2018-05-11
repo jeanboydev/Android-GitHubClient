@@ -75,7 +75,7 @@ public class ReposRepository {
 
     public LiveData<String> getReadMeHTML(String url){
         MutableLiveData<String> liveData = new MutableLiveData<>();
-        Call<String> call = fileService.getFileAsHtmlStream(false,url);
+        Call<String> call = fileService.getFileAsStream(false,url);
         NetManager.getInstance().request(new RequestParams<>(call),
                 new RequestCallback<ResponseData<String>>() {
                     @Override

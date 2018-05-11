@@ -21,6 +21,7 @@ import com.jeanboy.arch.base.helper.ToolbarHelper;
 import com.jeanboy.arch.base.util.DateUtil;
 import com.jeanboy.arch.data.net.entity.RepositoryEntity;
 import com.jeanboy.arch.data.net.entity.UserInfoEntity;
+import com.zzhoujay.richtext.RichText;
 
 import java.util.Date;
 
@@ -63,8 +64,10 @@ public class RepositoryInfoActivity extends BaseDiActivity {
     @BindView(R.id.tv_update_time)
     TextView tv_update_time;
 
-    @BindView(R.id.web_view)
-    CodeWebView web_view;
+//    @BindView(R.id.web_view)
+//    CodeWebView web_view;
+    @BindView(R.id.tv_readme)
+    TextView tv_readme;
 
     @Override
     protected int getLayoutId() {
@@ -109,9 +112,11 @@ public class RepositoryInfoActivity extends BaseDiActivity {
             public void onChanged(@Nullable String s) {
                 if (s == null) return;
                 Log.d(TAG, s);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    web_view.setMdSource(s, baseUrl, true);
-                }
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//                    web_view.setMdSource(s, baseUrl, true);
+//                }
+
+                RichText.fromMarkdown(s).into(tv_readme);
             }
         });
     }
