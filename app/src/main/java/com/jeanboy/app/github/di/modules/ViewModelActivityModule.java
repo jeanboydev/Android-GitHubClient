@@ -6,6 +6,7 @@ import com.jeanboy.app.github.ui.activity.AuthActivity;
 import com.jeanboy.app.github.ui.activity.MainActivity;
 import com.jeanboy.app.github.ui.vm.AuthViewModel;
 import com.jeanboy.app.github.ui.vm.MainViewModel;
+import com.jeanboy.app.github.ui.vm.TestApiViewModel;
 
 import dagger.Module;
 import dagger.Provides;
@@ -24,6 +25,11 @@ public class ViewModelActivityModule {
     @Provides
     AuthViewModel provideTokenViewModel(AuthActivity activity) {
         return ViewModelProviders.of(activity).get(AuthViewModel.class);
+    }
+
+    @Provides
+    TestApiViewModel provideTestApiViewModel(MainActivity activity) {
+        return ViewModelProviders.of(activity).get(TestApiViewModel.class);
     }
 
 }

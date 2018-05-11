@@ -272,4 +272,39 @@ public class UserInfoModel {
     public void setUpdatedAt(long updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    @Override
+    public String toString() {
+        return "UserInfoModel{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", name='" + name + '\'' +
+                ", company='" + company + '\'' +
+                ", blog='" + blog + '\'' +
+                ", location='" + location + '\'' +
+                ", hireable='" + hireable + '\'' +
+                ", bio='" + bio + '\'' +
+                ", publicRepos='" + publicRepos + '\'' +
+                ", publicGists='" + publicGists + '\'' +
+                ", followers='" + followers + '\'' +
+                ", following='" + following + '\'' +
+                ", avatarUrl='" + avatarUrl + '\'' +
+                ", gravatarId='" + gravatarId + '\'' +
+                ", url='" + url + '\'' +
+                ", htmUrl='" + htmUrl + '\'' +
+                ", followersUrl='" + followersUrl + '\'' +
+                ", followingUrl='" + followingUrl + '\'' +
+                ", gistsUrl='" + gistsUrl + '\'' +
+                ", starredUrl='" + starredUrl + '\'' +
+                ", subscriptionsUrl='" + subscriptionsUrl + '\'' +
+                ", organizationsUrl='" + organizationsUrl + '\'' +
+                ", reposUrl='" + reposUrl + '\'' +
+                ", eventsUrl='" + eventsUrl + '\'' +
+                ", receivedEventsUrl='" + receivedEventsUrl + '\'' +
+                ", type='" + type + '\'' +
+                ", siteAdmin=" + siteAdmin +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
 }
