@@ -43,7 +43,7 @@ public class FollowingRepository {
      */
     public LiveData<Boolean> checkFollowing(String username, String accessToken) {
         MutableLiveData<Boolean> liveData = new MutableLiveData<>();
-        Call<Boolean> call = followingService.checkFollowing(accessToken, username);
+        Call<Boolean> call = followingService.checkFollowing("token " + accessToken, username);
         NetManager.getInstance().request(new RequestParams<>(call),
                 new RequestCallback<ResponseData<Boolean>>() {
                     @Override
@@ -63,7 +63,7 @@ public class FollowingRepository {
 
     public LiveData<Boolean> checkFollowing(String accessToken, String username, String targetUsername) {
         MutableLiveData<Boolean> liveData = new MutableLiveData<>();
-        Call<Boolean> call = followingService.checkFollowing(accessToken, username, targetUsername);
+        Call<Boolean> call = followingService.checkFollowing("token " + accessToken, username, targetUsername);
         NetManager.getInstance().request(new RequestParams<>(call),
                 new RequestCallback<ResponseData<Boolean>>() {
                     @Override

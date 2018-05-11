@@ -68,7 +68,7 @@ public class UserRepository {
     public LiveData<UserInfoModel> getUserInfo(String accessToken, String username) {
         Log.d("getUserInfo param:", "accessToken:" + accessToken + ",username:" + username);
         MutableLiveData<UserInfoModel> liveData = new MutableLiveData<>();
-        Call<UserInfoEntity> call = userService.getUserInfo(accessToken, username);
+        Call<UserInfoEntity> call = userService.getUserInfo("token " + accessToken, username);
         NetManager.getInstance().request(new RequestParams<>(call),
                 new RequestCallback<ResponseData<UserInfoEntity>>() {
                     @Override

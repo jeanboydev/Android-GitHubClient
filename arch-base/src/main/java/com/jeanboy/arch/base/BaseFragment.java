@@ -20,7 +20,9 @@ public abstract class BaseFragment extends Fragment {
 
     protected abstract void onFragmentCreate();
 
-    protected abstract void setupArguments(Bundle args);
+    protected void setupArguments(Bundle args) {
+
+    }
 
     protected abstract void onFragmentViewCreated(View view, Bundle savedInstanceState);
 

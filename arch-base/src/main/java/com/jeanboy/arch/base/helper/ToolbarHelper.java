@@ -32,8 +32,11 @@ public class ToolbarHelper {
      */
     public static void setToolBarTitle(Toolbar toolbar, int resId) {
         if (toolbar == null) return;
-        TextView titleView = (TextView) toolbar.findViewById(R.id.toolbar_title);
-        if (titleView == null) return;
+        TextView titleView = toolbar.findViewById(R.id.toolbar_title);
+        if (titleView == null) {
+            toolbar.setTitle(resId);
+            return;
+        }
         titleView.setText(resId);
     }
 
@@ -45,8 +48,11 @@ public class ToolbarHelper {
      */
     public static void setToolBarTitle(Toolbar toolbar, CharSequence title) {
         if (toolbar == null) return;
-        TextView titleView = (TextView) toolbar.findViewById(R.id.toolbar_title);
-        if (titleView == null) return;
+        TextView titleView = toolbar.findViewById(R.id.toolbar_title);
+        if (titleView == null) {
+            toolbar.setTitle(title);
+            return;
+        }
         titleView.setText(title);
     }
 

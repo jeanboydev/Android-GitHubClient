@@ -4,8 +4,10 @@ import android.arch.lifecycle.ViewModelProviders;
 
 import com.jeanboy.app.github.ui.activity.AuthActivity;
 import com.jeanboy.app.github.ui.activity.MainActivity;
+import com.jeanboy.app.github.ui.activity.RepositoryInfoActivity;
 import com.jeanboy.app.github.ui.vm.AuthViewModel;
 import com.jeanboy.app.github.ui.vm.MainViewModel;
+import com.jeanboy.app.github.ui.vm.RepositoryInfoViewModel;
 import com.jeanboy.app.github.ui.vm.TestApiViewModel;
 
 import dagger.Module;
@@ -23,8 +25,13 @@ public class ViewModelActivityModule {
     }
 
     @Provides
-    AuthViewModel provideTokenViewModel(AuthActivity activity) {
+    AuthViewModel provideAuthViewModel(AuthActivity activity) {
         return ViewModelProviders.of(activity).get(AuthViewModel.class);
+    }
+
+    @Provides
+    RepositoryInfoViewModel provideRepositoryInfoViewModel(RepositoryInfoActivity activity) {
+        return ViewModelProviders.of(activity).get(RepositoryInfoViewModel.class);
     }
 
     @Provides

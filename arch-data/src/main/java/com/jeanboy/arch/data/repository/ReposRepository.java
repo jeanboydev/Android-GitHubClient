@@ -34,7 +34,7 @@ public class ReposRepository {
 
     public LiveData<RepositoryEntity> getReposInfo(String accessToken, String username, String repos) {
         MutableLiveData<RepositoryEntity> liveData = new MutableLiveData<>();
-        Call<RepositoryEntity> call = reposService.getReposInfo(accessToken, username, repos);
+        Call<RepositoryEntity> call = reposService.getReposInfo("token " + accessToken, username, repos);
         NetManager.getInstance().request(new RequestParams<>(call),
                 new RequestCallback<ResponseData<RepositoryEntity>>() {
                     @Override
@@ -53,7 +53,7 @@ public class ReposRepository {
 
     public LiveData<List<RepositoryModel>> getRepos(String accessToken, String username, int page) {
         MutableLiveData<List<RepositoryModel>> liveData = new MutableLiveData<>();
-        Call<List<RepositoryEntity>> call = reposService.getRepos(accessToken, username, page);
+        Call<List<RepositoryEntity>> call = reposService.getRepos("token " + accessToken, username, page);
         NetManager.getInstance().request(new RequestParams<>(call),
                 new RequestCallback<ResponseData<List<RepositoryEntity>>>() {
                     @Override
