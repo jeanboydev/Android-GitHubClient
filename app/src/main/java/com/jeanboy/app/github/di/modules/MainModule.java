@@ -3,6 +3,7 @@ package com.jeanboy.app.github.di.modules;
 
 import com.jeanboy.app.github.ui.activity.AuthActivity;
 import com.jeanboy.app.github.ui.activity.MainActivity;
+import com.jeanboy.app.github.ui.activity.SettingsActivity;
 import com.jeanboy.app.github.ui.activity.SplashActivity;
 import com.jeanboy.app.github.ui.fragment.HomeFragment;
 import com.jeanboy.app.github.ui.fragment.MineFragment;
@@ -22,6 +23,9 @@ public abstract class MainModule {
 
     @ContributesAndroidInjector(modules = {ViewModelActivityModule.class})
     abstract AuthActivity contributeAuthActivity();
+
+    @ContributesAndroidInjector(modules = {ViewModelActivityModule.class})
+    abstract SettingsActivity contributeSettingsActivity();
 
     /*---- fragment ----*/
     @ContributesAndroidInjector(modules = {ViewModelFragmentModule.class})

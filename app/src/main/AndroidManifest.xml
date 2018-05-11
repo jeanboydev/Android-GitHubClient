@@ -24,8 +24,7 @@
         <activity
             android:name=".ui.activity.MainActivity"
             android:launchMode="singleTask" />
-        <activity
-            android:name=".ui.activity.AuthActivity">
+        <activity android:name=".ui.activity.AuthActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -37,6 +36,7 @@
                     android:scheme="myhubapp" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.activity.SettingsActivity"></activity>
     </application>
 
 </manifest>
