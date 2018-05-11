@@ -6,10 +6,12 @@
     <string name="fork_event_content">forked</string>
     <string name="member_event_content">added</string>
     <string name="push_event_content">pushed to</string>
+    <string name="public_event_content">made</string>
 
     <string name="title_normal_event"><Data><![CDATA[%1$s&nbsp;&nbsp;<font color="#303030"><b>%2$s</b></font>]]></Data></string>
     <string name="title_fork_event"><Data><![CDATA[%1$s&nbsp;&nbsp;<font color="#303030"><b>%2$s</b></font>&nbsp;&nbsp;from&nbsp;&nbsp;<font color="#303030"><b>%3$s</b></font>]]></Data></string>
     <string name="title_push_event"><Data><![CDATA[%1$s&nbsp;&nbsp;<font color="#303030"><b>%2$s</b></font>&nbsp;&nbsp;in&nbsp;&nbsp;<font color="#303030"><b>%3$s</b></font>]]></Data></string>
+    <string name="title_public_event"><Data><![CDATA[%1$s&nbsp;&nbsp;<font color="#303030"><b>%2$s</b></font>&nbsp;&nbsp;public]]></Data></string>
     <string name="watchers_count">star(%1$d)</string>
 
 </resources>

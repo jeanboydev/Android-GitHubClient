@@ -89,6 +89,9 @@ public class ReceivedEventAdapter extends RecyclerBaseAdapter<ReceivedEventModel
         }else if(AppConfig.PUSH_EVENT.equals(receivedEventModel.getType())){
             content = holder.getConvertView().getResources().getString(R.string.title_push_event,
                     action, branch, fromRepoName);
+        }else if(AppConfig.PUBLIC_EVENT.equals(receivedEventModel.getType())){
+            content = holder.getConvertView().getResources().getString(R.string.title_public_event,
+                    action, fromRepoName);
         }
 
         long createdAt = receivedEventModel.getCreatedAt();

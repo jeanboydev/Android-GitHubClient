@@ -6,6 +6,7 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,6 +17,7 @@ import com.jeanboy.app.github.di.BaseDiFragment;
 import com.jeanboy.app.github.ui.adapter.ReceivedEventAdapter;
 import com.jeanboy.app.github.ui.vm.MainHomeViewModel;
 import com.jeanboy.arch.base.adapter.recyclerview.decoration.SpaceItemDecoration;
+import com.jeanboy.arch.base.helper.ToastHelper;
 import com.jeanboy.arch.base.helper.ToolbarHelper;
 import com.jeanboy.arch.data.cache.database.model.ReceivedEventModel;
 import com.jeanboy.arch.data.net.entity.RepositoryEntity;
@@ -39,6 +41,8 @@ import butterknife.BindView;
  */
 public class HomeFragment extends BaseDiFragment {
 
+    @BindView(R.id.srl_refresh)
+    SwipeRefreshLayout srl_refresh;
     @BindView(R.id.list_container)
     RecyclerView list_container;
 
@@ -46,7 +50,7 @@ public class HomeFragment extends BaseDiFragment {
     private Map<String, RepositoryEntity> repositoryMap = new HashMap<>();
     private ReceivedEventAdapter dataAdapter;
     private RecyclerViewHelper recyclerViewHelper;
-
+    private boolean isRefreshing = false;
 
     @Inject
     MainHomeViewModel mainHomeViewModel;
@@ -70,6 +74,17 @@ public class HomeFragment extends BaseDiFragment {
     @Override
     protected void setupView(View view, Bundle savedInstanceState) {
         ToolbarHelper.setToolBarTitle(getToolbar(), "Received Events");
+
+        srl_refresh.setEnabled(false);
+        srl_refresh.setColorSchemeResources(R.color.colorPrimary);
+        srl_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (isRefreshing) return;
+                isRefreshing = true;
+                initData();
+            }
+        });
 
         dataAdapter = new ReceivedEventAdapter(dataList, repositoryMap);
 
@@ -125,6 +140,11 @@ public class HomeFragment extends BaseDiFragment {
         request.observe(this, new Observer<List<ReceivedEventModel>>() {
             @Override
             public void onChanged(@Nullable List<ReceivedEventModel> receivedEventModels) {
+                if (isRefreshing) {
+                    ToastHelper.toast(getActivity(), "刷新成功！");
+                }
+                isRefreshing = false;
+                srl_refresh.setRefreshing(false);
                 if (receivedEventModels == null) {
                     if (currentPage == 1) {
                         recyclerViewHelper.loadError();
@@ -136,6 +156,7 @@ public class HomeFragment extends BaseDiFragment {
                 recyclerViewHelper.loadComplete(true);
                 if (currentPage == 1) {
                     dataList.clear();
+                    srl_refresh.setEnabled(true);
                 }
                 dataList.addAll(receivedEventModels);
                 dataAdapter.notifyDataSetChanged();
