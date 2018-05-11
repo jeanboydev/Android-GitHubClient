@@ -4,13 +4,18 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.util.Log;
 
+import com.jeanboy.arch.data.cache.database.model.UserInfoModel;
 import com.jeanboy.arch.data.cache.manager.AppDatabase;
 import com.jeanboy.arch.data.cache.manager.DBManager;
 import com.jeanboy.arch.data.net.core.RequestCallback;
 import com.jeanboy.arch.data.net.core.RequestParams;
 import com.jeanboy.arch.data.net.core.ResponseData;
+import com.jeanboy.arch.data.net.entity.UserInfoEntity;
 import com.jeanboy.arch.data.net.manager.NetManager;
 import com.jeanboy.arch.data.net.service.FollowingService;
+import com.jeanboy.arch.data.repository.mapper.UserInfoMapper;
+
+import java.util.List;
 
 import retrofit2.Call;
 
@@ -129,5 +134,48 @@ public class FollowingRepository {
                 });
         return liveData;
     }
+
+    public LiveData<List<UserInfoModel>> getFollowing(String accessToken, String username, int page) {
+        MutableLiveData<List<UserInfoModel>> liveData = new MutableLiveData<>();
+        Call<List<UserInfoEntity>> call = followingService.getFollowing(accessToken, username, page);
+        NetManager.getInstance().request(new RequestParams<>(call),
+                new RequestCallback<ResponseData<List<UserInfoEntity>>>() {
+                    @Override
+                    public void onSuccess(ResponseData<List<UserInfoEntity>> response) {
+                        List<UserInfoEntity> body = response.getBody();
+                        List<UserInfoModel> userInfoModelList = new UserInfoMapper().transform(body);
+                        liveData.setValue(userInfoModelList);
+                    }
+
+                    @Override
+                    public void onError(int code, String msg) {
+                        Log.d("getFollowing", "code:" + code + ",msg:" + msg);
+                        liveData.setValue(null);
+                    }
+                });
+        return liveData;
+    }
+
+    public LiveData<List<UserInfoModel>> getFollowers(String accessToken, String username, int page) {
+        MutableLiveData<List<UserInfoModel>> liveData = new MutableLiveData<>();
+        Call<List<UserInfoEntity>> call = followingService.getFollowers(accessToken, username, page);
+        NetManager.getInstance().request(new RequestParams<>(call),
+                new RequestCallback<ResponseData<List<UserInfoEntity>>>() {
+                    @Override
+                    public void onSuccess(ResponseData<List<UserInfoEntity>> response) {
+                        List<UserInfoEntity> body = response.getBody();
+                        List<UserInfoModel> userInfoModelList = new UserInfoMapper().transform(body);
+                        liveData.setValue(userInfoModelList);
+                    }
+
+                    @Override
+                    public void onError(int code, String msg) {
+                        Log.d("getFollowers", "code:" + code + ",msg:" + msg);
+                        liveData.setValue(null);
+                    }
+                });
+        return liveData;
+    }
+
 
 }
