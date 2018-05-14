@@ -29,7 +29,7 @@ public class FollowingRepository {
 
     public FollowingRepository() {
         database = DBManager.getInstance().getDatabase();
-        followingService = NetManager.getInstance().create(FollowingService.BASE_URL, FollowingService.class);
+        followingService = NetManager.getInstance().createForJSON(FollowingService.BASE_URL, FollowingService.class);
     }
 
     /**

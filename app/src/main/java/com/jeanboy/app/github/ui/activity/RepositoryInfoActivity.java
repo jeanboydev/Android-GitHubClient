@@ -3,7 +3,6 @@ package com.jeanboy.app.github.ui.activity;
 import android.app.Activity;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -14,7 +13,6 @@ import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
 import com.jeanboy.app.github.R;
 import com.jeanboy.app.github.di.BaseDiActivity;
-import com.jeanboy.app.github.helper.webview.CodeWebView;
 import com.jeanboy.app.github.ui.vm.RepositoryInfoViewModel;
 import com.jeanboy.arch.base.ExtrasCallback;
 import com.jeanboy.arch.base.helper.ToolbarHelper;
@@ -64,8 +62,20 @@ public class RepositoryInfoActivity extends BaseDiActivity {
     @BindView(R.id.tv_update_time)
     TextView tv_update_time;
 
-//    @BindView(R.id.web_view)
-//    CodeWebView web_view;
+    @BindView(R.id.tv_stars_count)
+    TextView tv_stars_count;
+    @BindView(R.id.tv_forks_count)
+    TextView tv_forks_count;
+    @BindView(R.id.tv_watchers_count)
+    TextView tv_watchers_count;
+    @BindView(R.id.tv_issues_count)
+    TextView tv_issues_count;
+
+    @BindView(R.id.tv_default_branch)
+    TextView tv_default_branch;
+    @BindView(R.id.tv_commit_desc)
+    TextView tv_commit_desc;
+
     @BindView(R.id.tv_readme)
     TextView tv_readme;
 
@@ -83,7 +93,7 @@ public class RepositoryInfoActivity extends BaseDiActivity {
 
     @Override
     protected void setupView(Bundle savedInstanceState) {
-        String title = getResources().getString(R.string.title_repos);
+        String title = username + "/" + repos;
         ToolbarHelper.setToolBarTitle(getToolbar(), title);
         ToolbarHelper.setToolbarHomeAsUp(this);
         ToolbarHelper.setStatusBarTranslucent(this);
@@ -111,12 +121,8 @@ public class RepositoryInfoActivity extends BaseDiActivity {
             @Override
             public void onChanged(@Nullable String s) {
                 if (s == null) return;
-                Log.d(TAG, s);
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//                    web_view.setMdSource(s, baseUrl, true);
-//                }
-
-                RichText.fromMarkdown(s).into(tv_readme);
+                Log.e(TAG, "============onChanged=======tv_readme====");
+                RichText.fromHtml(s).into(tv_readme);
             }
         });
     }
@@ -134,8 +140,19 @@ public class RepositoryInfoActivity extends BaseDiActivity {
         tv_repos_desc.setText(repositoryEntity.getDescription());
         tv_language.setText(repositoryEntity.getLanguage());
         String updateAt = repositoryEntity.getUpdated_at();
-        Date date = DateUtil.formatUTC(updateAt);
-        String format = DateUtil.format(date.getTime(), DateUtil.FORMAT_DATE_24_FULL);
-        tv_update_time.setText(format);
+        Date updateDate = DateUtil.formatUTC(updateAt);
+        String formatUpdate = DateUtil.format(updateDate.getTime(), DateUtil.FORMAT_DATE_24_FULL);
+        tv_update_time.setText(formatUpdate);
+
+        tv_stars_count.setText(String.valueOf(repositoryEntity.getStargazers_count()));
+        tv_forks_count.setText(String.valueOf(repositoryEntity.getForks_count()));
+        tv_watchers_count.setText(String.valueOf(repositoryEntity.getWatchers_count()));
+        tv_issues_count.setText(String.valueOf(repositoryEntity.getOpen_issues_count()));
+
+        tv_default_branch.setText(repositoryEntity.getDefault_branch());
+        String pushAt = repositoryEntity.getPushed_at();
+        Date pushDate = DateUtil.formatUTC(pushAt);
+        String formatPush = DateUtil.format(pushDate.getTime(), DateUtil.FORMAT_DATE_24_FULL);
+        tv_commit_desc.setText(getResources().getString(R.string.repos_latest_commit, formatPush));
     }
 }

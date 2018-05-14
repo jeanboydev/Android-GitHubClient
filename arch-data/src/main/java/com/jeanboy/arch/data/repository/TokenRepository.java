@@ -26,7 +26,7 @@ public class TokenRepository {
 
     public TokenRepository() {
         database = DBManager.getInstance().getDatabase();
-        authService = NetManager.getInstance().create(AuthService.BASE_URL, AuthService.class);
+        authService = NetManager.getInstance().createForJSON(AuthService.BASE_URL, AuthService.class);
     }
 
     public AccessTokenModel getAccessToken(){

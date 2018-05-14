@@ -32,7 +32,7 @@ public class OrganizationRepository {
 
     public OrganizationRepository() {
         database = DBManager.getInstance().getDatabase();
-        organizationService = NetManager.getInstance().create(OrganizationService.BASE_URL, OrganizationService.class);
+        organizationService = NetManager.getInstance().createForJSON(OrganizationService.BASE_URL, OrganizationService.class);
     }
 
     public LiveData<List<OrganizationModel>> getUserOrgs(String accessToken, String username, int page) {

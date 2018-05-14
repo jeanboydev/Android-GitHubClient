@@ -31,7 +31,7 @@ public class EventRepository {
 
     public EventRepository() {
         database = DBManager.getInstance().getDatabase();
-        eventService = NetManager.getInstance().create(EventService.BASE_URL, EventService.class);
+        eventService = NetManager.getInstance().createForJSON(EventService.BASE_URL, EventService.class);
     }
 
     public LiveData<List<ReceivedEventModel>> getReceivedEvents(String accessToken, String username, int page) {

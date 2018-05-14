@@ -56,6 +56,8 @@ ext{
 
     // retrofit -> xml
     simpleXmlVersion = '2.7.1'
+    // retrofit -> String
+    scalarsVersion = '2.0.0'
 
 	// glide
     glideVersion = '3.7.0'

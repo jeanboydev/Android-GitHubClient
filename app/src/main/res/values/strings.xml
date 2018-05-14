@@ -37,5 +37,8 @@
 
     <!-- repos info-->
     <string name="title_repos">Repository</string>
+    <string name="repos_title_readme">README</string>
+    <string name="repos_readme_loading">Loading&#8230;</string>
+    <string name="repos_latest_commit">Latest commit about %1$s.</string>
 
 </resources>

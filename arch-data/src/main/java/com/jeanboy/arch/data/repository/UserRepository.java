@@ -27,7 +27,7 @@ public class UserRepository {
 
     public UserRepository() {
         database = DBManager.getInstance().getDatabase();
-        userService = NetManager.getInstance().create(UserService.BASE_URL, UserService.class);
+        userService = NetManager.getInstance().createForJSON(UserService.BASE_URL, UserService.class);
     }
 
     public LiveData<UserInfoModel> loadUserInfo(long userId, String accessToken) {

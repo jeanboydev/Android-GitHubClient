@@ -2,6 +2,7 @@ package com.jeanboy.arch.data.repository;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.util.Log;
 
 import com.jeanboy.arch.data.cache.database.model.received.RepositoryModel;
 import com.jeanboy.arch.data.cache.manager.AppDatabase;
@@ -30,7 +31,7 @@ public class ReposRepository {
 
     public ReposRepository() {
         database = DBManager.getInstance().getDatabase();
-        reposService = NetManager.getInstance().create(ReposService.BASE_URL, ReposService.class);
+        reposService = NetManager.getInstance().createForJSON(ReposService.BASE_URL, ReposService.class);
         fileService = NetManager.getInstance().create(FileService.BASE_URL, FileService.class);
     }
 
@@ -73,13 +74,14 @@ public class ReposRepository {
         return liveData;
     }
 
-    public LiveData<String> getReadMeHTML(String url){
+    public LiveData<String> getReadMeHTML(String url) {
         MutableLiveData<String> liveData = new MutableLiveData<>();
-        Call<String> call = fileService.getFileAsStream(false,url);
+        Call<String> call = fileService.getFileAsHtmlStream(false, url);
         NetManager.getInstance().request(new RequestParams<>(call),
                 new RequestCallback<ResponseData<String>>() {
                     @Override
                     public void onSuccess(ResponseData<String> response) {
+                        Log.e("==========","====onSuccess====");
                         String body = response.getBody();
                         liveData.setValue(body);
                     }
