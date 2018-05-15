@@ -54,26 +54,6 @@ public class ReposRepository {
         return liveData;
     }
 
-    public LiveData<List<RepositoryModel>> getRepos(String accessToken, String username, int page) {
-        MutableLiveData<List<RepositoryModel>> liveData = new MutableLiveData<>();
-        Call<List<RepositoryEntity>> call = reposService.getRepos("token " + accessToken, username, page);
-        NetManager.getInstance().request(new RequestParams<>(call),
-                new RequestCallback<ResponseData<List<RepositoryEntity>>>() {
-                    @Override
-                    public void onSuccess(ResponseData<List<RepositoryEntity>> response) {
-                        List<RepositoryEntity> body = response.getBody();
-                        List<RepositoryModel> repositoryModelList = new RepositoryMapper().transform(body);
-                        liveData.setValue(repositoryModelList);
-                    }
-
-                    @Override
-                    public void onError(int code, String msg) {
-                        liveData.setValue(null);
-                    }
-                });
-        return liveData;
-    }
-
     public LiveData<String> getReadMeHTML(String url) {
         MutableLiveData<String> liveData = new MutableLiveData<>();
         Call<String> call = fileService.getFileAsHtmlStream(false, url);

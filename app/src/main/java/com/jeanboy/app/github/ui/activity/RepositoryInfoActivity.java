@@ -30,25 +30,6 @@ import butterknife.BindView;
 public class RepositoryInfoActivity extends BaseDiActivity {
 
 
-    private final static String KEY_USERNAME = "username";
-    private final static String KEY_REPOS = "repos";
-
-    private String username;
-    private String repos;
-
-    public static void startBy(Activity context, String username, String repos) {
-        startActivity(context, RepositoryInfoActivity.class, new ExtrasCallback() {
-            @Override
-            public void onPutExtras(Bundle bundle) {
-                bundle.putString(KEY_USERNAME, username);
-                bundle.putString(KEY_REPOS, repos);
-            }
-        });
-    }
-
-    @Inject
-    RepositoryInfoViewModel repositoryInfoViewModel;
-
     @BindView(R.id.iv_avatar)
     ImageView iv_avatar;
     @BindView(R.id.tv_username)
@@ -66,8 +47,8 @@ public class RepositoryInfoActivity extends BaseDiActivity {
     TextView tv_stars_count;
     @BindView(R.id.tv_forks_count)
     TextView tv_forks_count;
-    @BindView(R.id.tv_watchers_count)
-    TextView tv_watchers_count;
+    @BindView(R.id.tv_subscribers_count)
+    TextView tv_subscribers_count;
     @BindView(R.id.tv_issues_count)
     TextView tv_issues_count;
 
@@ -78,6 +59,26 @@ public class RepositoryInfoActivity extends BaseDiActivity {
 
     @BindView(R.id.tv_readme)
     TextView tv_readme;
+
+
+    @Inject
+    RepositoryInfoViewModel repositoryInfoViewModel;
+
+    private final static String KEY_USERNAME = "username";
+    private final static String KEY_REPOS = "repos";
+
+    private String username;
+    private String repos;
+
+    public static void startBy(Activity context, String username, String repos) {
+        startActivity(context, RepositoryInfoActivity.class, new ExtrasCallback() {
+            @Override
+            public void onPutExtras(Bundle bundle) {
+                bundle.putString(KEY_USERNAME, username);
+                bundle.putString(KEY_REPOS, repos);
+            }
+        });
+    }
 
     @Override
     protected int getLayoutId() {
@@ -146,7 +147,7 @@ public class RepositoryInfoActivity extends BaseDiActivity {
 
         tv_stars_count.setText(String.valueOf(repositoryEntity.getStargazers_count()));
         tv_forks_count.setText(String.valueOf(repositoryEntity.getForks_count()));
-        tv_watchers_count.setText(String.valueOf(repositoryEntity.getWatchers_count()));
+        tv_subscribers_count.setText(String.valueOf(repositoryEntity.getSubscribers_count()));
         tv_issues_count.setText(String.valueOf(repositoryEntity.getOpen_issues_count()));
 
         tv_default_branch.setText(repositoryEntity.getDefault_branch());

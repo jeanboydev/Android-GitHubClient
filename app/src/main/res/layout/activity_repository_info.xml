@@ -218,7 +218,7 @@
                 android:paddingTop="15dp">
 
                 <TextView
-                    android:id="@+id/tv_watchers_count"
+                    android:id="@+id/tv_subscribers_count"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -231,7 +231,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
-                    android:text="Watchers"
+                    android:text="Subscribers"
                     android:textColor="@color/textNormal"
                     android:textSize="14sp" />
             </LinearLayout>
