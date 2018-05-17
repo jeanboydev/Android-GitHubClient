@@ -48,7 +48,7 @@ ext{
 	// App dependencies
 	// core
     archVersion = '1.1.1'
-    roomVersion = '1.1.0-beta3'
+    roomVersion = '1.1.0'
     okhttpVersion = '3.10.0'
     retrofitVersion = '2.4.0'
     daggerVersion = '2.16'

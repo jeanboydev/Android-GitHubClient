@@ -60,6 +60,8 @@ dependencies {
     api "com.facebook.stetho:stetho-okhttp3:$rootProject.stethoVersion"
     //fastjson
     api "com.alibaba:fastjson:$rootProject.fastjsonVersion"
+    //jsoup
+    implementation 'org.jsoup:jsoup:1.11.3'
 
     implementation project(':arch-base')
 }

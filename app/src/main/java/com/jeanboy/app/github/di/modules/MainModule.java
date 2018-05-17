@@ -8,7 +8,7 @@ import com.jeanboy.app.github.ui.activity.SettingsActivity;
 import com.jeanboy.app.github.ui.activity.SplashActivity;
 import com.jeanboy.app.github.ui.fragment.HomeFragment;
 import com.jeanboy.app.github.ui.fragment.MineFragment;
-import com.jeanboy.app.github.ui.fragment.ProjectFragment;
+import com.jeanboy.app.github.ui.fragment.TrendingFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -36,7 +36,7 @@ public abstract class MainModule {
     abstract HomeFragment contributeHomeFragment();
 
     @ContributesAndroidInjector
-    abstract ProjectFragment contributeProjectFragment();
+    abstract TrendingFragment contributeTrendingFragment();
 
     @ContributesAndroidInjector(modules = {ViewModelFragmentModule.class})
     abstract MineFragment contributeMineFragment();

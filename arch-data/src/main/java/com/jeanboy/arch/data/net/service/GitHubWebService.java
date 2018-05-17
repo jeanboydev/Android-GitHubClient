@@ -24,13 +24,18 @@ public interface GitHubWebService {
     @GET("topics")
     Call<String> getTopics(@Header("forceNetWork") boolean forceNetWork);
 
-
+    /**
+     * 获取热门项目
+     * https://github.com/trending
+     *
+     * @return
+     */
     @GET("trending")
     @Headers("Cache-Control: public, max-age=86400")
-    Call<String> getTrendingLanguages();
+    Call<String> getTrending();
 
     /**
-     * 获取指定语言最热的项目
+     * 筛选热门项目
      * https://github.com/trending/java
      *
      * @param language
@@ -42,8 +47,8 @@ public interface GitHubWebService {
             "Cache-Control: public, max-age=86400",
             "forceNetWork: false"
     })
-    Call<String> getTrendingRepos(@Path(value = "language", encoded = true) String language,
-                                  @Query("since") String since);
+    Call<String> getTrending(@Path(value = "language", encoded = true) String language,
+                             @Query("since") String since);
 
 
 }

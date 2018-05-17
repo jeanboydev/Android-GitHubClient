@@ -44,7 +44,7 @@
                 android:layout_weight="1"
                 android:textAllCaps="false"
                 android:drawableTop="@drawable/ic_project"
-                android:text="@string/title_project" />
+                android:text="@string/title_trending" />
 
 
             <RadioButton

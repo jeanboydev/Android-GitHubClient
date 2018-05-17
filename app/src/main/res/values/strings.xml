@@ -19,15 +19,14 @@
 
     <!-- mine -->
     <string name="title_mine">Mine</string>
-
-
-    <!-- projects-->
-    <string name="title_project">Projects</string>
     <string name="mine_item_repositories">Repositories</string>
     <string name="mine_item_stars">Stars</string>
     <string name="mine_item_followers">Followers</string>
     <string name="mine_item_following">Following</string>
     <string name="mine_item_settings">Settings</string>
+
+    <!-- Trending-->
+    <string name="title_trending">Trending</string>
 
     <!-- settings -->
     <string name="title_settings">Settings</string>
