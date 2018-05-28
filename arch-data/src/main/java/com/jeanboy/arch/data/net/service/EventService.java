@@ -20,7 +20,7 @@ public interface EventService {
     String BASE_URL = "https://api.github.com";
 
     /**
-     * 好友动态列表
+     * 获取关注用户的动态列表
      * GET https://api.github.com/users/{username}/received_events?page=2
      * HEAD{
      * Authorization: token OAUTH-TOKEN

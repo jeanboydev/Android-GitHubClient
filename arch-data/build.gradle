@@ -53,12 +53,15 @@ dependencies {
     api "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
     api "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
     api "com.squareup.retrofit2:converter-simplexml:$rootProject.retrofitVersion"
+    api "com.squareup.retrofit2:converter-scalars:$rootProject.scalarsVersion"
     api "org.simpleframework:simple-xml:$rootProject.simpleXmlVersion"
     //Stetho
     api "com.facebook.stetho:stetho:$rootProject.stethoVersion"
     api "com.facebook.stetho:stetho-okhttp3:$rootProject.stethoVersion"
     //fastjson
     api "com.alibaba:fastjson:$rootProject.fastjsonVersion"
+    //jsoup
+    implementation 'org.jsoup:jsoup:1.11.3'
 
     implementation project(':arch-base')
 }

@@ -189,6 +189,8 @@ public class RepositoryEntity {
     @SerializedName("public")
     private boolean isPublic;
 
+    private int period_stargazers_count;//每天/每周/每月
+
     public String getId() {
         return id;
     }
@@ -771,5 +773,13 @@ public class RepositoryEntity {
 
     public void setPublic(boolean aPublic) {
         isPublic = aPublic;
+    }
+
+    public int getPeriod_stargazers_count() {
+        return period_stargazers_count;
+    }
+
+    public void setPeriod_stargazers_count(int period_stargazers_count) {
+        this.period_stargazers_count = period_stargazers_count;
     }
 }

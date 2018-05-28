@@ -44,6 +44,8 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
     //text view
     implementation 'me.codeboy.android:align-text-view:2.3.2'
+    //richtext
+    implementation 'com.zzhoujay.richtext:richtext:2.5.4'
     // arch
     implementation project(':arch-base')
     implementation project(':arch-data')

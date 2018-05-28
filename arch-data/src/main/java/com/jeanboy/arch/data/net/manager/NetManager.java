@@ -14,6 +14,7 @@ import retrofit2.Call;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
 /**
@@ -43,6 +44,10 @@ public class NetManager {
     }
 
     /*------------------------ 配置 Retrofit ------------------------------*/
+
+    private Retrofit get(String baseUrl) {
+        return get(baseUrl, ScalarsConverterFactory.create());
+    }
 
     private Retrofit getWithGSON(String baseUrl) {
         return get(baseUrl, GsonConverterFactory.create());
@@ -99,6 +104,10 @@ public class NetManager {
     }
 
     public <T> T create(String baseUrl, Class<T> clazz) {
+        return get(baseUrl).create(clazz);
+    }
+
+    public <T> T createForJSON(String baseUrl, Class<T> clazz) {
         return getWithGSON(baseUrl).create(clazz);
     }
 

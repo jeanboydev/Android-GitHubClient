@@ -12,7 +12,7 @@ import com.jeanboy.app.github.R;
 import com.jeanboy.app.github.di.BaseDiActivity;
 import com.jeanboy.app.github.ui.fragment.HomeFragment;
 import com.jeanboy.app.github.ui.fragment.MineFragment;
-import com.jeanboy.app.github.ui.fragment.ProjectFragment;
+import com.jeanboy.app.github.ui.fragment.TrendingFragment;
 import com.jeanboy.app.github.ui.vm.TestApiViewModel;
 
 import javax.inject.Inject;
@@ -28,7 +28,7 @@ public class MainActivity extends BaseDiActivity {
     @Inject
     HomeFragment homeFragment;
     @Inject
-    ProjectFragment projectFragment;
+    TrendingFragment trendingFragment;
     @Inject
     MineFragment mineFragment;
 
@@ -49,7 +49,7 @@ public class MainActivity extends BaseDiActivity {
 
     @Override
     protected void setupView(Bundle savedInstanceState) {
-        fragments = new Fragment[]{homeFragment, projectFragment, mineFragment};
+        fragments = new Fragment[]{homeFragment, trendingFragment, mineFragment};
         showFragment(R.id.fragment_container, fragments[currentTabIndex]);
         bottomMenu.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -68,7 +68,7 @@ public class MainActivity extends BaseDiActivity {
 
         // test code start
 
-        new TestApi().test(this, testApiViewModel);
+//        new TestApi().test(this, testApiViewModel);
 
 
         // test code end
