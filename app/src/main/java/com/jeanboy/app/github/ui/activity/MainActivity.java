@@ -68,7 +68,7 @@ public class MainActivity extends BaseDiActivity {
 
         // test code start
 
-//        new TestApi().test(this, testApiViewModel);
+        new TestApi().test(this, testApiViewModel);
 
 
         // test code end

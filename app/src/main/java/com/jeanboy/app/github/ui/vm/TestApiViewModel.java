@@ -3,12 +3,15 @@ package com.jeanboy.app.github.ui.vm;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 
+import com.jeanboy.arch.data.cache.database.model.AuthTokenModel;
 import com.jeanboy.arch.data.cache.database.model.UserInfoModel;
 import com.jeanboy.arch.data.cache.database.model.received.RepositoryModel;
 import com.jeanboy.arch.data.repository.FollowingRepository;
 import com.jeanboy.arch.data.repository.OrganizationRepository;
 import com.jeanboy.arch.data.repository.ReposRepository;
+import com.jeanboy.arch.data.repository.TokenRepository;
 import com.jeanboy.arch.data.repository.UserRepository;
+import com.jeanboy.arch.data.repository.params.AuthParams;
 
 import java.util.List;
 
@@ -27,11 +30,18 @@ public class TestApiViewModel extends ViewModel {
     private LiveData<List<UserInfoModel>> checkFollowing7;
     private LiveData<List<RepositoryModel>> checkFollowing8;
     private LiveData<List<RepositoryModel>> checkFollowing9;
+    LiveData<AuthTokenModel> authorizations;
 
+    private TokenRepository tokenRepository = new TokenRepository();
     private UserRepository userRepository = new UserRepository();
     private FollowingRepository followingRepository = new FollowingRepository();
     private OrganizationRepository organizationRepository = new OrganizationRepository();
     private ReposRepository reposRepository = new ReposRepository();
+
+    public LiveData<AuthTokenModel> authorizations(String username, String password, AuthParams authParams) {
+        authorizations = tokenRepository.authorizations(username, password, authParams);
+        return authorizations;
+    }
 
     public LiveData<UserInfoModel> requestUserInfo(String accessToken, String username) {
         userInfo = userRepository.getUserInfo(accessToken, username);
