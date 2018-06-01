@@ -4,11 +4,13 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 
 import com.jeanboy.arch.data.cache.database.model.AuthTokenModel;
+import com.jeanboy.arch.data.cache.database.model.IssueModel;
 import com.jeanboy.arch.data.cache.database.model.UserInfoModel;
 import com.jeanboy.arch.data.cache.database.model.received.RepositoryModel;
 import com.jeanboy.arch.data.repository.FollowingRepository;
 import com.jeanboy.arch.data.repository.OrganizationRepository;
 import com.jeanboy.arch.data.repository.ReposRepository;
+import com.jeanboy.arch.data.repository.SearchRepository;
 import com.jeanboy.arch.data.repository.TokenRepository;
 import com.jeanboy.arch.data.repository.UserRepository;
 import com.jeanboy.arch.data.repository.params.AuthParams;
@@ -31,12 +33,16 @@ public class TestApiViewModel extends ViewModel {
     private LiveData<List<RepositoryModel>> checkFollowing8;
     private LiveData<List<RepositoryModel>> checkFollowing9;
     LiveData<AuthTokenModel> authorizations;
+    LiveData<List<UserInfoModel>> searchUsers;
+    LiveData<List<RepositoryModel>> searchRepos;
+    LiveData<List<IssueModel>> searchIssues;
 
     private TokenRepository tokenRepository = new TokenRepository();
     private UserRepository userRepository = new UserRepository();
     private FollowingRepository followingRepository = new FollowingRepository();
     private OrganizationRepository organizationRepository = new OrganizationRepository();
     private ReposRepository reposRepository = new ReposRepository();
+    private SearchRepository searchRepository = new SearchRepository();
 
     public LiveData<AuthTokenModel> authorizations(String username, String password, AuthParams authParams) {
         authorizations = tokenRepository.authorizations(username, password, authParams);
@@ -91,6 +97,21 @@ public class TestApiViewModel extends ViewModel {
     public LiveData<List<RepositoryModel>> getUserRepos(String accessToken, int page, String type, String sort, String direction) {
         checkFollowing9 = reposRepository.getUserRepos(accessToken, page, type, sort, direction);
         return checkFollowing9;
+    }
+
+    public LiveData<List<UserInfoModel>> searchUsers(String accessToken, String query, String sort, String order, int page) {
+        searchUsers = searchRepository.searchUsers(accessToken, query, sort, order, page);
+        return searchUsers;
+    }
+
+    public LiveData<List<RepositoryModel>> searchRepos(String accessToken, String query, String sort, String order, int page) {
+        searchRepos = searchRepository.searchRepos(accessToken, query, sort, order, page);
+        return searchRepos;
+    }
+
+    public LiveData<List<IssueModel>> searchIssues(String accessToken, String query, String sort, String order, int page) {
+        searchIssues = searchRepository.searchIssues(accessToken, query, sort, order, page);
+        return searchIssues;
     }
 
 }

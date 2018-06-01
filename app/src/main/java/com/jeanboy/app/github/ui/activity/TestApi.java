@@ -6,13 +6,11 @@ import android.arch.lifecycle.Observer;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.jeanboy.app.github.base.MainApplication;
-import com.jeanboy.app.github.config.AppConfig;
+import com.jeanboy.app.github.config.AppSettings;
 import com.jeanboy.app.github.ui.vm.TestApiViewModel;
-import com.jeanboy.arch.data.cache.database.model.AuthTokenModel;
-import com.jeanboy.arch.data.repository.params.AuthParams;
+import com.jeanboy.arch.data.cache.database.model.IssueModel;
 
-import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by 乔晓松 on 2018/5/11 15:32
@@ -21,21 +19,46 @@ public class TestApi {
 
     public void test(LifecycleOwner activity, TestApiViewModel testApiViewModel) {
 
-        AuthParams authParams = new AuthParams();
-        authParams.setClientId(AppConfig.CLIENT_ID);
-        authParams.setClientSecret(AppConfig.CLIENT_SECRET);
-        authParams.setNoteUrl(AppConfig.REDIRECT_URI);
-        authParams.setNote(MainApplication.getInstance().getPackageName());
-        authParams.setScopes(Arrays.asList("user", "repo", "gist", "notifications"));
-
-        LiveData<AuthTokenModel> authTokenModelLiveData = testApiViewModel
-                .authorizations("coolspan", "qxs000000.", authParams);
-        authTokenModelLiveData.observe(activity, new Observer<AuthTokenModel>() {
+        LiveData<List<IssueModel>> searchIssues = testApiViewModel.searchIssues(AppSettings.getAccessToken(), "user:ThirtyDegreesRay+state:open", "created", "desc", 1);
+        searchIssues.observe(activity, new Observer<List<IssueModel>>() {
             @Override
-            public void onChanged(@Nullable AuthTokenModel authTokenModel) {
-                Log.d("MainActivity", "authTokenModel:" + (authTokenModel != null ? authTokenModel.toString() : "null"));
+            public void onChanged(@Nullable List<IssueModel> list) {
+                Log.d("TestApi searchIssues", "list:" + list);
             }
         });
+
+
+//        LiveData<List<RepositoryModel>> searchRepos = testApiViewModel.searchRepos(AppSettings.getAccessToken(), "filedownload", "followers", "desc", 1);
+//        searchRepos.observe(activity, new Observer<List<RepositoryModel>>() {
+//            @Override
+//            public void onChanged(@Nullable List<RepositoryModel> list) {
+//                Log.d("TestApi searchRepos", "list:" + list);
+//            }
+//        });
+
+//        LiveData<List<UserInfoModel>> searchUsers = testApiViewModel.searchUsers(AppSettings.getAccessToken(), "coolspan", "followers", "desc", 1);
+//        searchUsers.observe(activity, new Observer<List<UserInfoModel>>() {
+//            @Override
+//            public void onChanged(@Nullable List<UserInfoModel> list) {
+//                Log.d("TestApi searchUsers", "list:" + list);
+//            }
+//        });
+
+//        AuthParams authParams = new AuthParams();
+//        authParams.setClientId(AppConfig.CLIENT_ID);
+//        authParams.setClientSecret(AppConfig.CLIENT_SECRET);
+//        authParams.setNoteUrl(AppConfig.REDIRECT_URI);
+//        authParams.setNote(MainApplication.getInstance().getPackageName());
+//        authParams.setScopes(Arrays.asList("user", "repo", "gist", "notifications"));
+
+//        LiveData<AuthTokenModel> authTokenModelLiveData = testApiViewModel
+//                .authorizations("coolspan", "qxs000000.", authParams);
+//        authTokenModelLiveData.observe(activity, new Observer<AuthTokenModel>() {
+//            @Override
+//            public void onChanged(@Nullable AuthTokenModel authTokenModel) {
+//                Log.d("MainActivity", "authTokenModel:" + (authTokenModel != null ? authTokenModel.toString() : "null"));
+//            }
+//        });
 
 //        LiveData<UserInfoModel> userInfoModelLiveData = testApiViewModel.requestUserInfo(AppSettings.getAccessToken(), "coolspan");
 //        userInfoModelLiveData.observe(activity, new Observer<UserInfoModel>() {
