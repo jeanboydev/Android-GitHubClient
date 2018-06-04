@@ -21,7 +21,7 @@ public interface FollowingService {
     String BASE_URL = "https://api.github.com";
 
     /**
-     * 不可用
+     *
      * <p>
      * 查看我是否关注了该用户
      * GET https://api.github.com/user/following/{username}
@@ -48,7 +48,7 @@ public interface FollowingService {
                                  @Path("targetUsername") String targetUsername);
 
     /**
-     * 不可用
+     *
      * 取消关注
      * DELETE https://api.github.com/user/following/{username}
      * HEAD{
@@ -62,7 +62,7 @@ public interface FollowingService {
 
 
     /**
-     * 不可用
+     *
      * 添加关注
      * PUT https://api.github.com/user/following/{username}
      * HEAD{

@@ -5,9 +5,11 @@ import android.arch.lifecycle.ViewModel;
 
 import com.jeanboy.arch.data.cache.database.model.AuthTokenModel;
 import com.jeanboy.arch.data.cache.database.model.IssueModel;
+import com.jeanboy.arch.data.cache.database.model.notifications.NotificationModel;
 import com.jeanboy.arch.data.cache.database.model.UserInfoModel;
 import com.jeanboy.arch.data.cache.database.model.received.RepositoryModel;
 import com.jeanboy.arch.data.repository.FollowingRepository;
+import com.jeanboy.arch.data.repository.NotificationRepository;
 import com.jeanboy.arch.data.repository.OrganizationRepository;
 import com.jeanboy.arch.data.repository.ReposRepository;
 import com.jeanboy.arch.data.repository.SearchRepository;
@@ -43,6 +45,7 @@ public class TestApiViewModel extends ViewModel {
     private OrganizationRepository organizationRepository = new OrganizationRepository();
     private ReposRepository reposRepository = new ReposRepository();
     private SearchRepository searchRepository = new SearchRepository();
+    private NotificationRepository notificationRepository = new NotificationRepository();
 
     public LiveData<AuthTokenModel> authorizations(String username, String password, AuthParams authParams) {
         authorizations = tokenRepository.authorizations(username, password, authParams);
@@ -114,4 +117,13 @@ public class TestApiViewModel extends ViewModel {
         return searchIssues;
     }
 
+    public LiveData<List<NotificationModel>> getMyNotifications(String accessToken, boolean all, boolean participating) {
+        LiveData<List<NotificationModel>> repositoryMyNotifications = notificationRepository.getMyNotifications(accessToken, all, participating);
+        return repositoryMyNotifications;
+    }
+
+    public LiveData<Boolean> markNotificationAsRead(String accessToken, String threadId) {
+        LiveData<Boolean> booleanLiveData = notificationRepository.markNotificationAsRead(accessToken, threadId);
+        return booleanLiveData;
+    }
 }

@@ -8,9 +8,6 @@ import android.util.Log;
 
 import com.jeanboy.app.github.config.AppSettings;
 import com.jeanboy.app.github.ui.vm.TestApiViewModel;
-import com.jeanboy.arch.data.cache.database.model.IssueModel;
-
-import java.util.List;
 
 /**
  * Created by 乔晓松 on 2018/5/11 15:32
@@ -19,13 +16,32 @@ public class TestApi {
 
     public void test(LifecycleOwner activity, TestApiViewModel testApiViewModel) {
 
-        LiveData<List<IssueModel>> searchIssues = testApiViewModel.searchIssues(AppSettings.getAccessToken(), "user:ThirtyDegreesRay+state:open", "created", "desc", 1);
-        searchIssues.observe(activity, new Observer<List<IssueModel>>() {
+        Log.e("TestApi", "token: " + AppSettings.getAccessToken());
+
+        LiveData<Boolean> booleanLiveData = testApiViewModel.markNotificationAsRead(AppSettings.getAccessToken(), "1");
+        booleanLiveData.observe(activity, new Observer<Boolean>() {
             @Override
-            public void onChanged(@Nullable List<IssueModel> list) {
-                Log.d("TestApi searchIssues", "list:" + list);
+            public void onChanged(@Nullable Boolean aBoolean) {
+                Log.d("TestApi", "markNotificationAsRead: " + aBoolean);
             }
         });
+
+        
+//        LiveData<List<NotificationModel>> myNotifications = testApiViewModel.getMyNotifications(AppSettings.getAccessToken(), false, false);
+//
+//        myNotifications.observe(activity, new Observer<List<NotificationModel>>() {
+//            @Override
+//            public void onChanged(@Nullable List<NotificationModel> strings) {
+//                Log.d("TestApi Notifications", "strings:" + strings);
+//            }
+//        });
+//        LiveData<List<IssueModel>> searchIssues = testApiViewModel.searchIssues(AppSettings.getAccessToken(), "user:ThirtyDegreesRay+state:open", "created", "desc", 1);
+//        searchIssues.observe(activity, new Observer<List<IssueModel>>() {
+//            @Override
+//            public void onChanged(@Nullable List<IssueModel> list) {
+//                Log.d("TestApi searchIssues", "list:" + list);
+//            }
+//        });
 
 
 //        LiveData<List<RepositoryModel>> searchRepos = testApiViewModel.searchRepos(AppSettings.getAccessToken(), "filedownload", "followers", "desc", 1);
@@ -72,7 +88,7 @@ public class TestApi {
 //        booleanLiveData.observe(activity, new Observer<Boolean>() {
 //            @Override
 //            public void onChanged(@Nullable Boolean aBoolean) {
-//                Log.d("MainActivity", "checkFollowing: " + aBoolean);
+//                Log.d("TestApi", "checkFollowing: " + aBoolean);
 //            }
 //        });
 //
@@ -88,18 +104,18 @@ public class TestApi {
 //        booleanLiveData3.observe(activity, new Observer<Boolean>() {
 //            @Override
 //            public void onChanged(@Nullable Boolean aBoolean) {
-//                Log.d("MainActivity", "unfollowUser: " + aBoolean);
+//                Log.d("TestApi", "unfollowUser: " + aBoolean);
 //            }
 //        });
-//
+////
 //        LiveData<Boolean> booleanLiveData4 = testApiViewModel.followUser(AppSettings.getAccessToken(), "jeanboydev");
 //        booleanLiveData4.observe(activity, new Observer<Boolean>() {
 //            @Override
 //            public void onChanged(@Nullable Boolean aBoolean) {
-//                Log.d("MainActivity", "followUser: " + aBoolean);
+//                Log.d("TestApi", "followUser: " + aBoolean);
 //            }
 //        });
-//
+////
 //        LiveData<List<UserInfoModel>> booleanLiveData5 = testApiViewModel.getFollowing(AppSettings.getAccessToken(), "coolspan", 1);
 //        booleanLiveData5.observe(activity, new Observer<List<UserInfoModel>>() {
 //            @Override

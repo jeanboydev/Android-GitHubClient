@@ -57,7 +57,7 @@ public class OrganizationRepository {
 
     public LiveData<List<UserInfoModel>> getOrgMembers(String accessToken, String org, int page) {
         MutableLiveData<List<UserInfoModel>> liveData = new MutableLiveData<>();
-        Call<List<UserInfoEntity>> call = organizationService.getOrgMembers(accessToken, org, page);
+        Call<List<UserInfoEntity>> call = organizationService.getOrgMembers("token " + accessToken, org, page);
         NetManager.getInstance().request(new RequestParams<>(call),
                 new RequestCallback<ResponseData<List<UserInfoEntity>>>() {
                     @Override

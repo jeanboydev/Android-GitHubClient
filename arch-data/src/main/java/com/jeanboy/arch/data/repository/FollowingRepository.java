@@ -33,9 +33,6 @@ public class FollowingRepository {
     }
 
     /**
-     * 不可用 code:401,msg:
-     * {"message":"Requires authentication",
-     * "documentation_url":"https://developer.github.com/v3/users/followers/#unfollow-a-user"}
      *
      * @param username
      * @param accessToken
@@ -54,8 +51,12 @@ public class FollowingRepository {
 
                     @Override
                     public void onError(int code, String msg) {
-                        Log.d("checkFollowing", "code:" + code + ",msg:" + msg);
-                        liveData.setValue(false);
+                        if (code == 404) {
+                            liveData.setValue(false);
+                        } else {
+                            Log.d("checkFollowing", "code:" + code + ",msg:" + msg);
+                            liveData.setValue(false);
+                        }
                     }
                 });
         return liveData;
@@ -82,7 +83,7 @@ public class FollowingRepository {
     }
 
     /**
-     * 不可用
+     *
      *
      * @param accessToken
      * @param username
@@ -90,7 +91,7 @@ public class FollowingRepository {
      */
     public LiveData<Boolean> unfollowUser(String accessToken, String username) {
         MutableLiveData<Boolean> liveData = new MutableLiveData<>();
-        Call<Boolean> call = followingService.unfollowUser(accessToken, username);
+        Call<Boolean> call = followingService.unfollowUser("token " + accessToken, username);
         NetManager.getInstance().request(new RequestParams<>(call),
                 new RequestCallback<ResponseData<Boolean>>() {
                     @Override
@@ -109,7 +110,7 @@ public class FollowingRepository {
     }
 
     /**
-     * 不可用
+     *
      *
      * @param accessToken
      * @param username
@@ -117,7 +118,7 @@ public class FollowingRepository {
      */
     public LiveData<Boolean> followUser(String accessToken, String username) {
         MutableLiveData<Boolean> liveData = new MutableLiveData<>();
-        Call<Boolean> call = followingService.followUser(accessToken, username);
+        Call<Boolean> call = followingService.followUser("token " + accessToken, username);
         NetManager.getInstance().request(new RequestParams<>(call),
                 new RequestCallback<ResponseData<Boolean>>() {
                     @Override

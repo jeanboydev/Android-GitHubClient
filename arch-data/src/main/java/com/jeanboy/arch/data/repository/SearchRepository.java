@@ -51,7 +51,7 @@ public class SearchRepository {
      */
     public LiveData<List<UserInfoModel>> searchUsers(String accessToken, String query, String sort, String order, int page) {
         MutableLiveData<List<UserInfoModel>> liveData = new MutableLiveData<>();
-        Call<SearchWrapperEntity<UserInfoEntity>> call = searchService.searchUsers(accessToken, query, sort, order, page);
+        Call<SearchWrapperEntity<UserInfoEntity>> call = searchService.searchUsers("token " + accessToken, query, sort, order, page);
         NetManager.getInstance().request(new RequestParams<>(call),
                 new RequestCallback<ResponseData<SearchWrapperEntity<UserInfoEntity>>>() {
                     @Override
@@ -82,7 +82,7 @@ public class SearchRepository {
      */
     public LiveData<List<RepositoryModel>> searchRepos(String accessToken, String query, String sort, String order, int page) {
         MutableLiveData<List<RepositoryModel>> liveData = new MutableLiveData<>();
-        Call<SearchWrapperEntity<RepositoryEntity>> call = searchService.searchRepos(accessToken, query, sort, order, page);
+        Call<SearchWrapperEntity<RepositoryEntity>> call = searchService.searchRepos("token " + accessToken, query, sort, order, page);
         NetManager.getInstance().request(new RequestParams<>(call),
                 new RequestCallback<ResponseData<SearchWrapperEntity<RepositoryEntity>>>() {
                     @Override
@@ -103,7 +103,7 @@ public class SearchRepository {
 
     public LiveData<List<IssueModel>> searchIssues(String accessToken, String query, String sort, String order, int page) {
         MutableLiveData<List<IssueModel>> liveData = new MutableLiveData<>();
-        Call<SearchWrapperEntity<IssueEntity>> call = searchService.searchIssues(accessToken, query, sort, order, page);
+        Call<SearchWrapperEntity<IssueEntity>> call = searchService.searchIssues("token " + accessToken, query, sort, order, page);
         NetManager.getInstance().request(new RequestParams<>(call),
                 new RequestCallback<ResponseData<SearchWrapperEntity<IssueEntity>>>() {
                     @Override
