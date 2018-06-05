@@ -16,6 +16,7 @@ import com.jeanboy.app.github.R;
 import com.jeanboy.app.github.config.AppSettings;
 import com.jeanboy.app.github.di.BaseDiFragment;
 import com.jeanboy.app.github.ui.activity.SettingsActivity;
+import com.jeanboy.app.github.ui.activity.UserRepositoryListActivity;
 import com.jeanboy.app.github.ui.vm.MineViewModel;
 import com.jeanboy.arch.base.helper.ToolbarHelper;
 import com.jeanboy.arch.data.cache.database.model.UserInfoModel;
@@ -58,6 +59,8 @@ public class MineFragment extends BaseDiFragment {
     @Inject
     MineViewModel mineViewModel;
 
+    private String username;
+
     @Inject
     public MineFragment() {
     }
@@ -84,12 +87,19 @@ public class MineFragment extends BaseDiFragment {
         });
     }
 
+    @OnClick({R.id.item_repositories})
+    public void toRepositories() {
+        UserRepositoryListActivity.startBy(getActivity(), this.username);
+    }
+
     @OnClick({R.id.item_settings})
     public void toSettings() {
         SettingsActivity.startBy(getActivity());
     }
 
     private void refreshView(UserInfoModel userInfoModel) {
+        this.username = userInfoModel.getLogin();
+
         String avatarUrl = userInfoModel.getAvatarUrl();
         Glide.with(Objects.requireNonNull(getActivity())).load(avatarUrl).into(iv_avatar);
 

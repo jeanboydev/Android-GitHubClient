@@ -1,6 +1,6 @@
-package com.jeanboy.app.github.ui.fragment;
+package com.jeanboy.app.github.ui.activity;
 
-
+import android.app.Activity;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.os.Bundle;
@@ -11,64 +11,74 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.jeanboy.app.github.R;
-import com.jeanboy.app.github.di.BaseDiFragment;
-import com.jeanboy.app.github.ui.activity.RepositoryInfoActivity;
-import com.jeanboy.app.github.ui.adapter.ReceivedEventAdapter;
-import com.jeanboy.app.github.ui.vm.MainHomeViewModel;
+import com.jeanboy.app.github.di.BaseDiActivity;
+import com.jeanboy.app.github.ui.adapter.TrendingRepositoryAdapter;
+import com.jeanboy.app.github.ui.adapter.UserRepositoryAdapter;
+import com.jeanboy.app.github.ui.vm.UserRepositoryListViewModel;
+import com.jeanboy.arch.base.ExtrasCallback;
 import com.jeanboy.arch.base.adapter.recyclerview.BaseViewHolder;
 import com.jeanboy.arch.base.adapter.recyclerview.RecyclerBaseAdapter;
 import com.jeanboy.arch.base.adapter.recyclerview.decoration.SpaceItemDecoration;
 import com.jeanboy.arch.base.helper.ToastHelper;
 import com.jeanboy.arch.base.helper.ToolbarHelper;
-import com.jeanboy.arch.data.cache.database.model.ReceivedEventModel;
-import com.jeanboy.arch.data.cache.database.model.received.RepositoryModel;
 import com.jeanboy.arch.data.net.entity.RepositoryEntity;
 import com.jeanboy.recyclerviewhelper.RecyclerViewHelper;
 import com.jeanboy.recyclerviewhelper.listener.LoadMoreListener;
 import com.jeanboy.recyclerviewhelper.listener.TipsListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 
-/**
- * Created by jeanboy on 2018/4/25.
- */
-public class HomeFragment extends BaseDiFragment {
+public class UserRepositoryListActivity extends BaseDiActivity {
 
     @BindView(R.id.srl_refresh)
     SwipeRefreshLayout srl_refresh;
     @BindView(R.id.list_container)
     RecyclerView list_container;
 
-    private List<ReceivedEventModel> dataList = new ArrayList<>();
-    private Map<String, RepositoryEntity> repositoryMap = new HashMap<>();
-    private ReceivedEventAdapter dataAdapter;
+
+    @Inject
+    UserRepositoryListViewModel userRepositoryListViewModel;
+
+    private List<RepositoryEntity> dataList = new ArrayList<>();
+    private UserRepositoryAdapter dataAdapter;
     private RecyclerViewHelper recyclerViewHelper;
     private boolean isRefreshing = false;
-
-    @Inject
-    MainHomeViewModel mainHomeViewModel;
-
     private int currentPage = 1;
 
-    @Inject
-    public HomeFragment() {
+    private static final String KEY_USERNAME = "username";
+
+    private String username;
+
+    public static void startBy(Activity context, String username) {
+        startActivity(context, UserRepositoryListActivity.class, new ExtrasCallback() {
+            @Override
+            public void onPutExtras(Bundle bundle) {
+                bundle.putString(KEY_USERNAME, username);
+            }
+        });
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_home;
+        return R.layout.activity_user_repository_list;
     }
 
     @Override
-    protected void setupView(View view, Bundle savedInstanceState) {
-        ToolbarHelper.setToolBarTitle(getToolbar(), R.string.title_received);
+    protected void setupArguments(Bundle args) {
+        super.setupArguments(args);
+        username = args.getString(KEY_USERNAME);
+    }
+
+    @Override
+    protected void setupView(Bundle savedInstanceState) {
+        ToolbarHelper.setToolBarTitle(getToolbar(), R.string.title_repos_list);
+        ToolbarHelper.setToolbarHomeAsUp(this);
+
 
         srl_refresh.setEnabled(false);
         srl_refresh.setColorSchemeResources(R.color.colorPrimary);
@@ -81,9 +91,9 @@ public class HomeFragment extends BaseDiFragment {
             }
         });
 
-        dataAdapter = new ReceivedEventAdapter(dataList, repositoryMap);
+        dataAdapter = new UserRepositoryAdapter(dataList);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(UserRepositoryListActivity.this);
         list_container.setAdapter(dataAdapter);
         list_container.setLayoutManager(layoutManager);
         list_container.addItemDecoration(new SpaceItemDecoration(getResources().getDimensionPixelSize(R.dimen.recycler_item_space)));
@@ -116,16 +126,15 @@ public class HomeFragment extends BaseDiFragment {
         dataAdapter.setOnItemClickListener(new RecyclerBaseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, BaseViewHolder holder, int position) {
-                ReceivedEventModel receivedEventModel = dataList.get(position);
-                RepositoryModel repo = receivedEventModel.getRepo();
-                if (repo == null) return;
+                RepositoryEntity repositoryEntity = dataList.get(position);
+                if (repositoryEntity == null) return;
 
-                String fromRepoName = repo.getName();
+                String fromRepoName = repositoryEntity.getFull_name();
                 if (!fromRepoName.contains("/")) return;
 
                 String[] params = fromRepoName.split("/");
                 if (params.length != 2) return;
-                RepositoryInfoActivity.startBy(getActivity(), params[0], params[1]);
+                RepositoryInfoActivity.startBy(UserRepositoryListActivity.this, params[0], params[1]);
             }
         });
     }
@@ -137,12 +146,12 @@ public class HomeFragment extends BaseDiFragment {
     }
 
     private void loadNext() {
-        LiveData<List<ReceivedEventModel>> request = mainHomeViewModel.request(currentPage);
-        request.observe(this, new Observer<List<ReceivedEventModel>>() {
+        LiveData<List<RepositoryEntity>> request = userRepositoryListViewModel.getReposList(username, currentPage);
+        request.observe(this, new Observer<List<RepositoryEntity>>() {
             @Override
-            public void onChanged(@Nullable List<ReceivedEventModel> receivedEventModels) {
+            public void onChanged(@Nullable List<RepositoryEntity> receivedEventModels) {
                 if (isRefreshing) {
-                    ToastHelper.toast(getActivity(), "刷新成功！");
+                    ToastHelper.toast(UserRepositoryListActivity.this, "刷新成功！");
                 }
                 isRefreshing = false;
                 srl_refresh.setRefreshing(false);

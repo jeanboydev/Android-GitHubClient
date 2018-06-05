@@ -21,9 +21,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.activity.MainActivity"
-            android:launchMode="singleTask" />
         <activity android:name=".ui.activity.AuthActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -36,8 +33,15 @@
                     android:scheme="myhubapp" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".ui.activity.SettingsActivity" />
-        <activity android:name=".ui.activity.RepositoryInfoActivity"></activity>
+        <activity android:name=".ui.activity.RepositoryInfoActivity" />
+        <activity android:name=".ui.activity.UserRepositoryListActivity" />
+        <activity android:name=".ui.activity.UserStarsListActivity" />
+        <activity android:name=".ui.activity.UserFollowersListActivity" />
+        <activity android:name=".ui.activity.UserFollowingListActivity" />
     </application>
 
 </manifest>

@@ -39,8 +39,8 @@ public interface ReposService {
      * }
      */
     @Headers("Accept: application/json")
-    @GET("users/{username}/repos")
-    Call<List<RepositoryEntity>> getRepos(@Header("Authorization") String accessToken,
+    @GET("users/{username}/repos?sort=updated")
+    Call<List<RepositoryEntity>> getReposList(@Header("Authorization") String accessToken,
                                           @Path("username") String username,
                                           @Query("page") int page);
 

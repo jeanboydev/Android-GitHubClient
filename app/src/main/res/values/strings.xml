@@ -29,6 +29,7 @@
     <string name="title_trending">Trending</string>
     <string name="stars_count">Stars(%1$d)</string>
     <string name="forks_count">Forks(%1$d)</string>
+    <string name="open_issues_count">Issues(%1$d)</string>
     <string name="trending_today">%1$d stars today</string>
     <string name="trending_this_week">%1$d stars this week</string>
     <string name="trending_this_month">%1$d stars this month</string>
@@ -44,5 +45,8 @@
     <string name="repos_title_readme">README</string>
     <string name="repos_readme_loading">Loading&#8230;</string>
     <string name="repos_latest_commit">Latest commit about %1$s.</string>
+
+    <!-- user repository list -->
+    <string name="title_repos_list">Repositories</string>
 
 </resources>

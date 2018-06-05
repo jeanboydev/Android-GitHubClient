@@ -4,13 +4,8 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 
 import com.jeanboy.app.github.config.AppSettings;
-import com.jeanboy.arch.data.cache.database.model.ReceivedEventModel;
-import com.jeanboy.arch.data.cache.database.model.UserInfoModel;
 import com.jeanboy.arch.data.net.entity.RepositoryEntity;
 import com.jeanboy.arch.data.repository.ReposRepository;
-import com.jeanboy.arch.data.repository.UserRepository;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
