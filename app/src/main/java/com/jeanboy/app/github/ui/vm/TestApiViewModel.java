@@ -126,4 +126,14 @@ public class TestApiViewModel extends ViewModel {
         LiveData<Boolean> booleanLiveData = notificationRepository.markNotificationAsRead(accessToken, threadId);
         return booleanLiveData;
     }
+
+    public LiveData<Boolean> markAllNotificationAsRead(String accessToken) {
+        LiveData<Boolean> booleanLiveData = notificationRepository.markAllNotificationAsRead(accessToken);
+        return booleanLiveData;
+    }
+
+    public LiveData<Boolean> markRepoNotificationAsRead(String accessToken, String owner, String repo) {
+        LiveData<Boolean> booleanLiveData = notificationRepository.markRepoNotificationAsRead(accessToken, owner, repo);
+        return booleanLiveData;
+    }
 }

@@ -14,6 +14,7 @@ import com.jeanboy.arch.data.net.entity.notifications.NotificationEntity;
 import com.jeanboy.arch.data.net.manager.NetManager;
 import com.jeanboy.arch.data.net.service.NotificationService;
 import com.jeanboy.arch.data.repository.mapper.NotificationMapper;
+import com.jeanboy.arch.data.repository.params.MarkNotificationReadRequestParams;
 
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class NotificationRepository {
 
     public LiveData<List<NotificationModel>> getMyNotifications(String token, boolean all, boolean participating) {
         MutableLiveData<List<NotificationModel>> liveData = new MutableLiveData<>();
-        Call<List<NotificationEntity>> call = notificationService.getMyNotifications("token " + token, all,participating);
+        Call<List<NotificationEntity>> call = notificationService.getMyNotifications("token " + token, all, participating);
         NetManager.getInstance().request(new RequestParams<>(call),
                 new RequestCallback<ResponseData<List<NotificationEntity>>>() {
                     @Override
@@ -69,6 +70,46 @@ public class NotificationRepository {
                     @Override
                     public void onError(int code, String msg) {
                         Log.d("markNotificationAsRead", "code:" + code + ",msg:" + msg);
+                        liveData.setValue(false);
+                    }
+                });
+        return liveData;
+    }
+
+    public LiveData<Boolean> markAllNotificationAsRead(String token) {
+        MutableLiveData<Boolean> liveData = new MutableLiveData<>();
+        Call<Response<ResponseBody>> call = notificationService.markAllNotificationAsRead("token " + token, new MarkNotificationReadRequestParams());
+        NetManager.getInstance().request(new RequestParams<>(call),
+                new RequestCallback<ResponseData<Response<ResponseBody>>>() {
+                    @Override
+                    public void onSuccess(ResponseData<Response<ResponseBody>> response) {
+                        Response<ResponseBody> body = response.getBody();
+                        liveData.setValue(true);
+                    }
+
+                    @Override
+                    public void onError(int code, String msg) {
+                        Log.d("markAllNotifyAsRead", "code:" + code + ",msg:" + msg);
+                        liveData.setValue(false);
+                    }
+                });
+        return liveData;
+    }
+
+    public LiveData<Boolean> markRepoNotificationAsRead(String token, String owner, String repo) {
+        MutableLiveData<Boolean> liveData = new MutableLiveData<>();
+        Call<Response<ResponseBody>> call = notificationService.markRepoNotificationAsRead("token " + token, new MarkNotificationReadRequestParams(), owner, repo);
+        NetManager.getInstance().request(new RequestParams<>(call),
+                new RequestCallback<ResponseData<Response<ResponseBody>>>() {
+                    @Override
+                    public void onSuccess(ResponseData<Response<ResponseBody>> response) {
+                        Response<ResponseBody> body = response.getBody();
+                        liveData.setValue(true);
+                    }
+
+                    @Override
+                    public void onError(int code, String msg) {
+                        Log.d("markRepoNotifyAsRead", "code:" + code + ",msg:" + msg);
                         liveData.setValue(false);
                     }
                 });

@@ -1,16 +1,19 @@
 package com.jeanboy.arch.data.net.service;
 
 import com.jeanboy.arch.data.net.entity.notifications.NotificationEntity;
+import com.jeanboy.arch.data.repository.params.MarkNotificationReadRequestParams;
 
 import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Response;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.PATCH;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -39,7 +42,7 @@ public interface NotificationService {
 
 
     /**
-     * 标记消息为已读
+     * 标记指定通知消息为已读
      *
      * @param accessToken
      * @param threadId
@@ -49,6 +52,35 @@ public interface NotificationService {
     @Headers("Accept: application/json")
     Call<Response<ResponseBody>> markNotificationAsRead(@Header("Authorization") String accessToken,
                                                         @Path("threadId") String threadId);
+
+    /**
+     * 标记所有的通知消息为已读
+     *
+     * @param accessToken
+     * @param body
+     * @return
+     */
+    @PUT("notifications")
+    @Headers("Accept: application/json")
+    Call<Response<ResponseBody>> markAllNotificationAsRead(@Header("Authorization") String accessToken,
+                                                           @Body MarkNotificationReadRequestParams body);
+
+
+    /**
+     * 标记指定用户和仓库的通知消息为已读
+     *
+     * @param accessToken
+     * @param body
+     * @param owner
+     * @param repo
+     * @return
+     */
+    @PUT("repos/{owner}/{repo}/notifications")
+    @Headers("Accept: application/json")
+    Call<Response<ResponseBody>> markRepoNotificationAsRead(@Header("Authorization") String accessToken,
+                                                            @Body MarkNotificationReadRequestParams body,
+                                                            @Path("owner") String owner,
+                                                            @Path("repo") String repo);
 
 
 }

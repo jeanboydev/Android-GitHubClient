@@ -18,13 +18,29 @@ public class TestApi {
 
         Log.e("TestApi", "token: " + AppSettings.getAccessToken());
 
-        LiveData<Boolean> booleanLiveData = testApiViewModel.markNotificationAsRead(AppSettings.getAccessToken(), "1");
+        LiveData<Boolean> booleanLiveData = testApiViewModel.markRepoNotificationAsRead(AppSettings.getAccessToken(),"coolspan","IOSRadarView");
         booleanLiveData.observe(activity, new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable Boolean aBoolean) {
-                Log.d("TestApi", "markNotificationAsRead: " + aBoolean);
+                Log.d("TestApi", "markRepoNotificationAsRead: " + aBoolean);
             }
         });
+
+//        LiveData<Boolean> booleanLiveData = testApiViewModel.markAllNotificationAsRead(AppSettings.getAccessToken());
+//        booleanLiveData.observe(activity, new Observer<Boolean>() {
+//            @Override
+//            public void onChanged(@Nullable Boolean aBoolean) {
+//                Log.d("TestApi", "markAllNotificationAsRead: " + aBoolean);
+//            }
+//        });
+
+//        LiveData<Boolean> booleanLiveData = testApiViewModel.markNotificationAsRead(AppSettings.getAccessToken(), "1");
+//        booleanLiveData.observe(activity, new Observer<Boolean>() {
+//            @Override
+//            public void onChanged(@Nullable Boolean aBoolean) {
+//                Log.d("TestApi", "markNotificationAsRead: " + aBoolean);
+//            }
+//        });
 
         
 //        LiveData<List<NotificationModel>> myNotifications = testApiViewModel.getMyNotifications(AppSettings.getAccessToken(), false, false);
