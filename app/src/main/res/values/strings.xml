@@ -27,6 +27,11 @@
 
     <!-- Trending-->
     <string name="title_trending">Trending</string>
+    <string name="stars_count">Stars(%1$d)</string>
+    <string name="forks_count">Forks(%1$d)</string>
+    <string name="trending_today">%1$d stars today</string>
+    <string name="trending_this_week">%1$d stars this week</string>
+    <string name="trending_this_month">%1$d stars this month</string>
 
     <!-- settings -->
     <string name="title_settings">Settings</string>

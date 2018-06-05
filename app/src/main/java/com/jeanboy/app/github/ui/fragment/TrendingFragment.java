@@ -21,6 +21,7 @@ import com.jeanboy.arch.base.adapter.recyclerview.decoration.SpaceItemDecoration
 import com.jeanboy.arch.base.helper.ToastHelper;
 import com.jeanboy.arch.base.helper.ToolbarHelper;
 import com.jeanboy.arch.data.net.entity.RepositoryEntity;
+import com.jeanboy.arch.data.repository.params.TrendingParams;
 import com.jeanboy.recyclerviewhelper.RecyclerViewHelper;
 import com.jeanboy.recyclerviewhelper.listener.TipsListener;
 
@@ -48,6 +49,9 @@ public class TrendingFragment extends BaseDiFragment {
 
     @Inject
     MainTrendingViewModel mainTrendingViewModel;
+
+    private TrendingParams params = null;
+    private TrendingParams.Period period = TrendingParams.Period.Daily;
 
     @Inject
     public TrendingFragment() {
@@ -115,7 +119,7 @@ public class TrendingFragment extends BaseDiFragment {
 
     @Override
     protected void initData() {
-        LiveData<List<RepositoryEntity>> request = mainTrendingViewModel.request(null);
+        LiveData<List<RepositoryEntity>> request = mainTrendingViewModel.request(params);
         request.observe(this, new Observer<List<RepositoryEntity>>() {
             @Override
             public void onChanged(@Nullable List<RepositoryEntity> receivedEventModels) {
