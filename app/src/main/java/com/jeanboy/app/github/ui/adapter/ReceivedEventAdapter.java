@@ -49,7 +49,7 @@ public class ReceivedEventAdapter extends RecyclerBaseAdapter<ReceivedEventModel
         }
 
         int actionStringId = AppConfig.getEventStringId(receivedEventModel.getType());
-        String action = holder.getConvertView().getResources().getString(actionStringId);
+        String action = holder.getResources().getString(actionStringId);
 
         String fromRepoName = "";
         String fromRepoUrl = "";
@@ -81,27 +81,27 @@ public class ReceivedEventAdapter extends RecyclerBaseAdapter<ReceivedEventModel
             }
         }
 
-        String content = holder.getConvertView().getResources().getString(R.string.title_normal_event,
+        String content = holder.getResources().getString(R.string.title_normal_event,
                 action, fromRepoName);
         if (AppConfig.FORK_EVENT.equals(receivedEventModel.getType())) {
-            content = holder.getConvertView().getResources().getString(R.string.title_fork_event,
+            content = holder.getResources().getString(R.string.title_fork_event,
                     action, toRepoName, fromRepoName);
         } else if (AppConfig.PUSH_EVENT.equals(receivedEventModel.getType())) {
-            content = holder.getConvertView().getResources().getString(R.string.title_push_event,
+            content = holder.getResources().getString(R.string.title_push_event,
                     action, branch, fromRepoName);
         } else if (AppConfig.PUBLIC_EVENT.equals(receivedEventModel.getType())) {
-            content = holder.getConvertView().getResources().getString(R.string.title_public_event,
+            content = holder.getResources().getString(R.string.title_public_event,
                     action, fromRepoName);
         }
 
         long createdAt = receivedEventModel.getCreatedAt();
-        String formatRecent = DateUtil.formatRecent(createdAt, holder.getConvertView().getContext());
+        String formatRecent = DateUtil.formatRecent(createdAt, holder.getContext());
 
         holder.setText(R.id.tv_username, username);
         holder.setText(R.id.tv_create_at, formatRecent);
         holder.setText(R.id.tv_content, Html.fromHtml(content));
         ImageView avatarImageView = holder.getView(R.id.iv_avatar);
-        Glide.with(holder.getConvertView().getContext()).load(avatarUrl)
+        Glide.with(holder.getContext()).load(avatarUrl)
                 .apply(RequestOptions.circleCropTransform()).into(avatarImageView);
     }
 }

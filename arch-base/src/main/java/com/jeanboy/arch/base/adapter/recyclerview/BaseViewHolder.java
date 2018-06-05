@@ -1,5 +1,7 @@
 package com.jeanboy.arch.base.adapter.recyclerview;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
@@ -37,6 +39,14 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
             views.put(viewId, view);
         }
         return (T) view;
+    }
+
+    public Context getContext(){
+        return convertView.getContext();
+    }
+
+    public Resources getResources(){
+        return convertView.getResources();
     }
 
     public BaseViewHolder setText(int viewId, int resId) {

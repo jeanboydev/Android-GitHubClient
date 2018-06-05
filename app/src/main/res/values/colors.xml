@@ -9,7 +9,7 @@
     <color name="textNormal">#6a737d</color>
     <color name="textLink">@color/colorAccent</color>
     <color name="textRed">#cc0000</color>
-    <color name="line">#f2f2f2</color>
+    <color name="line">#dddddd</color>
 
     <color name="common_bg">#f2f2f2</color>
 </resources>

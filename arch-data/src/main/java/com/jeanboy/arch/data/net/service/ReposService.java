@@ -51,11 +51,10 @@ public interface ReposService {
      * }
      */
     @Headers("Accept: application/json")
-    @GET("users/{username}/repos")
-    Call<List<RepositoryEntity>> getRepos(
-            @Header("Authorization") String accessToken,
-            @Path("username") String username,
-            @Query("page") int page);
+    @GET("users/{username}/repos?sort=updated")
+    Call<List<RepositoryEntity>> getReposList(@Header("Authorization") String accessToken,
+                                          @Path("username") String username,
+                                          @Query("page") int page);
 
     /**
      * 获取指定用户的Started的仓库
