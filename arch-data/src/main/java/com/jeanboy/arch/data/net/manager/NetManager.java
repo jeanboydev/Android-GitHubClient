@@ -57,6 +57,10 @@ public class NetManager {
         return get(baseUrl, SimpleXmlConverterFactory.create());
     }
 
+    private Retrofit getWithString(String baseUrl) {
+        return get(baseUrl, ScalarsConverterFactory.create());
+    }
+
     private Retrofit get(String baseUrl, Converter.Factory factory) {
         if (client == null) {
             client = getOkHttpClient();
@@ -113,5 +117,9 @@ public class NetManager {
 
     public <T> T createForXml(String baseUrl, Class<T> clazz) {
         return getWithXml(baseUrl).create(clazz);
+    }
+
+    public <T> T createForString(String baseUrl, Class<T> clazz) {
+        return getWithString(baseUrl).create(clazz);
     }
 }

@@ -3,11 +3,15 @@ package com.jeanboy.app.github.ui.activity;
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.jeanboy.app.github.config.AppSettings;
 import com.jeanboy.app.github.ui.vm.TestApiViewModel;
+import com.jeanboy.arch.data.cache.database.model.received.RepositoryModel;
+
+import java.util.List;
+
+import javax.annotation.Nullable;
 
 /**
  * Created by 乔晓松 on 2018/5/11 15:32
@@ -18,13 +22,133 @@ public class TestApi {
 
         Log.e("TestApi", "token: " + AppSettings.getAccessToken());
 
-        LiveData<Boolean> booleanLiveData = testApiViewModel.markRepoNotificationAsRead(AppSettings.getAccessToken(),"coolspan","IOSRadarView");
-        booleanLiveData.observe(activity, new Observer<Boolean>() {
+        LiveData<List<RepositoryModel>> booleanLiveData = testApiViewModel.getForks(AppSettings.getAccessToken(), "coolspan", "IOSRadarView", 1);
+        booleanLiveData.observe(activity, new Observer<List<RepositoryModel>>() {
             @Override
-            public void onChanged(@Nullable Boolean aBoolean) {
-                Log.d("TestApi", "markRepoNotificationAsRead: " + aBoolean);
+            public void onChanged(@Nullable List<RepositoryModel> aBoolean) {
+                Log.d("TestApi", "getForks: " + aBoolean);
             }
         });
+
+//        LiveData<RepositoryModel> booleanLiveData = testApiViewModel.createFork(AppSettings.getAccessToken(), "coolspan", "IOSRadarView");
+//        booleanLiveData.observe(activity, new Observer<RepositoryModel>() {
+//            @Override
+//            public void onChanged(@Nullable RepositoryModel aBoolean) {
+//                Log.d("TestApi", "createFork: " + aBoolean);
+//            }
+//        });
+
+//        LiveData<List<UserInfoModel>> booleanLiveData = testApiViewModel.getWatchers(AppSettings.getAccessToken(), "coolspan", "IOSRadarView", 1);
+//        booleanLiveData.observe(activity, new Observer<List<UserInfoModel>>() {
+//            @Override
+//            public void onChanged(@Nullable List<UserInfoModel> aBoolean) {
+//                Log.d("TestApi", "getWatchers: " + aBoolean);
+//            }
+//        });
+
+//        LiveData<List<UserInfoModel>> booleanLiveData = testApiViewModel.getStargazers(AppSettings.getAccessToken(), "coolspan", "IOSRadarView", 1);
+//        booleanLiveData.observe(activity, new Observer<List<UserInfoModel>>() {
+//            @Override
+//            public void onChanged(@Nullable List<UserInfoModel> aBoolean) {
+//                Log.d("TestApi", "getStargazers: " + aBoolean);
+//            }
+//        });
+
+//        LiveData<List<TagModel>> booleanLiveData = testApiViewModel.getTags(AppSettings.getAccessToken(),"coolspan","IOSRadarView");
+//        booleanLiveData.observe(activity, new Observer<List<TagModel>>() {
+//            @Override
+//            public void onChanged(@Nullable List<TagModel> aBoolean) {
+//                Log.d("TestApi", "getTags: " + aBoolean);
+//            }
+//        });
+
+//        LiveData<List<BranchModel>> booleanLiveData = testApiViewModel.getBranches(AppSettings.getAccessToken(),"coolspan","IOSRadarView");
+//        booleanLiveData.observe(activity, new Observer<List<BranchModel>>() {
+//            @Override
+//            public void onChanged(@Nullable List<BranchModel> aBoolean) {
+//                Log.d("TestApi", "getBranches: " + aBoolean);
+//            }
+//        });
+
+//        LiveData<List<FileModel>> booleanLiveData = testApiViewModel.getRepoFiles(AppSettings.getAccessToken(),"coolspan","IOSRadarView","","master");
+//        booleanLiveData.observe(activity, new Observer<List<FileModel>>() {
+//            @Override
+//            public void onChanged(@Nullable List<FileModel> aBoolean) {
+//                Log.d("TestApi", "getRepoFiles: " + aBoolean);
+//            }
+//        });
+
+//        LiveData<String> booleanLiveData = testApiViewModel.getFileAsStream(AppSettings.getAccessToken(),"https://api.github.com/repos/coolspan/IOSRadarView/readme?ref=master");
+//        booleanLiveData.observe(activity, new Observer<String>() {
+//            @Override
+//            public void onChanged(@Nullable String aBoolean) {
+//                Log.d("TestApi", "getFileAsStream: " + aBoolean);
+//            }
+//        });
+
+//        LiveData<String> booleanLiveData = testApiViewModel.getFileAsHtmlStream(AppSettings.getAccessToken(),"https://api.github.com/repos/coolspan/IOSRadarView/readme?ref=master");
+//        booleanLiveData.observe(activity, new Observer<String>() {
+//            @Override
+//            public void onChanged(@Nullable String aBoolean) {
+//                Log.d("TestApi", "getFileAsHtmlStream: " + aBoolean);
+//            }
+//        });
+
+//        LiveData<Boolean> booleanLiveData = testApiViewModel.watchRepo(AppSettings.getAccessToken(),"coolspan","IOSRadarView");
+//        booleanLiveData.observe(activity, new Observer<Boolean>() {
+//            @Override
+//            public void onChanged(@Nullable Boolean aBoolean) {
+//                Log.d("TestApi", "watchRepo: " + aBoolean);
+//            }
+//        });
+
+//        LiveData<Boolean> booleanLiveData = testApiViewModel.unwatchRepo(AppSettings.getAccessToken(),"coolspan","IOSRadarView");
+//        booleanLiveData.observe(activity, new Observer<Boolean>() {
+//            @Override
+//            public void onChanged(@Nullable Boolean aBoolean) {
+//                Log.d("TestApi", "unwatchRepo: " + aBoolean);
+//            }
+//        });
+
+//        LiveData<Boolean> booleanLiveData = testApiViewModel.checkRepoWatched(AppSettings.getAccessToken(),"coolspan","IOSRadarView");
+//        booleanLiveData.observe(activity, new Observer<Boolean>() {
+//            @Override
+//            public void onChanged(@Nullable Boolean aBoolean) {
+//                Log.d("TestApi", "checkRepoWatched: " + aBoolean);
+//            }
+//        });
+
+//        LiveData<Boolean> booleanLiveData = testApiViewModel.unstarRepo(AppSettings.getAccessToken(),"coolspan","IOSRadarView");
+//        booleanLiveData.observe(activity, new Observer<Boolean>() {
+//            @Override
+//            public void onChanged(@Nullable Boolean aBoolean) {
+//                Log.d("TestApi", "unstarRepo: " + aBoolean);
+//            }
+//        });
+
+//        LiveData<Boolean> booleanLiveData = testApiViewModel.starRepo(AppSettings.getAccessToken(),"coolspan","IOSRadarView");
+//        booleanLiveData.observe(activity, new Observer<Boolean>() {
+//            @Override
+//            public void onChanged(@Nullable Boolean aBoolean) {
+//                Log.d("TestApi", "starRepo: " + aBoolean);
+//            }
+//        });
+
+//        LiveData<Boolean> booleanLiveData = testApiViewModel.checkRepoStarred(AppSettings.getAccessToken(),"coolspan","IOSRadarView");
+//        booleanLiveData.observe(activity, new Observer<Boolean>() {
+//            @Override
+//            public void onChanged(@Nullable Boolean aBoolean) {
+//                Log.d("TestApi", "checkRepoStarred: " + aBoolean);
+//            }
+//        });
+
+//        LiveData<Boolean> booleanLiveData = testApiViewModel.markRepoNotificationAsRead(AppSettings.getAccessToken(),"coolspan","IOSRadarView");
+//        booleanLiveData.observe(activity, new Observer<Boolean>() {
+//            @Override
+//            public void onChanged(@Nullable Boolean aBoolean) {
+//                Log.d("TestApi", "markRepoNotificationAsRead: " + aBoolean);
+//            }
+//        });
 
 //        LiveData<Boolean> booleanLiveData = testApiViewModel.markAllNotificationAsRead(AppSettings.getAccessToken());
 //        booleanLiveData.observe(activity, new Observer<Boolean>() {
@@ -42,7 +166,7 @@ public class TestApi {
 //            }
 //        });
 
-        
+
 //        LiveData<List<NotificationModel>> myNotifications = testApiViewModel.getMyNotifications(AppSettings.getAccessToken(), false, false);
 //
 //        myNotifications.observe(activity, new Observer<List<NotificationModel>>() {

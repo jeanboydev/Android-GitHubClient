@@ -4,9 +4,12 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 
 import com.jeanboy.arch.data.cache.database.model.AuthTokenModel;
+import com.jeanboy.arch.data.cache.database.model.BranchModel;
+import com.jeanboy.arch.data.cache.database.model.FileModel;
 import com.jeanboy.arch.data.cache.database.model.IssueModel;
-import com.jeanboy.arch.data.cache.database.model.notifications.NotificationModel;
+import com.jeanboy.arch.data.cache.database.model.TagModel;
 import com.jeanboy.arch.data.cache.database.model.UserInfoModel;
+import com.jeanboy.arch.data.cache.database.model.notifications.NotificationModel;
 import com.jeanboy.arch.data.cache.database.model.received.RepositoryModel;
 import com.jeanboy.arch.data.repository.FollowingRepository;
 import com.jeanboy.arch.data.repository.NotificationRepository;
@@ -136,4 +139,81 @@ public class TestApiViewModel extends ViewModel {
         LiveData<Boolean> booleanLiveData = notificationRepository.markRepoNotificationAsRead(accessToken, owner, repo);
         return booleanLiveData;
     }
+
+    public LiveData<Boolean> checkRepoStarred(String accessToken, String owner, String repo) {
+        LiveData<Boolean> booleanLiveData = reposRepository.checkRepoStarred(accessToken, owner, repo);
+        return booleanLiveData;
+    }
+
+    public LiveData<Boolean> starRepo(String accessToken, String owner, String repo) {
+        LiveData<Boolean> booleanLiveData = reposRepository.starRepo(accessToken, owner, repo);
+        return booleanLiveData;
+    }
+
+    public LiveData<Boolean> unstarRepo(String accessToken, String owner, String repo) {
+        LiveData<Boolean> booleanLiveData = reposRepository.unstarRepo(accessToken, owner, repo);
+        return booleanLiveData;
+    }
+
+    public LiveData<Boolean> checkRepoWatched(String accessToken, String owner, String repo) {
+        LiveData<Boolean> booleanLiveData = reposRepository.checkRepoWatched(accessToken, owner, repo);
+        return booleanLiveData;
+    }
+
+    public LiveData<Boolean> watchRepo(String accessToken, String owner, String repo) {
+        LiveData<Boolean> booleanLiveData = reposRepository.watchRepo(accessToken, owner, repo);
+        return booleanLiveData;
+    }
+
+    public LiveData<Boolean> unwatchRepo(String accessToken, String owner, String repo) {
+        LiveData<Boolean> booleanLiveData = reposRepository.unwatchRepo(accessToken, owner, repo);
+        return booleanLiveData;
+    }
+
+    public LiveData<String> getFileAsHtmlStream(String accessToken, String url) {
+        LiveData<String> booleanLiveData = reposRepository.getFileAsHtmlStream(accessToken, url);
+        return booleanLiveData;
+    }
+
+    public LiveData<String> getFileAsStream(String accessToken, String url) {
+        LiveData<String> booleanLiveData = reposRepository.getFileAsStream(accessToken, url);
+        return booleanLiveData;
+    }
+
+    public LiveData<List<FileModel>> getRepoFiles(String accessToken, String owner, String repo, String path, String branch) {
+        LiveData<List<FileModel>> booleanLiveData = reposRepository.getRepoFiles(accessToken, owner, repo, path, branch);
+        return booleanLiveData;
+    }
+
+    public LiveData<List<BranchModel>> getBranches(String accessToken, String owner, String repo) {
+        LiveData<List<BranchModel>> booleanLiveData = reposRepository.getBranches(accessToken, owner, repo);
+        return booleanLiveData;
+    }
+
+    public LiveData<List<TagModel>> getTags(String accessToken, String owner, String repo) {
+        LiveData<List<TagModel>> booleanLiveData = reposRepository.getTags(accessToken, owner, repo);
+        return booleanLiveData;
+    }
+
+    public LiveData<List<UserInfoModel>> getStargazers(String accessToken, String owner, String repo, int page) {
+        LiveData<List<UserInfoModel>> booleanLiveData = reposRepository.getStargazers(accessToken, owner, repo, page);
+        return booleanLiveData;
+    }
+
+    public LiveData<List<UserInfoModel>> getWatchers(String accessToken, String owner, String repo, int page) {
+        LiveData<List<UserInfoModel>> booleanLiveData = reposRepository.getWatchers(accessToken, owner, repo, page);
+        return booleanLiveData;
+    }
+
+    public LiveData<RepositoryModel> createFork(String accessToken, String owner, String repo) {
+        LiveData<RepositoryModel> booleanLiveData = reposRepository.createFork(accessToken, owner, repo);
+        return booleanLiveData;
+    }
+
+    public LiveData<List<RepositoryModel>> getForks(String accessToken, String owner, String repo, int page) {
+        LiveData<List<RepositoryModel>> booleanLiveData = reposRepository.getForks(accessToken, owner, repo, page);
+        return booleanLiveData;
+    }
+
+
 }

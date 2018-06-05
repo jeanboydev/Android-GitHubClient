@@ -1,5 +1,7 @@
 package com.jeanboy.arch.data.net.entity.received;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -30,6 +32,7 @@ public class PayLoadEntity {
      * ]
      * }
      */
+    // WatchEvent&PullRequestEvent
     private String action;
 
     //ForkEvent
@@ -43,6 +46,19 @@ public class PayLoadEntity {
     private String head;
     private String before;
     private List<CommitEntity> commits;
+
+    // CreateEvent
+    @SerializedName("ref_type")
+    private String refType;
+    @SerializedName("master_branch")
+    private String masterBranch;
+    private String description;
+    @SerializedName("pusher_type")
+    private String pusherType;
+
+    //ReleaseEvent
+//    private ReleaseEntity release;
+
 
     public String getAction() {
         return action;

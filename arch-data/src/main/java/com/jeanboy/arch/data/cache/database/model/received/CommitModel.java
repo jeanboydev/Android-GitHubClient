@@ -1,29 +1,17 @@
-package com.jeanboy.arch.data.net.entity.received;
+package com.jeanboy.arch.data.cache.database.model.received;
 
 /**
- * Created by jeanboy on 2018/5/10.
+ * Created by 乔晓松 on 2018/6/5 15:26
  */
-public class CommitEntity {
-    /**
-     * {
-     * "sha": "7efa6f992304e505ec6dbe847074776761636e12",
-     * "author": {
-     * "email": "coolspan@sina.cn",
-     * "name": "coolspan"
-     * },
-     * "message": "Add the dynamic list interface to get the specified user(添加获取指定用户的动态列表接口)",
-     * "distinct": true,
-     * "url": "https://api.github.com/repos/jeanboydev/Android-GitHubClient/commits/7efa6f992304e505ec6dbe847074776761636e12"
-     * }
-     */
+public class CommitModel {
 
     private String sha;
     private String message;
     private boolean distinct;
     private String url;
-    private AuthorEntity author;
+    private AuthorModel author;
 
-    public CommitEntity() {
+    public CommitModel() {
     }
 
     public String getSha() {
@@ -58,17 +46,17 @@ public class CommitEntity {
         this.url = url;
     }
 
-    public AuthorEntity getAuthor() {
+    public AuthorModel getAuthor() {
         return author;
     }
 
-    public void setAuthor(AuthorEntity author) {
+    public void setAuthor(AuthorModel author) {
         this.author = author;
     }
 
     @Override
     public String toString() {
-        return "CommitEntity{" +
+        return "CommitModel{" +
                 "sha='" + sha + '\'' +
                 ", message='" + message + '\'' +
                 ", distinct=" + distinct +

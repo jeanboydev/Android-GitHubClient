@@ -10,7 +10,7 @@ import com.jeanboy.arch.data.repository.handler.MapperHandler;
 public class RepositoryMapper extends MapperHandler<RepositoryEntity, RepositoryModel> {
 
     @Override
-    protected RepositoryModel transform(RepositoryEntity repositoryEntity) {
+    public RepositoryModel transform(RepositoryEntity repositoryEntity) {
         RepositoryModel repositoryModel = new RepositoryModel();
         repositoryModel.setId(repositoryEntity.getId());
         repositoryModel.setUrl(repositoryEntity.getUrl());
